@@ -1,0 +1,71 @@
+---
+import { Image } from 'astro:assets';
+import dashboard from '../assets/screenshots/dashboard.svg';
+
+const DEMO_URL = 'https://demo.balances.kerti.dev';
+const SELF_HOST_URL = 'https://github.com/kerti/balances-v2/blob/main/SELF-HOSTING.md';
+---
+
+<section class="container">
+  <h1>Track your net worth, not&nbsp;your coffee&nbsp;money.</h1>
+  <p class="subhead">
+    Each month you enter your balances; Balances tracks your net worth. One number per position,
+    once a month — no receipt-scanning, no transaction categorising, no bank-sync babysitting.
+  </p>
+  <div class="cta">
+    <a class="button button-primary" href={DEMO_URL}>Try the live demo</a>
+    <a class="button button-secondary" href={SELF_HOST_URL}>Self-host it</a>
+  </div>
+  <p class="caveat">The demo is a shared account; its data resets nightly.</p>
+  <div class="shot">
+    <Image src={dashboard} alt="Balances dashboard showing a household net-worth chart" />
+  </div>
+</section>
+
+<style>
+  section {
+    padding-block: 4.5rem 3rem;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: clamp(2.25rem, 6vw, 3.75rem);
+    font-weight: 700;
+    max-width: 20ch;
+    margin-inline: auto;
+  }
+
+  .subhead {
+    max-width: 44rem;
+    margin: 1.5rem auto 0;
+    font-size: 1.1875rem;
+    color: var(--muted-foreground);
+  }
+
+  .cta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  .caveat {
+    margin-top: 0.875rem;
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+  }
+
+  .shot {
+    margin-top: 3.5rem;
+    border: 1px solid var(--border);
+    border-radius: calc(var(--radius) * 1.4);
+    overflow: hidden;
+    background: var(--card);
+    box-shadow: 0 1.5rem 3rem -1.5rem oklch(0.147 0.004 49.25 / 25%);
+  }
+
+  .shot img {
+    display: block;
+  }
+</style>

@@ -1,0 +1,61 @@
+---
+const GITHUB_URL = 'https://github.com/kerti/balances-v2';
+const DEMO_URL = 'https://demo.balances.kerti.dev';
+---
+
+<header>
+  <div class="container bar">
+    <a class="wordmark" href="/">
+      <img src="/favicon.svg" alt="" width="28" height="28" />
+      Balances
+    </a>
+    <nav>
+      <a class="gh" href={GITHUB_URL}>GitHub</a>
+      <a class="button button-primary demo" href={DEMO_URL}>Try the demo</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  header {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 0.875rem;
+  }
+
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    font-size: 1.125rem;
+    color: var(--foreground);
+    text-decoration: none;
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .gh {
+    color: var(--muted-foreground);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .gh:hover {
+    color: var(--foreground);
+  }
+
+  .demo {
+    padding: 0.5rem 1rem;
+    font-size: 0.9375rem;
+  }
+</style>

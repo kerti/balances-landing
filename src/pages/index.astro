@@ -1,16 +1,22 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import Hero from '../components/Hero.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import NotBudgeting from '../components/NotBudgeting.astro';
+import Groups from '../components/Groups.astro';
+import Yours from '../components/Yours.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 ---
 
 <Layout title="Balances — track your net worth, not your coffee money">
+  <SiteHeader />
   <main>
-    <h1>Balances</h1>
-    <p>
-      Each month you enter your balances; Balances tracks your net worth. One number per position,
-      once a month — no receipt-scanning, no transaction categorising, no bank-sync babysitting.
-    </p>
-    <p>
-      <a href="https://github.com/kerti/balances-v2">See the app &rarr;</a>
-    </p>
+    <Hero />
+    <HowItWorks />
+    <NotBudgeting />
+    <Groups />
+    <Yours />
   </main>
+  <SiteFooter />
 </Layout>

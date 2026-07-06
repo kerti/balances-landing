@@ -1,0 +1,104 @@
+---
+import { Image } from 'astro:assets';
+import positions from '../assets/screenshots/positions.svg';
+
+const groups = [
+  {
+    name: 'Assets',
+    body: 'Bank accounts, property, vehicles — things of value that aren’t investment instruments.',
+  },
+  {
+    name: 'Liabilities',
+    body: 'Mortgages, bank loans, credit-card balances — and the informal money owed to family.',
+  },
+  {
+    name: 'Receivables',
+    body: 'Money owed to your household by someone else, so it stops falling through the cracks.',
+  },
+  {
+    name: 'Investments',
+    body: 'Stocks, mutual funds, bonds, gold, time deposits — with a ledger for buys, sells, and income.',
+  },
+];
+---
+
+<section class="container">
+  <h2>Everything in one place</h2>
+  <p class="lede">
+    Net worth only means something when it covers the whole picture — including the illiquid things
+    that have no transactions to sync.
+  </p>
+  <div class="cards">
+    {
+      groups.map((group) => (
+        <div class="card">
+          <h3>{group.name}</h3>
+          <p>{group.body}</p>
+        </div>
+      ))
+    }
+  </div>
+  <div class="shot">
+    <Image src={positions} alt="Balances positions list showing all four position groups" />
+  </div>
+</section>
+
+<style>
+  section {
+    padding-block: 4rem;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+  }
+
+  .lede {
+    max-width: 40rem;
+    margin: 1.25rem auto 0;
+    color: var(--muted-foreground);
+    font-size: 1.0625rem;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 1rem;
+    margin-top: 2.5rem;
+    text-align: left;
+  }
+
+  .card {
+    background: var(--card);
+    color: var(--card-foreground);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.125rem;
+    font-weight: 650;
+    color: var(--primary);
+  }
+
+  .card p {
+    margin-top: 0.5rem;
+    color: var(--muted-foreground);
+    font-size: 0.9375rem;
+  }
+
+  .shot {
+    margin-top: 3rem;
+    border: 1px solid var(--border);
+    border-radius: calc(var(--radius) * 1.4);
+    overflow: hidden;
+    background: var(--card);
+    box-shadow: 0 1.5rem 3rem -1.5rem oklch(0.147 0.004 49.25 / 25%);
+  }
+
+  .shot img {
+    display: block;
+  }
+</style>
