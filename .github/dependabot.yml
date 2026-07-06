@@ -1,0 +1,22 @@
+version: 2
+
+# Automated dependency-update PRs + security alerts. Config-only, no CI job.
+# Two ecosystems are in play: npm (the Astro site, once scaffolded) and the
+# GitHub Actions pinned in our workflows.
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      # Collapse dev-tooling churn (astro, eslint, prettier, types, etc.) into
+      # one PR so it doesn't drown any runtime-dependency bumps.
+      dev-dependencies:
+        dependency-type: development
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
