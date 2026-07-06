@@ -1,0 +1,35 @@
+{
+  "name": "balances-landing",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "AGPL-3.0-only",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro:check": "astro check",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check": "npm run lint && npm run format:check && npm run astro:check && npm run build",
+    "prepare": "git rev-parse --git-dir > /dev/null 2>&1 && sh scripts/hooks-install.sh || true"
+  },
+  "dependencies": {
+    "astro": "^7"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9",
+    "@eslint/js": "^9",
+    "eslint": "^9",
+    "eslint-plugin-astro": "^1",
+    "globals": "^15",
+    "prettier": "^3",
+    "prettier-plugin-astro": "^0.14",
+    "typescript": "^5",
+    "typescript-eslint": "^8"
+  }
+}

@@ -13,17 +13,20 @@ this repo is only the website.
 
 ## Status
 
-Scaffolding only. The Astro site (ADR-0005) is not built yet.
+Astro scaffold (ADR-0005) with a placeholder home page. Real content is next.
 
 ## Local development
 
-Prerequisites: Node (version pinned in `.nvmrc` once the app is scaffolded).
+Prerequisites: Node 22+ (pinned in `.nvmrc`).
 
 ```sh
-scripts/hooks-install.sh      # first clone: enable the pre-commit secret guard
+npm install        # installs deps; the "prepare" script enables the pre-commit secret guard
+npm run dev        # http://localhost:4321
+npm run build      # static build to dist/ (what Cloudflare Pages serves)
+npm run check      # the local mirror of CI: lint · format:check · astro check · build
 ```
 
-Build/dev/lint scripts land in `package.json` when the Astro app is scaffolded (Phase B).
+Individual gates: `npm run lint`, `npm run format` (write) / `npm run format:check`, `npm run astro:check`.
 
 ## Hosting
 
