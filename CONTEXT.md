@@ -35,6 +35,12 @@ The **favicon / app icon** (`public/favicon.svg`) is a mirror of the app's icon 
 two byte-identical; if the app's icon changes, copy it over here rather than editing the copy in
 this repo. Any future shared brand marks (logo, wordmark) follow the same rule.
 
+**Design tokens** (decided 2026-07-06) follow the same source-of-truth rule: the landing copies the
+app's tokens verbatim — **Geist Variable** (self-hosted via `@fontsource`, no external font CDN),
+cyan primary `oklch(0.609 0.126 221.723)`, stone neutrals, the shadcn cyan ramp — from
+`frontend/src/index.css` in the app repo. If the app's palette moves, re-copy; don't fork the look
+here (app repo issue #93: the surfaces must feel like one product).
+
 ## Value proposition (what the copy sells)
 
 - **Low friction.** One number per position, once a month. No receipt-scanning, no transaction
@@ -46,12 +52,30 @@ this repo. Any future shared brand marks (logo, wordmark) follow the same rule.
 - **Yours.** Open-source (AGPL-3.0) and self-hostable; your household's net worth is not a data
   product.
 
+**Hero headline (canonical):** _"Track your net worth, not your coffee money."_ Subhead: the
+disambiguation sentence from the naming law.
+
+**Claims discipline** (decided 2026-07-06): the page names only the durable core — four position
+groups, monthly snapshots, the net-worth chart, open-source/AGPL, self-host, household
+backup/export. No version numbers, no "beta" badge; the live demo is the maturity disclosure.
+Churn-prone features (importers, tags, analytics) stay off the page until the app stabilises
+(app repo issue #93: "keep landing claims vague enough to survive alpha churn").
+
 ## Audience & voice
 
 - **Audience:** individuals and households who want a durable, low-effort picture of net worth over
   years — not spenders trying to budget week to week.
 - **Voice:** calm, precise, a little opinionated. State the non-features plainly. No hype, no
   growth-hacking urgency, no fake scarcity. Never imply features the app does not have.
+
+## Calls to action (decided 2026-07-06)
+
+There is no hosted signup — production SaaS is deferred indefinitely (app repo HANDOFF.md). The
+page funnels to one **primary CTA: the live demo** at `demo.balances.kerti.dev` (shared account,
+resets nightly — copy must say so). **Secondary CTA: self-host** (the app repo's `SELF-HOSTING.md`
+walkthrough). GitHub repo link rides in the nav/footer, not as a competing button. Never tease a
+hosted signup or waitlist (ADR-0001 forbids capture; CONTEXT.md forbids implying what doesn't
+exist).
 
 ## Out of scope for this site (until decided otherwise)
 

@@ -1,0 +1,54 @@
+---
+const GITHUB_URL = 'https://github.com/kerti/balances-v2';
+const DEMO_URL = 'https://demo.balances.kerti.dev';
+const SELF_HOST_URL = 'https://github.com/kerti/balances-v2/blob/main/SELF-HOSTING.md';
+const LICENSE_URL = 'https://github.com/kerti/balances-v2/blob/main/LICENSE';
+---
+
+<footer>
+  <div class="container bar">
+    <p class="tag">Balances — built in the open.</p>
+    <nav>
+      <a href={DEMO_URL}>Demo</a>
+      <a href={GITHUB_URL}>GitHub</a>
+      <a href={SELF_HOST_URL}>Self-hosting</a>
+      <a href={LICENSE_URL}>AGPL-3.0</a>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  footer {
+    border-top: 1px solid var(--border);
+  }
+
+  .bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 2rem;
+  }
+
+  .tag {
+    color: var(--muted-foreground);
+    font-size: 0.9375rem;
+  }
+
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  a {
+    color: var(--muted-foreground);
+    text-decoration: none;
+    font-size: 0.9375rem;
+  }
+
+  a:hover {
+    color: var(--foreground);
+  }
+</style>
