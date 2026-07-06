@@ -13,7 +13,8 @@ this repo is only the website.
 
 ## Status
 
-Astro scaffold (ADR-0005) with a placeholder home page. Real content is next.
+Live at **<https://balances.kerti.dev>** (Astro scaffold, ADR-0005) with a placeholder home page.
+Real content is next.
 
 ## Local development
 
@@ -30,7 +31,8 @@ Individual gates: `npm run lint`, `npm run format` (write) / `npm run format:che
 
 ## Hosting
 
-Deploys to **Cloudflare Pages** via its native Git integration (ADR-0002) — CI does not hold deploy
-secrets; pushes and PRs build automatically.
+Deploys to **Cloudflare Pages** via its native Git integration (ADR-0002, config in ADR-0006) —
+`main` publishes to <https://balances.kerti.dev>, every PR gets a preview URL, and CI holds no deploy
+secrets.
 
 Licensed under [AGPL-3.0](LICENSE).
