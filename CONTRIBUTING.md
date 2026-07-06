@@ -11,10 +11,11 @@ The marketing site for Balances. Small, opinionated repo — a little orientatio
 ## Local setup
 
 ```sh
-scripts/hooks-install.sh      # once per clone: enables the pre-commit secret guard
+npm install       # installs deps; the "prepare" script enables the pre-commit secret guard
+npm run dev       # http://localhost:4321
 ```
 
-Build/dev tooling arrives with the Astro scaffold (Phase B); this file gets the `npm` verbs then.
+Before opening a PR, run `npm run check` — it mirrors CI (lint · format:check · astro check · build).
 
 ## How a change flows
 

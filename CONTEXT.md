@@ -24,7 +24,7 @@ balances."
 
 They disambiguate in the same sentence:
 
-> *Each month you enter your balances; Balances tracks your net worth.*
+> _Each month you enter your balances; Balances tracks your net worth._
 
 Never write "BALANCES", "balances" (for the product), or "Balance" (singular, for the product).
 
