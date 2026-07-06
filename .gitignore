@@ -1,0 +1,22 @@
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.log
+
+# Env
+.env
+.env.*
+!.env.example
+
+# Node / Astro (arrives with the Phase B scaffold)
+node_modules/
+dist/
+.astro/
+
+# Cloudflare Wrangler local state
+.wrangler/
+
+# Per-machine Claude Code settings (hooks/permissions); shared assets in
+# .claude/ (skills, etc.) are committed normally.
+.claude/settings.local.json
