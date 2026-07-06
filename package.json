@@ -24,13 +24,13 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9",
-    "@eslint/js": "^9",
-    "eslint": "^9",
-    "eslint-plugin-astro": "^1",
-    "globals": "^15",
+    "@eslint/js": "^10",
+    "eslint": "^10",
+    "eslint-plugin-astro": "^2",
+    "globals": "^17",
     "prettier": "^3",
     "prettier-plugin-astro": "^0.14",
-    "typescript": "^5",
+    "typescript": "^6",
     "typescript-eslint": "^8"
   }
 }
