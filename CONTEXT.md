@@ -28,6 +28,13 @@ They disambiguate in the same sentence:
 
 Never write "BALANCES", "balances" (for the product), or "Balance" (singular, for the product).
 
+## Brand assets
+
+The **favicon / app icon** (`public/favicon.svg`) is a mirror of the app's icon in
+`kerti/balances-v2` (`frontend/public/favicon.svg`) — the app repo is the source of truth. Keep the
+two byte-identical; if the app's icon changes, copy it over here rather than editing the copy in
+this repo. Any future shared brand marks (logo, wordmark) follow the same rule.
+
 ## Value proposition (what the copy sells)
 
 - **Low friction.** One number per position, once a month. No receipt-scanning, no transaction
