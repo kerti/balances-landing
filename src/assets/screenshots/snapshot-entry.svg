@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="590" height="1278" viewBox="0 0 590 1278">
-  <!-- PLACEHOLDER — replace with a real screenshot (same filename or update the
-       import in HowItWorks.astro): monthly snapshot entry form at phone width,
-       light mode, toy fixture data only. -->
-  <rect width="590" height="1278" fill="#f5f5f4"/>
-  <rect x="8" y="8" width="574" height="1262" fill="none" stroke="#a8a29e" stroke-width="4" stroke-dasharray="16 12" rx="24"/>
-  <text x="295" y="600" text-anchor="middle" font-family="system-ui, sans-serif" font-size="30" font-weight="600" fill="#57534e">Screenshot placeholder</text>
-  <text x="295" y="650" text-anchor="middle" font-family="system-ui, sans-serif" font-size="20" fill="#78716c">Snapshot entry (phone, light, 590×1278)</text>
-</svg>
