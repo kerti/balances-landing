@@ -1,9 +1,14 @@
 ---
 import { Image } from 'astro:assets';
-import dashboard from '../assets/screenshots/dashboard.svg';
+import dashboard from '../assets/screenshots/dashboard.png';
+import { DEMO_URL, SELF_HOST_URL } from '../consts';
 
-const DEMO_URL = 'https://demo.balances.kerti.dev';
-const SELF_HOST_URL = 'https://github.com/kerti/balances-v2/blob/main/SELF-HOSTING.md';
+const facts = [
+  'AGPL-3.0 open source',
+  'Self-host with docker compose',
+  'No bank connections — you type the numbers',
+  'English & Bahasa Indonesia',
+];
 ---
 
 <section class="container">
@@ -12,11 +17,18 @@ const SELF_HOST_URL = 'https://github.com/kerti/balances-v2/blob/main/SELF-HOSTI
     Each month you enter your balances; Balances tracks your net worth. One number per position,
     once a month — no receipt-scanning, no transaction categorising, no bank-sync babysitting.
   </p>
+  <p class="audience">
+    Built for households who want to watch wealth build over years — not track spending week to
+    week.
+  </p>
   <div class="cta">
     <a class="button button-primary" href={DEMO_URL}>Try the live demo</a>
     <a class="button button-secondary" href={SELF_HOST_URL}>Self-host it</a>
   </div>
-  <p class="caveat">The demo is a shared account; its data resets nightly.</p>
+  <p class="caveat">No signup — the demo is a shared account; its data resets nightly.</p>
+  <ul class="facts">
+    {facts.map((fact) => <li>{fact}</li>)}
+  </ul>
   <div class="shot">
     <Image src={dashboard} alt="Balances dashboard showing a household net-worth chart" />
   </div>
@@ -50,10 +62,45 @@ const SELF_HOST_URL = 'https://github.com/kerti/balances-v2/blob/main/SELF-HOSTI
     margin-top: 2rem;
   }
 
+  .audience {
+    max-width: 44rem;
+    margin: 0.875rem auto 0;
+    font-size: 1rem;
+    color: var(--muted-foreground);
+  }
+
   .caveat {
     margin-top: 0.875rem;
     font-size: 0.875rem;
     color: var(--muted-foreground);
+  }
+
+  .facts {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 1.75rem auto 0;
+    padding: 0;
+    list-style: none;
+    max-width: 44rem;
+  }
+
+  .facts li {
+    padding: 0.3125rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--secondary);
+    color: var(--secondary-foreground);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 30rem) {
+    .facts li {
+      white-space: normal;
+    }
   }
 
   .shot {

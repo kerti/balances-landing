@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import positions from '../assets/screenshots/positions.svg';
+import positions from '../assets/screenshots/positions.png';
 
 const groups = [
   {
@@ -39,7 +39,10 @@ const groups = [
     }
   </div>
   <div class="shot">
-    <Image src={positions} alt="Balances positions list showing all four position groups" />
+    <Image
+      src={positions}
+      alt="Bank-accounts position list in Balances, with all four position groups in the navigation"
+    />
   </div>
 </section>
 

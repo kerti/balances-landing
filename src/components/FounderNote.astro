@@ -1,0 +1,54 @@
+<section>
+  <div class="container">
+    <h2>Why I built Balances</h2>
+    <div class="note">
+      <p>
+        I’ve been recording my household’s finances since 2011 — before I was married, and with real
+        discipline since my second year of marriage. I did it in GNU Cash for about three years,
+        then a self-hosted Firefly III, then Google Sheets. The daily cadence broke me every time:
+        sit down at the computer, enter the day’s transactions, dread the ones I’d missed. The
+        spreadsheets survived longest — and grew to twelve workbooks.
+      </p>
+      <p>
+        Balances replaces all of it with one app and one habit I can actually keep: once a month, I
+        enter the balances. I built it for my own household first, and building it in the open —
+        sharpening my engineering practice along the way — means you can use it for yours.
+      </p>
+      <p class="sig">— Raditya (kerti), maintainer</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .container {
+    padding-block: 4rem;
+    max-width: 46rem;
+  }
+
+  h2 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .note {
+    margin-top: 2rem;
+    padding: 2rem 2.25rem;
+    border: 1px solid var(--border);
+    border-radius: calc(var(--radius) * 1.4);
+    background: var(--card);
+  }
+
+  .note p {
+    font-size: 1.0625rem;
+    color: var(--card-foreground);
+  }
+
+  .note p + p {
+    margin-top: 1.25rem;
+  }
+
+  .sig {
+    color: var(--muted-foreground);
+  }
+</style>
