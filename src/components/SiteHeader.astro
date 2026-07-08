@@ -5,8 +5,20 @@ import { GITHUB_URL, DEMO_URL } from '../consts';
 <header>
   <div class="container bar">
     <a class="wordmark" href="/">
-      <img src="/favicon.svg" alt="" width="28" height="28" />
-      Balances
+      <img
+        class="wordmark-light"
+        src="/brand/wordmark-light.svg"
+        alt="Balances"
+        width="142"
+        height="44"
+      />
+      <img
+        class="wordmark-dark"
+        src="/brand/wordmark-dark.svg"
+        alt="Balances"
+        width="142"
+        height="44"
+      />
     </a>
     <nav>
       <a class="gh" href={GITHUB_URL}>GitHub</a>
@@ -24,17 +36,32 @@ import { GITHUB_URL, DEMO_URL } from '../consts';
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-block: 0.875rem;
+    padding-block: 0.6875rem;
   }
 
   .wordmark {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    font-weight: 700;
-    font-size: 1.125rem;
-    color: var(--foreground);
-    text-decoration: none;
+  }
+
+  .wordmark img {
+    display: none;
+    height: 3rem;
+    width: auto;
+  }
+
+  .wordmark img.wordmark-light {
+    display: block;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .wordmark img.wordmark-light {
+      display: none;
+    }
+
+    .wordmark img.wordmark-dark {
+      display: block;
+    }
   }
 
   nav {
