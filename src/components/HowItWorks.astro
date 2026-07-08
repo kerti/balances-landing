@@ -110,7 +110,9 @@ const steps = [
     border-radius: calc(var(--radius) * 2.2);
     overflow: hidden;
     background: var(--card);
-    box-shadow: 0 1.5rem 3rem -1.5rem oklch(0.147 0.004 49.25 / 25%);
+    box-shadow:
+      0 2rem 3.5rem -1.5rem color-mix(in oklch, var(--primary) 45%, transparent),
+      0 1.5rem 3rem -1.5rem oklch(0.147 0.004 49.25 / 25%);
   }
 
   .shot img {
