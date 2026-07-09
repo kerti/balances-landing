@@ -37,9 +37,10 @@ this repo. Any future shared brand marks (logo, wordmark) follow the same rule.
 
 **Design tokens** (decided 2026-07-06) follow the same source-of-truth rule: the landing copies the
 app's tokens verbatim — **Geist Variable** (self-hosted via `@fontsource`, no external font CDN),
-cyan primary `oklch(0.609 0.126 221.723)`, stone neutrals, the shadcn cyan ramp — from
-`frontend/src/index.css` in the app repo. If the app's palette moves, re-copy; don't fork the look
-here (app repo issue #93: the surfaces must feel like one product).
+indigo primary `oklch(0.511 0.262 276.966)` (matches the logo accent `#6366F1`, `docs/brand/logo.md`
+in the app repo), stone neutrals, the shadcn indigo ramp — from `frontend/src/index.css` in the app
+repo. If the app's palette moves, re-copy; don't fork the look here (app repo issue #93: the
+surfaces must feel like one product).
 
 ## Value proposition (what the copy sells)
 

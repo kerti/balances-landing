@@ -1,15 +1,36 @@
 ---
 import { GITHUB_URL, DEMO_URL, SELF_HOST_URL, LICENSE_URL } from '../consts';
+import GithubIcon from './GithubIcon.astro';
 ---
 
 <footer>
   <div class="container bar">
-    <p class="tag">Balances — built in the open.</p>
+    <p class="tag">
+      <a class="wordmark" href="/">
+        <img
+          class="wordmark-light"
+          src="/brand/wordmark-light.svg"
+          alt="Balances"
+          width="180"
+          height="56"
+        />
+        <img
+          class="wordmark-dark"
+          src="/brand/wordmark-dark.svg"
+          alt="Balances"
+          width="180"
+          height="56"
+        />
+      </a>
+      <span>— built in the open.</span>
+    </p>
     <nav>
-      <a href={DEMO_URL}>Demo</a>
-      <a href={GITHUB_URL}>GitHub</a>
-      <a href={SELF_HOST_URL}>Self-hosting</a>
-      <a href={LICENSE_URL}>AGPL-3.0</a>
+      <a href={DEMO_URL} target="_blank" rel="noopener noreferrer">Demo</a>
+      <a href={SELF_HOST_URL} target="_blank" rel="noopener noreferrer">Self-hosting</a>
+      <a href={LICENSE_URL} target="_blank" rel="noopener noreferrer">AGPL-3.0</a>
+      <a class="gh" href={GITHUB_URL} target="_blank" rel="noopener noreferrer" aria-label="GitHub"
+        ><GithubIcon /></a
+      >
     </nav>
   </div>
 </footer>
@@ -26,18 +47,51 @@ import { GITHUB_URL, DEMO_URL, SELF_HOST_URL, LICENSE_URL } from '../consts';
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    padding-block: 2rem;
+    padding-block: 0.6875rem;
   }
 
   .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
     color: var(--muted-foreground);
     font-size: 0.9375rem;
+  }
+
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .wordmark img {
+    display: none;
+    height: 2.5rem;
+    width: auto;
+  }
+
+  .wordmark img.wordmark-light {
+    display: block;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .wordmark img.wordmark-light {
+      display: none;
+    }
+
+    .wordmark img.wordmark-dark {
+      display: block;
+    }
   }
 
   nav {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: 1.5rem;
+  }
+
+  .gh {
+    display: inline-flex;
   }
 
   a {
