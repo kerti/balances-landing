@@ -9,15 +9,36 @@ import { DEMO_URL, SELF_HOST_URL } from '../consts';
       No account to create, nothing to install. The demo is a shared account and resets nightly.
     </p>
     <div class="cta">
-      <a class="button button-primary" href={DEMO_URL}>Try the live demo</a>
-      <a class="button button-secondary" href={SELF_HOST_URL}>Self-host it</a>
+      <a class="button button-primary" href={DEMO_URL} target="_blank" rel="noopener noreferrer"
+        >Try the live demo</a
+      >
+      <a
+        class="button button-secondary"
+        href={SELF_HOST_URL}
+        target="_blank"
+        rel="noopener noreferrer">Self-host it</a
+      >
     </div>
   </div>
 </section>
 
 <style>
   section {
+    position: relative;
+    overflow: hidden;
     border-top: 1px solid var(--border);
+  }
+
+  section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+      to top,
+      color-mix(in oklch, var(--primary) 14%, transparent),
+      transparent 55%
+    );
   }
 
   .container {

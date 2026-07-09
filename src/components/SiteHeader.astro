@@ -1,5 +1,6 @@
 ---
 import { GITHUB_URL, DEMO_URL } from '../consts';
+import GithubIcon from './GithubIcon.astro';
 ---
 
 <header>
@@ -21,8 +22,15 @@ import { GITHUB_URL, DEMO_URL } from '../consts';
       />
     </a>
     <nav>
-      <a class="gh" href={GITHUB_URL}>GitHub</a>
-      <a class="button button-primary demo" href={DEMO_URL}>Try the demo</a>
+      <a class="gh" href={GITHUB_URL} target="_blank" rel="noopener noreferrer" aria-label="GitHub"
+        ><GithubIcon /></a
+      >
+      <a
+        class="button button-primary demo"
+        href={DEMO_URL}
+        target="_blank"
+        rel="noopener noreferrer">Try the demo</a
+      >
     </nav>
   </div>
 </header>
@@ -72,9 +80,9 @@ import { GITHUB_URL, DEMO_URL } from '../consts';
   }
 
   .gh {
+    display: inline-flex;
     color: var(--muted-foreground);
-    text-decoration: none;
-    font-weight: 500;
+    --gh-icon-size: 1.5rem;
   }
 
   .gh:hover {
@@ -94,10 +102,6 @@ import { GITHUB_URL, DEMO_URL } from '../consts';
 
     nav {
       gap: 0.5rem;
-    }
-
-    .gh {
-      white-space: nowrap;
     }
 
     .demo {
