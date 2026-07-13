@@ -26,11 +26,11 @@
     "@astrojs/check": "^0.9",
     "@eslint/js": "^10",
     "eslint": "^10",
-    "eslint-plugin-astro": "^2",
+    "eslint-plugin-astro": "^3",
     "globals": "^17",
     "prettier": "^3",
     "prettier-plugin-astro": "^0.14",
-    "typescript": "^6",
+    "typescript": "^7",
     "typescript-eslint": "^8"
   }
 }
