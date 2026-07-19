@@ -12,9 +12,9 @@ const {
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
-// Social-preview card — regenerated from scripts/og/og.html (see its header comment).
 const ogImage = new URL('/og.png', Astro.site);
-const ogImageAlt = 'Balances — Track your net worth, not your coffee money. balances.kerti.dev';
+const ogImageAlt =
+  "Balances — Track your household's net worth without itemising a single transaction.";
 ---
 
 <!doctype html>
@@ -31,8 +31,8 @@ const ogImageAlt = 'Balances — Track your net worth, not your coffee money. ba
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
+    <meta property="og:image:width" content="2560" />
+    <meta property="og:image:height" content="1280" />
     <meta property="og:image:alt" content={ogImageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={ogImage} />
