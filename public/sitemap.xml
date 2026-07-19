@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Hand-maintained: the site is a single page (ADR-0001, static-only).
+     Add an entry here if a page is ever added; if the site grows beyond a
+     few pages, switch to @astrojs/sitemap instead. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://balances.kerti.dev/</loc>
+  </url>
+</urlset>
