@@ -1,0 +1,105 @@
+<!doctype html>
+<!--
+  Source for the social-preview card (public/og.png, 1200×630).
+
+  Regenerate after editing (from the repo root, needs `npm install` for the font):
+
+    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+      --headless --screenshot=public/og.png --window-size=1200,630 \
+      --hide-scrollbars --force-device-scale-factor=1 scripts/og/og.html
+
+  Colors are the light-theme tokens from src/styles/global.css (source of truth:
+  the app repo, see CONTEXT.md "Brand assets"); the headline/subhead are the
+  canonical lines from CONTEXT.md. OG images can't follow the OS theme, so the
+  card commits to the light look.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      @font-face {
+        font-family: 'Geist Variable';
+        font-style: normal;
+        font-weight: 100 900;
+        src: url('../../node_modules/@fontsource-variable/geist/files/geist-latin-wght-normal.woff2')
+          format('woff2-variations');
+      }
+      * {
+        margin: 0;
+        box-sizing: border-box;
+      }
+      body {
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+        font-family: 'Geist Variable', system-ui, sans-serif;
+        background: oklch(0.97 0.002 106.424);
+        background-image: radial-gradient(circle, oklch(0.89 0.003 48.717) 1px, transparent 1px);
+        background-size: 28px 28px;
+        color: oklch(0.147 0.004 49.25);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 72px 80px 64px;
+        position: relative;
+      }
+      .wordmark {
+        height: 66px;
+        width: auto;
+        display: block;
+        align-self: flex-start;
+      }
+      h1 {
+        font-size: 68px;
+        font-weight: 650;
+        line-height: 1.12;
+        letter-spacing: -0.02em;
+        max-width: 880px;
+      }
+      h1 em {
+        font-style: normal;
+        color: oklch(0.511 0.262 276.966);
+      }
+      .subhead {
+        margin-top: 26px;
+        font-size: 29px;
+        line-height: 1.45;
+        color: oklch(0.553 0.013 58.071);
+        max-width: 760px;
+      }
+      .url {
+        font-size: 24px;
+        font-weight: 500;
+        color: oklch(0.553 0.013 58.071);
+      }
+      /* Rising month-end bars, bottom right — the chart ramp from the tokens. */
+      .bars {
+        position: absolute;
+        right: 80px;
+        bottom: 64px;
+        display: flex;
+        align-items: flex-end;
+        gap: 14px;
+      }
+      .bars span {
+        width: 34px;
+        border-radius: 6px;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <img class="wordmark" src="../../public/brand/wordmark-light.svg" alt="Balances" />
+    <div>
+      <h1>Track your <em>net worth</em>, not your coffee money.</h1>
+      <p class="subhead">Each month you enter your balances; Balances tracks your net worth.</p>
+    </div>
+    <p class="url">balances.kerti.dev</p>
+    <div class="bars">
+      <span style="height: 52px; background: oklch(0.785 0.115 274.713)"></span>
+      <span style="height: 84px; background: oklch(0.673 0.182 276.935)"></span>
+      <span style="height: 112px; background: oklch(0.585 0.233 277.117)"></span>
+      <span style="height: 148px; background: oklch(0.511 0.262 276.966)"></span>
+    </div>
+  </body>
+</html>
