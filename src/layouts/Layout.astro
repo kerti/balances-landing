@@ -12,6 +12,23 @@ const {
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL('/og.png', Astro.site);
+const ogImageAlt =
+  "Balances — Track your household's net worth without itemising a single transaction.";
+
+// Structured data for search engines. Claims here follow the same discipline
+// as the page copy (CONTEXT.md): durable core only, no hosted-signup implication.
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Balances',
+  url: Astro.site?.toString(),
+  description,
+  applicationCategory: 'FinanceApplication',
+  operatingSystem: 'Web (self-hosted)',
+  license: 'https://github.com/kerti/balances-v2/blob/main/LICENSE',
+  sameAs: ['https://github.com/kerti/balances-v2'],
+};
 ---
 
 <!doctype html>
@@ -23,10 +40,18 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <link rel="canonical" href={canonical} />
     <meta name="description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Balances" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="2560" />
+    <meta property="og:image:height" content="1280" />
+    <meta property="og:image:alt" content={ogImageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
     <title>{title}</title>
   </head>
   <body>

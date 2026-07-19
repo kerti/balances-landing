@@ -57,8 +57,8 @@ surfaces must feel like one product).
 disambiguation sentence from the naming law.
 
 **Claims discipline** (decided 2026-07-06): the page names only the durable core — four position
-groups, monthly snapshots, the net-worth chart, open-source/AGPL, self-host, household
-backup/export. No version numbers, no "beta" badge; the live demo is the maturity disclosure.
+groups, monthly snapshots, the net-worth chart, multi-currency (confirmed durable 2026-07-19),
+open-source/AGPL, self-host, household backup/export. No version numbers, no "beta" badge; the live demo is the maturity disclosure.
 Churn-prone features (importers, tags, analytics) stay off the page until the app stabilises
 (app repo issue #93: "keep landing claims vague enough to survive alpha churn").
 
