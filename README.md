@@ -13,8 +13,8 @@ this repo is only the website.
 
 ## Status
 
-Live at **<https://balances.kerti.dev>** (Astro scaffold, ADR-0005) with a placeholder home page.
-Real content is next.
+Live at **<https://balances.kerti.dev>** (Astro, ADR-0005) with the full landing page — hero,
+value-prop sections, screenshots, founder note, and baseline SEO/social previews.
 
 ## Local development
 
