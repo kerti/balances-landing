@@ -1,38 +1,39 @@
 /* Design tokens copied verbatim from the app repo (kerti/balances-v2,
    frontend/src/index.css) — the app is the source of truth (CONTEXT.md,
-   "Brand assets"). Base color: Stone (warm neutral); theme + chart color:
-   Indigo — matches the logo accent #6366F1 (docs/brand/logo.md), the
-   Tailwind v4 oklch indigo-300…700 ramp. If the app's palette moves,
-   re-copy these values; don't fork the look here. */
+   "Brand assets"). Brand: Graphite & Brass (ADR-0054) — warm graphite
+   neutrals with a muted brass accent (matches the logo accent #B08947 /
+   deep #8A6A30, docs/brand/logo.md), replacing the old indigo/stone
+   pairing. If the app's palette moves, re-copy these values; don't fork
+   the look here. */
 
 @import '@fontsource-variable/geist';
 
 :root {
   color-scheme: light;
-  --background: oklch(0.97 0.002 106.424);
-  --foreground: oklch(0.147 0.004 49.25);
-  --card: oklch(0.97 0.002 106.424);
-  --card-foreground: oklch(0.147 0.004 49.25);
-  --primary: oklch(0.511 0.262 276.966);
-  --primary-foreground: oklch(0.985 0.001 106.423);
-  --secondary: oklch(0.94 0.001 106.424);
-  --secondary-foreground: oklch(0.216 0.006 56.043);
-  --muted: oklch(0.94 0.001 106.424);
-  --muted-foreground: oklch(0.553 0.013 58.071);
-  --accent: oklch(0.94 0.001 106.424);
-  --accent-foreground: oklch(0.216 0.006 56.043);
-  --border: oklch(0.89 0.003 48.717);
-  --ring: oklch(0.511 0.262 276.966);
-  --chart-1: oklch(0.585 0.233 277.117);
-  --chart-2: oklch(0.511 0.262 276.966);
-  --chart-3: oklch(0.457 0.24 277.023);
-  --chart-4: oklch(0.673 0.182 276.935);
-  --chart-5: oklch(0.785 0.115 274.713);
+  --background: oklch(0.971 0.006 84.6);
+  --foreground: oklch(0.246 0.015 256.8);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.246 0.015 256.8);
+  --primary: oklch(0.544 0.086 80.1);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.941 0.01 81.8);
+  --secondary-foreground: oklch(0.246 0.015 256.8);
+  --muted: oklch(0.944 0.009 84.6);
+  --muted-foreground: oklch(0.517 0.019 79.3);
+  --accent: oklch(0.941 0.01 81.8);
+  --accent-foreground: oklch(0.246 0.015 256.8);
+  --border: oklch(0.912 0.014 78.3);
+  --ring: oklch(0.544 0.086 80.1);
+  --chart-1: oklch(0.654 0.097 78.9);
+  --chart-2: oklch(0.544 0.086 80.1);
+  --chart-3: oklch(0.505 0.023 250.6);
+  --chart-4: oklch(0.661 0.026 262.1);
+  --chart-5: oklch(0.796 0.091 84.3);
   --radius: 0.625rem;
 
   /* Landing-only compositional tokens (not copied from the app) — built from
      the tokens above, used for section banding and decorative glows. */
-  --section-tint: oklch(0.955 0.001 106.423);
+  --section-tint: oklch(0.953 0.009 84.6);
   --glow: var(--foreground);
 }
 
@@ -41,25 +42,25 @@
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: dark;
-    --background: oklch(0.19 0.004 49.25);
-    --foreground: oklch(0.985 0.001 106.423);
-    --card: oklch(0.24 0.006 56.043);
-    --card-foreground: oklch(0.985 0.001 106.423);
-    --primary: oklch(0.673 0.182 276.935);
-    --primary-foreground: oklch(0.216 0.006 56.043);
-    --secondary: oklch(0.29 0.007 34.298);
-    --secondary-foreground: oklch(0.985 0.001 106.423);
-    --muted: oklch(0.29 0.007 34.298);
-    --muted-foreground: oklch(0.709 0.01 56.259);
-    --accent: oklch(0.29 0.007 34.298);
-    --accent-foreground: oklch(0.985 0.001 106.423);
-    --border: oklch(1 0 0 / 10%);
-    --ring: oklch(0.673 0.182 276.935);
-    --chart-1: oklch(0.673 0.182 276.935);
-    --chart-2: oklch(0.585 0.233 277.117);
-    --chart-3: oklch(0.511 0.262 276.966);
-    --chart-4: oklch(0.785 0.115 274.713);
-    --chart-5: oklch(0.87 0.065 274.039);
+    --background: oklch(0.2 0.009 264.4);
+    --foreground: oklch(0.925 0.007 88.6);
+    --card: oklch(0.238 0.011 260.7);
+    --card-foreground: oklch(0.925 0.007 88.6);
+    --primary: oklch(0.713 0.108 78.7);
+    --primary-foreground: oklch(0.246 0.015 256.8);
+    --secondary: oklch(0.268 0.014 261.7);
+    --secondary-foreground: oklch(0.925 0.007 88.6);
+    --muted: oklch(0.268 0.014 261.7);
+    --muted-foreground: oklch(0.671 0.016 84.6);
+    --accent: oklch(0.268 0.014 261.7);
+    --accent-foreground: oklch(0.925 0.007 88.6);
+    --border: oklch(0.3 0.014 261.7);
+    --ring: oklch(0.713 0.108 78.7);
+    --chart-1: oklch(0.713 0.108 78.7);
+    --chart-2: oklch(0.796 0.091 84.3);
+    --chart-3: oklch(0.661 0.026 262.1);
+    --chart-4: oklch(0.505 0.023 250.6);
+    --chart-5: oklch(0.749 0.09 83.5);
     --section-tint: var(--secondary);
     --glow: var(--primary);
   }
