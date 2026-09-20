@@ -23,14 +23,12 @@ const steps = [
     <div class="steps">
       <h2>How it works</h2>
       <ol>
-        {
-          steps.map((step) => (
-            <li>
-              <h3>{step.title}</h3>
-              <p>{step.body}</p>
-            </li>
-          ))
-        }
+        {steps.map((step) => (
+          <li>
+            <h3>{step.title}</h3>
+            <p>{step.body}</p>
+          </li>
+        ))}
       </ol>
     </div>
     <div class="shot">
