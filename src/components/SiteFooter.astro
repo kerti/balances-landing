@@ -65,10 +65,10 @@ import GithubIcon from './GithubIcon.astro';
   }
 
   .tag span {
-    /* The geometric correction on the wordmark img (below) lines the two
-       baselines up almost exactly; this is a small empirical nudge on top
-       of that, since the lighter-weight caption still reads as sitting a
-       hair low next to the bold wordmark even once baselines coincide. */
+    /* The geometric correction on the wordmark img (below) lines the two */
+    /* baselines up almost exactly; this is a small empirical nudge on top */
+    /* of that, since the lighter-weight caption still reads as sitting a */
+    /* hair low next to the bold wordmark even once baselines coincide. */
     position: relative;
     top: -1px;
   }
@@ -85,11 +85,11 @@ import GithubIcon from './GithubIcon.astro';
     display: none;
     height: 2.5rem;
     width: auto;
-    /* The wordmark SVG's own baseline sits 6 of its 117.98 viewBox units
-       above the image's bottom edge (padding below the glyphs) — so the
-       default vertical-align: baseline, which plants the image's bottom
-       edge on the text baseline, would otherwise leave the copy ~2px
-       below the logo's true baseline. Pull the image up to compensate. */
+    /* The wordmark SVG's own baseline sits 6 of its 117.98 viewBox units */
+    /* above the image's bottom edge (padding below the glyphs) — so the */
+    /* default vertical-align: baseline, which plants the image's bottom */
+    /* edge on the text baseline, would otherwise leave the copy ~2px */
+    /* below the logo's true baseline. Pull the image up to compensate. */
     margin-bottom: calc(-6 / 117.98 * 2.5rem);
   }
 
