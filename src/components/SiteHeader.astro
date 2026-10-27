@@ -142,8 +142,10 @@ const sections = [
   /* Phones: shrink every header element together so the wordmark, theme
      toggle, GitHub link and demo button fit on one comfortable row. */
   @media (max-width: 36rem) {
+    /* Keep the desktop bar height (3rem wordmark + 2 × 0.6875rem) so the
+       smaller elements sit with room above and below them. */
     .bar {
-      padding-block: 0.5rem;
+      min-height: 4.375rem;
     }
 
     .wordmark img {
