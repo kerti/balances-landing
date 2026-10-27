@@ -1,18 +1,24 @@
 ---
-// The idea, not the interface: twelve month-end snapshots. Assets run above,
-// liabilities shrink below, and net worth is the gap between them, the brass
-// line with one dot per month-end. Shapes are generated at build time from an
-// illustrative series; there are no real figures, so nothing here can go stale.
-const netWorth = [90, 95, 93, 100, 106, 104, 112, 119, 117, 126, 134, 143];
-const liabilities = [75, 73, 71, 69, 67, 65, 62, 60, 57, 55, 52, 50];
-const assets = netWorth.map((value, i) => value + liabilities[i]);
+// The idea, not the interface: twelve month-end snapshots of net worth, the
+// brass line with one dot per month-end, drawn at build time from the page's
+// illustrative household (./net-worth).
+//
+// The card is a window onto a longer line. On wide screens a backdrop behind
+// the card carries the same line across the hero: the months before this year
+// run out of the card's left edge as a faint line back to a first month-end
+// three years ago, and the hero is tinted above it.
+import {
+  allMonthEnds,
+  earlierYears as history,
+  lastYear as netWorth,
+  percentChange,
+} from './net-worth';
 
 const width = 600;
 const height = 380;
 const pad = { x: 24, top: 24, bottom: 20 };
-const all = [...assets, ...liabilities, ...netWorth];
-const min = Math.min(...all) - 12;
-const max = Math.max(...all) + 6;
+const min = Math.min(...netWorth) - 40;
+const max = Math.max(...netWorth) + 15;
 const baseline = height - pad.bottom;
 
 const toPoints = (series: number[]) =>
@@ -24,13 +30,33 @@ const toPath = (pts: { x: number; y: number }[]) =>
   pts.map((p, i) => `${i ? 'L' : 'M'}${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ');
 
 const points = toPoints(netWorth);
-const assetPoints = toPoints(assets);
-const liabilityPoints = toPoints(liabilities);
+const step = (width - 2 * pad.x) / (netWorth.length - 1);
+const earlier = [...history, netWorth[0]].map((value, i) => ({
+  x: pad.x + (i - history.length) * step,
+  y: pad.top + ((max - value) / (max - min)) * (baseline - pad.top),
+}));
+const earlierLine = toPath(earlier);
+const earlierStart = earlier[0].x;
+const first = earlier[0];
+const now = points.at(-1)!;
+// Far enough out to reach the window edge at any width; the hero clips it.
+const far = 4000;
+// The tint above the line. It fades out across the card (see #hero-tint), so
+// the right of the screen stays the plain page background.
+const above = [
+  `M${earlierStart - far} ${earlier[0].y.toFixed(1)}`,
+  toPath([...earlier, ...points.slice(1)]).replace(/^M/, 'L'),
+  `L${now.x + far} ${now.y.toFixed(1)} L${now.x + far} ${-far} L${earlierStart - far} ${-far} Z`,
+].join(' ');
+// The card's edges, roughly: the chart sits inside its 1.5rem padding.
+const cardLeft = -40;
+const cardRight = width + 40;
+// The tint also fades in just before the first month-end, so there is no
+// hard edge where the line begins. Offsets along the tint gradient:
+const tintFrom = first.x - 160;
+const tintAt = (x: number) => ((x - tintFrom) / (cardRight - tintFrom)).toFixed(3);
+const sinceFirst = percentChange(0, allMonthEnds.length - 1).toFixed(0);
 const line = toPath(points);
-const assetsLine = toPath(assetPoints);
-const liabilitiesLine = toPath(liabilityPoints);
-// Direct labels sit just above each supporting line's last point.
-const labelX = width - pad.x;
 const area = `${line} L${points.at(-1)!.x} ${baseline} L${points[0].x} ${baseline} Z`;
 const grid = [0.25, 0.5, 0.75].map((f) => pad.top + f * (baseline - pad.top));
 ---
@@ -38,46 +64,86 @@ const grid = [0.25, 0.5, 0.75].map((f) => pad.top + f * (baseline - pad.top));
 <figure class="illustration" data-reveal>
   <p class="head">
     <span>Net worth</span>
-    <span class="sub">12 month-ends</span>
+    <span class="sub">The last 12 month-ends</span>
   </p>
-  <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby="hero-illustration-title">
-    <title id="hero-illustration-title">
-      Twelve monthly snapshots: assets rising, liabilities shrinking, and net worth, the gap
-      between them, climbing month by month
+  <div class="plot">
+    <svg class="backdrop" viewBox={`0 0 ${width} ${height}`} aria-hidden="true">
+      <defs>
+        <linearGradient
+          id="hero-earlier"
+          gradientUnits="userSpaceOnUse"
+          x1={earlierStart}
+          y1="0"
+          x2={pad.x}
+          y2="0"
+        >
+          <stop offset="0" style="stop-color: var(--primary); stop-opacity: 0.3"></stop>
+          <stop offset="1" style="stop-color: var(--primary); stop-opacity: 0.7"></stop>
+        </linearGradient>
+        <linearGradient
+          id="hero-tint"
+          gradientUnits="userSpaceOnUse"
+          x1={tintFrom}
+          y1="0"
+          x2={cardRight}
+          y2="0"
+        >
+          <stop offset="0" style="stop-color: var(--hero-tint); stop-opacity: 0"></stop>
+          <stop offset={tintAt(first.x)} style="stop-color: var(--hero-tint)"></stop>
+          <stop offset={tintAt(cardLeft)} style="stop-color: var(--hero-tint)"></stop>
+          <stop offset="1" style="stop-color: var(--hero-tint); stop-opacity: 0"></stop>
+        </linearGradient>
+      </defs>
+      <path class="above" d={above}></path>
+      <path class="earlier" d={earlierLine} stroke="url(#hero-earlier)"></path>
+      <circle class="first" cx={first.x} cy={first.y} r="6"></circle>
+      <text class="first-label" x={first.x - 6} y={first.y + 34}>
+        <tspan>First month-end</tspan>
+        <tspan class="first-when" x={first.x - 6} dy="22">
+          3 years ago
+        </tspan>
+      </text>
+    </svg>
+    <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby="hero-illustration-title">
+      <title id="hero-illustration-title">
+      Twelve monthly snapshots of net worth, climbing month by month
     </title>
-    <defs>
-      <linearGradient id="hero-area" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" style="stop-color: var(--primary); stop-opacity: 0.22"></stop>
-        <stop offset="1" style="stop-color: var(--primary); stop-opacity: 0"></stop>
-      </linearGradient>
-    </defs>
-    {grid.map((y) => (
-      <line class="grid" x1={pad.x} x2={width - pad.x} y1={y} y2={y} />
-    ))}
-    <line class="axis" x1={pad.x} x2={width - pad.x} y1={baseline} y2={baseline} />
-    {points.map((p) => (
-      <line class="tick" x1={p.x} x2={p.x} y1={p.y} y2={baseline} />
-    ))}
-    <path class="area" d={area} fill="url(#hero-area)" />
-    <path class="series assets" d={assetsLine} pathLength="1" />
-    <path class="series liabilities" d={liabilitiesLine} pathLength="1" />
-    <path class="line" d={line} pathLength="1" />
-    <text class="label" x={labelX} y={assetPoints.at(-1)!.y - 12}>
-      Assets
-    </text>
-    <text class="label" x={labelX} y={liabilityPoints.at(-1)!.y - 12}>
-      Liabilities
-    </text>
-    {points.map((p, i) => (
-      <circle
-        class:list={['dot', { now: i === points.length - 1 }]}
-        cx={p.x}
-        cy={p.y}
-        r={i === points.length - 1 ? 9 : 6}
-        style={`--i: ${i}`}
-      />
-    ))}
-  </svg>
+      <defs>
+        <linearGradient id="hero-area" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" style="stop-color: var(--primary); stop-opacity: 0.22"></stop>
+          <stop offset="1" style="stop-color: var(--primary); stop-opacity: 0"></stop>
+        </linearGradient>
+      </defs>
+      {grid.map((y) => (
+        <line class="grid" x1={pad.x} x2={width - pad.x} y1={y} y2={y} />
+      ))}
+      <line class="axis" x1={pad.x} x2={width - pad.x} y1={baseline} y2={baseline} />
+      {points.map((p) => (
+        <line class="tick" x1={p.x} x2={p.x} y1={p.y} y2={baseline} />
+      ))}
+      <path class="area" d={area} fill="url(#hero-area)" />
+      <line class="crosshair" x1={now.x} x2={now.x} y1={pad.top - 8} y2={baseline} />
+      <path class="line" d={line} pathLength="1" />
+      {points.map((p, i) => (
+        <circle
+          class:list={['dot', { now: i === points.length - 1 }]}
+          cx={p.x}
+          cy={p.y}
+          r={i === points.length - 1 ? 9 : 6}
+          style={`--i: ${i}`}
+        />
+      ))}
+      <g class="tip" transform={`translate(${now.x - 20} ${now.y - 4})`}>
+        <rect x="-226" y="-54" width="226" height="54" rx="9"></rect>
+        <text class="tip-date" x="-212" y="-32">
+          This month-end
+        </text>
+        <text class="tip-change" x="-212" y="-11">
+          Net worth +{sinceFirst}% in 3 years
+        </text>
+      </g>
+    </svg>
+  </div>
   <figcaption>
     <span class="ends">
       <span>A year ago</span>
@@ -94,7 +160,7 @@ const grid = [0.25, 0.5, 0.75].map((f) => pad.top + f * (baseline - pad.top));
     padding: 1.5rem 1.5rem 1.25rem;
     border: 1px solid var(--border);
     border-radius: calc(var(--radius) * 1.6);
-    background: color-mix(in oklch, var(--card) 70%, transparent);
+    background: var(--card);
     box-shadow: var(--shot-shadow);
     text-align: left;
   }
@@ -129,13 +195,102 @@ const grid = [0.25, 0.5, 0.75].map((f) => pad.top + f * (baseline - pad.top));
     stroke: var(--border);
   }
 
+  /* The backdrop: same coordinates as the chart, painted behind the card's
+     contents (z-index -1 inside the hero's stacking context). Only where the
+     card sits beside the copy; stacked, it would cut across the text. There
+     the card turns transparent, a frame over the one line, so the earlier
+     years run straight into its first month-end. */
+  .plot {
+    position: relative;
+  }
+
+  .backdrop {
+    display: none;
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    height: 100%;
+  }
+
+  @media (min-width: 64rem) {
+    .backdrop {
+      display: block;
+    }
+
+    .illustration {
+      background: transparent;
+      box-shadow: none;
+    }
+  }
+
+  /* Above the line the hero takes the darker tint, fading out across the
+     card; below it stays the page background, so the hero blends into the
+     next section. */
+  .above {
+    fill: url(#hero-tint);
+  }
+
+  /* The earlier years: faint and dot-free, strengthening towards the card. */
+  .earlier {
+    fill: none;
+    stroke-width: 2;
+    stroke-linejoin: round;
+  }
+
+  /* Where the line starts: the household's first month-end. Labelled only
+     where the window is wide enough for it to be on screen. */
+  .first {
+    fill: var(--background);
+    stroke: color-mix(in oklch, var(--primary) 45%, transparent);
+    stroke-width: 2.5;
+  }
+
+  .first-label {
+    display: none;
+    fill: var(--muted-foreground);
+    font-size: 19px;
+  }
+
+  .first-when {
+    fill: color-mix(in oklch, var(--primary) 70%, var(--muted-foreground));
+  }
+
+  @media (min-width: 88rem) {
+    .first-label {
+      display: inline;
+    }
+  }
+
+  .crosshair {
+    stroke: color-mix(in oklch, var(--primary) 40%, transparent);
+    stroke-dasharray: 4 5;
+  }
+
+  .tip rect {
+    fill: var(--card);
+    stroke: var(--border);
+  }
+
+  .tip text {
+    font-size: 16px;
+  }
+
+  .tip-date {
+    fill: var(--muted-foreground);
+  }
+
+  .tip-change {
+    fill: var(--primary);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
   .tick {
     stroke: color-mix(in oklch, var(--primary) 18%, transparent);
     stroke-dasharray: 2 4;
   }
 
-  .line,
-  .series {
+  .line {
     fill: none;
     stroke-linecap: round;
     stroke-linejoin: round;
@@ -144,26 +299,6 @@ const grid = [0.25, 0.5, 0.75].map((f) => pad.top + f * (baseline - pad.top));
   .line {
     stroke: var(--primary);
     stroke-width: 3;
-  }
-
-  /* Supporting series: thin and quiet so net worth stays the subject. */
-  .series {
-    stroke-width: 1.75;
-  }
-
-  .assets {
-    stroke: var(--chart-3);
-  }
-
-  .liabilities {
-    stroke: var(--chart-4);
-  }
-
-  .label {
-    fill: var(--muted-foreground);
-    font-size: 19px;
-    font-weight: 500;
-    text-anchor: end;
   }
 
   .dot {
@@ -202,14 +337,9 @@ const grid = [0.25, 0.5, 0.75].map((f) => pad.top + f * (baseline - pad.top));
     }
   }
 
-  /* Assets and liabilities draw first, then net worth, then the dots land
-     month by month. Motion only; the static drawing is complete without it. */
+  /* The earlier years fade in, net worth draws, then the dots land month by
+     month. Motion only; the static drawing is complete without it. */
   @media (prefers-reduced-motion: no-preference) {
-    .series {
-      stroke-dasharray: 1;
-      animation: draw 1.4s ease-out both;
-    }
-
     .line {
       stroke-dasharray: 1;
       animation: draw 1.6s ease-out 0.35s both;
@@ -219,8 +349,19 @@ const grid = [0.25, 0.5, 0.75].map((f) => pad.top + f * (baseline - pad.top));
       animation: fade 0.8s ease-out 1.5s both;
     }
 
-    .label {
-      animation: fade 0.5s ease-out 1.2s both;
+    .backdrop {
+      animation: fade 1.2s ease-out both;
+    }
+
+    .grid,
+    .axis,
+    .tick {
+      animation: fade 0.8s ease-out 0.2s both;
+    }
+
+    .crosshair,
+    .tip {
+      animation: fade 0.5s ease-out 1.9s both;
     }
 
     .dot {

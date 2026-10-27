@@ -5,25 +5,22 @@ import GithubIcon from './GithubIcon.astro';
 
 <footer>
   <div class="container bar">
-    <p class="tag">
-      <a class="wordmark" href="/">
-        <img
-          class="wordmark-light light-only"
-          src="/brand/wordmark-light.svg"
-          alt="Balances"
-          width="180"
-          height="56"
-        />
-        <img
-          class="wordmark-dark dark-only"
-          src="/brand/wordmark-dark.svg"
-          alt="Balances"
-          width="180"
-          height="56"
-        />
-      </a>
-      <span>— built in the open.</span>
-    </p>
+    <a class="wordmark" href="/">
+      <img
+        class="wordmark-light light-only"
+        src="/brand/wordmark-light.svg"
+        alt="Balances"
+        width="180"
+        height="56"
+      />
+      <img
+        class="wordmark-dark dark-only"
+        src="/brand/wordmark-dark.svg"
+        alt="Balances"
+        width="180"
+        height="56"
+      />
+    </a>
     <nav>
       <a href={DEMO_URL} target="_blank" rel="noopener noreferrer">
         Demo
@@ -33,6 +30,10 @@ import GithubIcon from './GithubIcon.astro';
       </a>
       <a href={LICENSE_URL} target="_blank" rel="noopener noreferrer">
         AGPL-3.0
+      </a>
+      <!-- Attribution required by the Streamline Flex icons' CC BY 4.0 licence. -->
+      <a href="https://www.streamlinehq.com" target="_blank" rel="noopener noreferrer">
+        Icons by Streamline
       </a>
       <a class="gh" href={GITHUB_URL} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
         <GithubIcon />
@@ -56,41 +57,14 @@ import GithubIcon from './GithubIcon.astro';
     padding-block: 0.6875rem;
   }
 
-  .tag {
+  .wordmark {
     display: inline-flex;
-    align-items: baseline;
-    gap: 0.5rem;
-    color: var(--muted-foreground);
-    font-size: 0.9375rem;
   }
 
-  .tag span {
-    /* The geometric correction on the wordmark img (below) lines the two */
-    /* baselines up almost exactly; this is a small empirical nudge on top */
-    /* of that, since the lighter-weight caption still reads as sitting a */
-    /* hair low next to the bold wordmark even once baselines coincide. */
-    position: relative;
-    top: -1px;
-  }
-
-  /* Deliberately not display: inline-flex here. .tag aligns its items on
-     the text baseline, and baseline synthesis through a *nested* flex
-     container is inconsistently implemented across browsers — it silently
-     fell back to this element's own margin-box bottom edge, defeating the
-     img's margin-bottom correction below. Left as plain inline content,
-     the img's `vertical-align: baseline` (the CSS default, unaffected by
-     .tag's flex context once .wordmark isn't itself a flex container) is
-     what actually aligns it, and that mechanism is reliable. */
   .wordmark img {
-    display: inline;
+    display: block;
     height: 2.5rem;
     width: auto;
-    /* The wordmark SVG's own baseline sits 6 of its 117.98 viewBox units */
-    /* above the image's bottom edge (padding below the glyphs) — so the */
-    /* default vertical-align: baseline, which plants the image's bottom */
-    /* edge on the text baseline, would otherwise leave the copy ~2px */
-    /* below the logo's true baseline. Pull the image up to compensate. */
-    margin-bottom: calc(-6 / 117.98 * 2.5rem);
   }
 
   nav {

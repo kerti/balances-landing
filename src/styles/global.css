@@ -41,6 +41,12 @@
      otherwise runs on a single background. */
   --section-tint: light-dark(oklch(0.953 0.009 84.6), var(--secondary));
   --glow: light-dark(var(--foreground), var(--primary));
+  /* The hero above its net-worth line: a shade darker than the page. */
+  --hero-tint: light-dark(oklch(0.945 0.009 84.6), oklch(0.168 0.009 264.4));
+  /* The sticky header's bar, not counting its 1px bottom line. Anchored
+     sections scroll to exactly this offset, so a section's top divider lands
+     on the header's line. */
+  --header-height: 4.375rem;
   /* Top padding of each page section; phones tighten it (below). */
   --section-pad-top: 4rem;
   /* Lift under screenshots: a faint brass halo over a neutral drop shadow. */
@@ -89,8 +95,8 @@
 
 html {
   scroll-behavior: smooth;
-  /* Keep anchored sections clear of the sticky header. */
-  scroll-padding-top: 5rem;
+  /* Anchored sections stop under the sticky header, divider on its line. */
+  scroll-padding-top: var(--header-height);
 }
 
 @media (prefers-reduced-motion: reduce) {

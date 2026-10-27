@@ -1,32 +1,47 @@
 ---
+import { icons } from './icons';
+import BackgroundGraph from './BackgroundGraph.astro';
+import { allMonthEnds, percentChange } from './net-worth';
 import { GITHUB_URL, SELF_HOST_URL } from '../consts';
+
+// The hero's household again, all three years; the tooltip picks out the
+// month-end thirty months before this October.
+const pointed = 6;
+const pointedChange = percentChange(pointed - 1, pointed).toFixed(1);
 
 const points = [
   {
     title: 'Open source',
     body: 'The whole app is open-source under AGPL-3.0.',
-    icon: 'M8 7l-5 5 5 5M16 7l5 5-5 5',
+    icon: icons.fileCode,
   },
   {
     title: 'Self-hosted',
     body: 'Run it on your own machine with a single',
     code: 'docker compose up',
-    icon: 'M4 4h16v6H4zM4 14h16v6H4zM8 7h.01M8 17h.01',
+    icon: icons.database,
   },
   {
     title: 'Backup & export',
     body: 'Back up or export the whole household whenever you like.',
-    icon: 'M3 4h18v4H3zM5 8v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8M10 12h4',
+    icon: icons.archiveBox,
   },
   {
     title: 'Two languages',
     body: 'Use the app in English or Bahasa Indonesia.',
-    icon: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z',
+    icon: icons.dictionary,
   },
 ];
 ---
 
 <section id="open-source">
+  <BackgroundGraph
+    values={allMonthEnds}
+    point={pointed}
+    date="30 April"
+    change={`Net worth +${pointedChange}%`}
+    top={45}
+  />
   <div class="container">
     <p class="eyebrow" data-reveal="up">
       Open source
@@ -41,8 +56,10 @@ const points = [
       {points.map((point, i) => (
         <li style={`--i: ${i}`}>
           <span class="icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <path d={point.icon} pathLength="1" />
+            <svg viewBox="0 0 14 14">
+              {point.icon.map((d) => (
+                <path d={d} pathLength="1" />
+              ))}
             </svg>
           </span>
           <h3>{point.title}</h3>
@@ -81,7 +98,13 @@ const points = [
 
 <style>
   section {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
     border-top: 1px solid var(--border);
+    /* The last section: tall enough, with the footer (~3.9rem), to scroll
+       up under the header like the others when its nav link is followed. */
+    min-height: calc(100svh - var(--header-height) - 3.875rem);
   }
 
   .container {
@@ -119,23 +142,23 @@ const points = [
     background: var(--card);
   }
 
+  /* Frameless line icons, drawn larger so their soft, rounded strokes carry
+     on their own. */
   .icon {
-    display: inline-grid;
-    place-items: center;
-    width: 2.5rem;
-    height: 2.5rem;
+    display: block;
+    width: 2.75rem;
+    height: 2.75rem;
     margin-bottom: 1rem;
-    border-radius: calc(var(--radius) * 0.8);
-    background: color-mix(in oklch, var(--primary) 14%, transparent);
     color: var(--primary);
   }
 
   .icon svg {
-    width: 1.375rem;
-    height: 1.375rem;
+    display: block;
+    width: 100%;
+    height: 100%;
     fill: none;
     stroke: currentColor;
-    stroke-width: 1.75;
+    stroke-width: 0.8;
     stroke-linecap: round;
     stroke-linejoin: round;
   }
