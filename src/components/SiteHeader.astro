@@ -14,7 +14,7 @@ const sections = [
 
 <header>
   <div class="container bar">
-    <a class="wordmark" href="/">
+    <a class="wordmark" href="#top">
       <img
         class="wordmark-light light-only"
         src="/brand/wordmark-light.svg"
@@ -103,7 +103,8 @@ const sections = [
     align-items: center;
     justify-content: space-between;
     gap: 0.75rem;
-    padding-block: 0.6875rem;
+    /* Fixed, so anchored sections can scroll to exactly beneath it. */
+    height: var(--header-height);
   }
 
   .wordmark {
@@ -147,12 +148,8 @@ const sections = [
   /* Phones: shrink every header element together so the wordmark, theme
      toggle, GitHub link and demo button fit on one comfortable row. */
   @media (max-width: 36rem) {
-    /* Keep the desktop bar height (3rem wordmark + 2 × 0.6875rem) so the
-       smaller elements sit with room above and below them. */
-    .bar {
-      min-height: 4.375rem;
-    }
-
+    /* The bar keeps its desktop height, so the smaller elements sit with
+       room above and below them. */
     .wordmark img {
       height: 2.25rem;
     }

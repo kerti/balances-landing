@@ -98,6 +98,9 @@ const points = [
     isolation: isolate;
     overflow: hidden;
     border-top: 1px solid var(--border);
+    /* The last section: tall enough, with the footer (~3.9rem), to scroll
+       up under the header like the others when its nav link is followed. */
+    min-height: calc(100svh - var(--header-height) - 3.875rem);
   }
 
   .container {
