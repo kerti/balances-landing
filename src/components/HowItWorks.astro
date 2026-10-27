@@ -1,33 +1,30 @@
 ---
 import { Image } from 'astro:assets';
-import stepPositions from '../assets/screenshots/step-positions.png';
-import stepSnapshot from '../assets/screenshots/step-snapshot.png';
-import stepNetWorth from '../assets/screenshots/step-net-worth.png';
+import stepAdd from '../assets/screenshots/step-add.png';
+import stepEnter from '../assets/screenshots/step-enter.png';
+import stepWatch from '../assets/screenshots/step-watch.png';
 
 const steps = [
   {
     label: 'Add',
     title: 'Add your positions',
     body: 'Bank accounts, property, vehicles, investments, debts — anything your household owns or owes.',
-    image: stepPositions,
-    alt: 'The four position groups in Balances — assets, investments, receivables, liabilities — with their totals',
-    narrow: false,
+    image: stepAdd,
+    alt: 'A household’s bank accounts in Balances, each with its owner and latest month-end balance',
   },
   {
     label: 'Enter',
     title: 'Enter month‑end balances',
     body: 'One number per position, straight off the statement. Ten minutes at the end of the month.',
-    image: stepSnapshot,
-    alt: 'The dialog for recording a month-end balance in Balances',
-    narrow: true,
+    image: stepEnter,
+    alt: 'Entering a month’s balances in Balances: every bank account, property and vehicle on one form',
   },
   {
     label: 'Watch',
     title: 'Watch your net worth',
     body: 'Balances charts it over time, across everything — including the illiquid things no bank sync can see.',
-    image: stepNetWorth,
-    alt: 'A household’s net worth and its chart over two years in Balances',
-    narrow: false,
+    image: stepWatch,
+    alt: 'A household’s net worth in Balances, charted month by month over two years',
   },
 ];
 ---
@@ -52,7 +49,7 @@ const steps = [
           <h3>{step.title}</h3>
           <p class="body">{step.body}</p>
         </div>
-        <div class:list={['shot', { narrow: step.narrow }]}>
+        <div class="shot">
           <Image src={step.image} alt={step.alt} />
         </div>
       </li>
@@ -138,12 +135,6 @@ const steps = [
     overflow: hidden;
     background: var(--card);
     box-shadow: var(--shot-shadow);
-  }
-
-  .shot.narrow {
-    max-width: 22rem;
-    width: 100%;
-    justify-self: center;
   }
 
   .shot img {
