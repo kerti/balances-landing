@@ -122,12 +122,13 @@ img {
 }
 
 /* Section eyebrow: a small brass diamond and a tracked uppercase label that
-   sits above a section heading. */
-.eyebrow {
+   sits above a section heading. `:root` lifts it over the sections' scoped
+   `p` rules, which would otherwise override its size and margin. */
+:root .eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 0.625rem;
-  margin-bottom: 1rem;
+  margin: 0 0 1rem;
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.18em;
@@ -135,7 +136,7 @@ img {
   color: var(--muted-foreground);
 }
 
-.eyebrow::before {
+:root .eyebrow::before {
   content: '';
   width: 0.4375rem;
   height: 0.4375rem;
