@@ -7,6 +7,7 @@
    the look here. Each light-dark() pair is <app :root value, app .dark value>. */
 
 @import '@fontsource-variable/geist';
+@import '@fontsource-variable/geist/wght-italic.css';
 
 :root {
   /* Follows the OS by default; the header's theme switcher pins it by
@@ -147,10 +148,11 @@ img {
   transform: rotate(45deg);
 }
 
-/* Two-tone headings: the closing phrase carries the brass accent. Geist ships
-   no italic, so the accent is colour only. */
+/* Two-tone headings: the closing phrase carries the brass accent, set in
+   Geist's true italic (the wght-italic face imported above). */
 .accent {
   color: var(--primary);
+  font-style: italic;
 }
 
 .sr-only {
