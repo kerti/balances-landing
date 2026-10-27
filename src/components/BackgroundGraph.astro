@@ -1,0 +1,128 @@
+---
+// A faint net-worth line behind a section, with one month-end picked out by a
+// crosshair, a dot and a small tooltip. Decorative only: illustrative values,
+// no real figures, hidden from assistive tech. The line stretches to the
+// section (preserveAspectRatio="none"); the dot and tooltip are HTML placed by
+// percentage, so they stay round and land exactly on the line.
+interface Props {
+  /** Month-end values, oldest first. Only the shape matters. */
+  values: number[];
+  /** Index of the month-end to pick out. */
+  point: number;
+  /** Tooltip lines, e.g. a month-end date and the change. */
+  date: string;
+  change: string;
+  /** Top of the line's band, as a percentage of the section height. */
+  top?: number;
+}
+
+const { values, point, date, change, top = 20 } = Astro.props;
+const min = Math.min(...values);
+const max = Math.max(...values);
+const coords = values.map((value, i) => ({
+  x: (i / (values.length - 1)) * 100,
+  y: 100 - ((value - min) / (max - min)) * 100,
+}));
+const line = coords.map((c, i) => `${i ? 'L' : 'M'}${c.x.toFixed(2)} ${c.y.toFixed(2)}`).join(' ');
+const area = `${line} L100 100 L0 100 Z`;
+const at = coords[point];
+// The point's height within the whole graph box, which starts `top`% down.
+const pointTop = top + (at.y * (100 - top)) / 100;
+// Near the right edge the tooltip opens leftwards so it stays on screen.
+const tipEnd = at.x > 70;
+---
+
+<div class="bg-graph" aria-hidden="true" style={`--top: ${top}%`}>
+  <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+    <path class="area" d={area}></path>
+    <path class="line" d={line}></path>
+  </svg>
+  <span class="crosshair" style={`left: ${at.x}%`}></span>
+  <span class="dot" style={`left: ${at.x}%; top: ${pointTop}%`}></span>
+  <span class:list={['tip', { end: tipEnd }]} style={`left: ${at.x}%; top: ${pointTop}%`}>
+    <span class="date">{date}</span>
+    <span class="change">{change}</span>
+  </span>
+</div>
+
+<style>
+  .bg-graph {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  svg {
+    position: absolute;
+    inset: var(--top) 0 0;
+    width: 100%;
+    height: calc(100% - var(--top));
+    overflow: visible;
+    /* Fade the ends so the line drifts in and out rather than hitting the
+       edges of the window. */
+    mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+  }
+
+  .line {
+    fill: none;
+    stroke: color-mix(in oklch, var(--primary) 30%, transparent);
+    stroke-width: 1.5;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .area {
+    fill: color-mix(in oklch, var(--primary) 5%, transparent);
+  }
+
+  .crosshair {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    border-left: 1px dashed color-mix(in oklch, var(--primary) 22%, transparent);
+  }
+
+  .dot {
+    position: absolute;
+    width: 0.625rem;
+    height: 0.625rem;
+    border: 1.5px solid color-mix(in oklch, var(--primary) 55%, transparent);
+    border-radius: 50%;
+    background: var(--background);
+    translate: -50% -50%;
+  }
+
+  .tip {
+    position: absolute;
+    display: grid;
+    gap: 0.125rem;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: calc(var(--radius) * 0.8);
+    background: color-mix(in oklch, var(--card) 85%, transparent);
+    font-size: 0.75rem;
+    line-height: 1.3;
+    text-align: left;
+    white-space: nowrap;
+    color: var(--muted-foreground);
+    translate: -50% calc(-100% - 1rem);
+  }
+
+  .tip.end {
+    translate: calc(-100% + 0.75rem) calc(-100% - 1rem);
+  }
+
+  .change {
+    font-variant-numeric: tabular-nums;
+    color: color-mix(in oklch, var(--primary) 75%, var(--muted-foreground));
+  }
+
+  /* Phones and narrow tablets: tall, stacked sections stretch the line into
+     a spike, and the copy fills the width, so leave the background plain. */
+  @media (max-width: 48rem) {
+    .bg-graph {
+      display: none;
+    }
+  }
+</style>

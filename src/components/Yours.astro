@@ -1,5 +1,6 @@
 ---
 import { icons } from './icons';
+import BackgroundGraph from './BackgroundGraph.astro';
 import { GITHUB_URL, SELF_HOST_URL } from '../consts';
 
 const points = [
@@ -28,6 +29,15 @@ const points = [
 ---
 
 <section id="open-source">
+  <BackgroundGraph
+    values={[
+      30, 29, 33, 35, 34, 38, 41, 39, 44, 47, 46, 51, 55, 53, 58, 62, 60, 66, 70, 69, 75, 80,
+    ]}
+    point={4}
+    date="30 April"
+    change="Net worth +0.9%"
+    top={45}
+  />
   <div class="container">
     <p class="eyebrow" data-reveal="up">
       Open source
@@ -84,6 +94,9 @@ const points = [
 
 <style>
   section {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
     border-top: 1px solid var(--border);
   }
 
