@@ -1,6 +1,7 @@
 ---
 import { GITHUB_URL, DEMO_URL } from '../consts';
 import GithubIcon from './GithubIcon.astro';
+import ThemeToggle from './ThemeToggle.astro';
 
 const sections = [
   { href: '#how-it-works', label: 'How it works' },
@@ -15,14 +16,14 @@ const sections = [
   <div class="container bar">
     <a class="wordmark" href="/">
       <img
-        class="wordmark-light"
+        class="wordmark-light light-only"
         src="/brand/wordmark-light.svg"
         alt="Balances"
         width="142"
         height="44"
       />
       <img
-        class="wordmark-dark"
+        class="wordmark-dark dark-only"
         src="/brand/wordmark-dark.svg"
         alt="Balances"
         width="142"
@@ -37,6 +38,7 @@ const sections = [
           </li>
         ))}
       </ul>
+      <ThemeToggle />
       <a class="gh" href={GITHUB_URL} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
         <GithubIcon />
       </a>
@@ -109,23 +111,9 @@ const sections = [
   }
 
   .wordmark img {
-    display: none;
+    display: block;
     height: 3rem;
     width: auto;
-  }
-
-  .wordmark img.wordmark-light {
-    display: block;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .wordmark img.wordmark-light {
-      display: none;
-    }
-
-    .wordmark img.wordmark-dark {
-      display: block;
-    }
   }
 
   nav {

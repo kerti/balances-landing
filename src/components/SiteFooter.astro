@@ -8,14 +8,14 @@ import GithubIcon from './GithubIcon.astro';
     <p class="tag">
       <a class="wordmark" href="/">
         <img
-          class="wordmark-light"
+          class="wordmark-light light-only"
           src="/brand/wordmark-light.svg"
           alt="Balances"
           width="180"
           height="56"
         />
         <img
-          class="wordmark-dark"
+          class="wordmark-dark dark-only"
           src="/brand/wordmark-dark.svg"
           alt="Balances"
           width="180"
@@ -82,7 +82,7 @@ import GithubIcon from './GithubIcon.astro';
      .tag's flex context once .wordmark isn't itself a flex container) is
      what actually aligns it, and that mechanism is reliable. */
   .wordmark img {
-    display: none;
+    display: inline;
     height: 2.5rem;
     width: auto;
     /* The wordmark SVG's own baseline sits 6 of its 117.98 viewBox units */
@@ -91,20 +91,6 @@ import GithubIcon from './GithubIcon.astro';
     /* edge on the text baseline, would otherwise leave the copy ~2px */
     /* below the logo's true baseline. Pull the image up to compensate. */
     margin-bottom: calc(-6 / 117.98 * 2.5rem);
-  }
-
-  .wordmark img.wordmark-light {
-    display: inline;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .wordmark img.wordmark-light {
-      display: none;
-    }
-
-    .wordmark img.wordmark-dark {
-      display: inline;
-    }
   }
 
   nav {

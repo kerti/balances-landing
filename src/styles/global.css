@@ -4,69 +4,70 @@
    neutrals with a muted brass accent (matches the logo accent #B08947 /
    deep #8A6A30, docs/brand/logo.md), replacing the old indigo/stone
    pairing. If the app's palette moves, re-copy these values; don't fork
-   the look here. */
+   the look here. Each light-dark() pair is <app :root value, app .dark value>. */
 
 @import '@fontsource-variable/geist';
 
 :root {
-  color-scheme: light;
-  --background: oklch(0.971 0.006 84.6);
-  --foreground: oklch(0.246 0.015 256.8);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.246 0.015 256.8);
-  --primary: oklch(0.544 0.086 80.1);
-  --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.941 0.01 81.8);
-  --secondary-foreground: oklch(0.246 0.015 256.8);
-  --muted: oklch(0.944 0.009 84.6);
-  --muted-foreground: oklch(0.517 0.019 79.3);
-  --accent: oklch(0.941 0.01 81.8);
-  --accent-foreground: oklch(0.246 0.015 256.8);
-  --border: oklch(0.912 0.014 78.3);
-  --ring: oklch(0.544 0.086 80.1);
-  --chart-1: oklch(0.654 0.097 78.9);
-  --chart-2: oklch(0.544 0.086 80.1);
-  --chart-3: oklch(0.505 0.023 250.6);
-  --chart-4: oklch(0.661 0.026 262.1);
-  --chart-5: oklch(0.796 0.091 84.3);
+  /* Follows the OS by default; the header's theme switcher pins it by
+     setting data-theme on <html> (see Layout.astro). Every colour token below
+     is a light-dark(<light>, <dark>) pair, so this is the only switch. */
+  color-scheme: light dark;
+  --background: light-dark(oklch(0.971 0.006 84.6), oklch(0.2 0.009 264.4));
+  --foreground: light-dark(oklch(0.246 0.015 256.8), oklch(0.925 0.007 88.6));
+  --card: light-dark(oklch(1 0 0), oklch(0.238 0.011 260.7));
+  --card-foreground: light-dark(oklch(0.246 0.015 256.8), oklch(0.925 0.007 88.6));
+  --primary: light-dark(oklch(0.544 0.086 80.1), oklch(0.713 0.108 78.7));
+  --primary-foreground: light-dark(oklch(1 0 0), oklch(0.246 0.015 256.8));
+  --secondary: light-dark(oklch(0.941 0.01 81.8), oklch(0.268 0.014 261.7));
+  --secondary-foreground: light-dark(oklch(0.246 0.015 256.8), oklch(0.925 0.007 88.6));
+  --muted: light-dark(oklch(0.944 0.009 84.6), oklch(0.268 0.014 261.7));
+  --muted-foreground: light-dark(oklch(0.517 0.019 79.3), oklch(0.671 0.016 84.6));
+  --accent: light-dark(oklch(0.941 0.01 81.8), oklch(0.268 0.014 261.7));
+  --accent-foreground: light-dark(oklch(0.246 0.015 256.8), oklch(0.925 0.007 88.6));
+  --border: light-dark(oklch(0.912 0.014 78.3), oklch(0.3 0.014 261.7));
+  --ring: light-dark(oklch(0.544 0.086 80.1), oklch(0.713 0.108 78.7));
+  --chart-1: light-dark(oklch(0.654 0.097 78.9), oklch(0.713 0.108 78.7));
+  --chart-2: light-dark(oklch(0.544 0.086 80.1), oklch(0.796 0.091 84.3));
+  --chart-3: light-dark(oklch(0.505 0.023 250.6), oklch(0.661 0.026 262.1));
+  --chart-4: light-dark(oklch(0.661 0.026 262.1), oklch(0.505 0.023 250.6));
+  --chart-5: light-dark(oklch(0.796 0.091 84.3), oklch(0.749 0.09 83.5));
   --radius: 0.625rem;
 
   /* Landing-only compositional tokens (not copied from the app) — built from
      the tokens above, used for section banding and decorative glows. */
-  --section-tint: oklch(0.953 0.009 84.6);
-  --glow: var(--foreground);
+  --section-tint: light-dark(oklch(0.953 0.009 84.6), var(--secondary));
+  --glow: light-dark(var(--foreground), var(--primary));
   /* Lift under screenshots: a faint brass halo over a neutral drop shadow. */
   --shot-shadow:
     0 1.5rem 3rem -1.5rem color-mix(in oklch, var(--primary) 20%, transparent),
     0 1.25rem 2.5rem -1.5rem oklch(0.147 0.004 49.25 / 22%);
 }
 
-/* The app toggles dark via a `.dark` class; this brochure has no JS, so the
-   same dark values ride the OS preference instead (decided 2026-07-06). */
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}
+
+/* Paired light/dark assets (the wordmarks): hide whichever doesn't match the
+   active theme, whether it comes from the OS or the switcher. */
+:root[data-theme='dark'] .light-only,
+:root[data-theme='light'] .dark-only {
+  display: none !important;
+}
+
 @media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
-    --background: oklch(0.2 0.009 264.4);
-    --foreground: oklch(0.925 0.007 88.6);
-    --card: oklch(0.238 0.011 260.7);
-    --card-foreground: oklch(0.925 0.007 88.6);
-    --primary: oklch(0.713 0.108 78.7);
-    --primary-foreground: oklch(0.246 0.015 256.8);
-    --secondary: oklch(0.268 0.014 261.7);
-    --secondary-foreground: oklch(0.925 0.007 88.6);
-    --muted: oklch(0.268 0.014 261.7);
-    --muted-foreground: oklch(0.671 0.016 84.6);
-    --accent: oklch(0.268 0.014 261.7);
-    --accent-foreground: oklch(0.925 0.007 88.6);
-    --border: oklch(0.3 0.014 261.7);
-    --ring: oklch(0.713 0.108 78.7);
-    --chart-1: oklch(0.713 0.108 78.7);
-    --chart-2: oklch(0.796 0.091 84.3);
-    --chart-3: oklch(0.661 0.026 262.1);
-    --chart-4: oklch(0.505 0.023 250.6);
-    --chart-5: oklch(0.749 0.09 83.5);
-    --section-tint: var(--secondary);
-    --glow: var(--primary);
+  :root:not([data-theme='light']) .light-only {
+    display: none !important;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme='dark']) .dark-only {
+    display: none !important;
   }
 }
 
