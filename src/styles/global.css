@@ -37,6 +37,8 @@
 
   /* Landing-only compositional tokens (not copied from the app) — built from
      the tokens above, used for section banding and decorative glows. */
+  /* Kept for one distinct closing band (the planned final CTA); the page
+     otherwise runs on a single background. */
   --section-tint: light-dark(oklch(0.953 0.009 84.6), var(--secondary));
   --glow: light-dark(var(--foreground), var(--primary));
   /* Top padding of each page section; phones tighten it (below). */
