@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import appInvestments from '../assets/screenshots/app-investments.png';
+import appInvestmentsLight from '../assets/screenshots/app-investments-light.png';
 
 const groups = [
   {
@@ -50,6 +51,12 @@ const groups = [
   </div>
   <div class="shot">
     <Image
+      class="light-only"
+      src={appInvestmentsLight}
+      alt="Investments overview in Balances, with all four position groups in the navigation"
+    />
+    <Image
+      class="dark-only"
       src={appInvestments}
       alt="Investments overview in Balances, with all four position groups in the navigation"
     />
