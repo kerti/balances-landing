@@ -2,29 +2,17 @@
 import HeroIllustration from './HeroIllustration.astro';
 import { DEMO_URL, SELF_HOST_URL } from '../consts';
 
-const facts = [
-  'AGPL-3.0 open source',
-  'Self-host with docker compose',
-  'No bank connections',
-  'Multi-currency',
-];
+const facts = ['AGPL-3.0 open source', 'Self-hostable', 'Multi-currency'];
 ---
 
 <section>
   <div class="container inner">
     <div class="copy">
-      <p class="eyebrow">Net worth for households</p>
+      <p class="eyebrow">Easy net&nbsp;worth&nbsp;tracking for&nbsp;households</p>
       <h1>
         Track your net worth, <span class="accent">not&nbsp;your coffee&nbsp;money.</span>
       </h1>
-      <p class="subhead">
-        Each month you enter your balances; Balances tracks your net worth. One number per position,
-        once a month. No receipt scanning, no transaction categorising, no bank-sync babysitting.
-      </p>
-      <p class="audience">
-        Built for households who want to watch wealth build over years, not track spending week to
-        week.
-      </p>
+      <p class="subhead">Each month you enter your balances; Balances tracks your net worth.</p>
       <div class="cta">
         <a class="button button-primary" href={DEMO_URL} target="_blank" rel="noopener noreferrer">
           Try the live demo
@@ -38,7 +26,7 @@ const facts = [
           Self-host it
         </a>
       </div>
-      <p class="caveat">No signup — the demo is a shared account; its data resets nightly.</p>
+      <p class="caveat">No signup. The demo is a shared account, and its data resets nightly.</p>
       <ul class="facts">
         {facts.map((fact) => (
           <li>{fact}</li>
@@ -81,6 +69,7 @@ const facts = [
     margin: 1.5rem auto 0;
     font-size: 1.1875rem;
     color: var(--muted-foreground);
+    text-wrap: balance;
   }
 
   .cta {
@@ -89,13 +78,6 @@ const facts = [
     justify-content: center;
     gap: 0.75rem;
     margin-top: 2rem;
-  }
-
-  .audience {
-    max-width: 60rem;
-    margin: 0.875rem auto 0;
-    font-size: 1rem;
-    color: var(--muted-foreground);
   }
 
   .caveat {
@@ -112,8 +94,8 @@ const facts = [
     margin: 1.75rem auto 0;
     padding: 0;
     list-style: none;
-    /* Room for two chips a row, never three, so the four always pair up 2 + 2
-       instead of leaving one alone on a row. */
+    /* Room for the three chips in one row. Kept narrow so a fourth would pair
+       them up 2 + 2 rather than leave one alone on a row. */
     max-width: 28rem;
   }
 
@@ -165,7 +147,6 @@ const facts = [
 
     h1,
     .subhead,
-    .audience,
     .facts {
       margin-inline: 0;
     }

@@ -9,13 +9,13 @@ interface Props {
 
 const {
   title,
-  description = 'Track your household net worth with monthly balance snapshots — no transaction-by-transaction budgeting.',
+  description = 'Track your household’s net worth from one balance per account, entered once a month.',
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL('/og.png', Astro.site);
 const ogImageAlt =
-  "Balances — Track your household's net worth without itemising a single transaction.";
+  'Balances: track your household’s net worth without itemising a single transaction.';
 
 // Structured data for search engines. Claims here follow the same discipline
 // as the page copy (CONTEXT.md): durable core only, no hosted-signup implication.

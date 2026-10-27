@@ -8,12 +8,12 @@ const groups = [
   {
     name: 'Assets',
     icon: icons.home,
-    body: 'Bank accounts, property, vehicles — things of value that aren’t investment instruments.',
+    body: 'Bank accounts, property, vehicles: things of value that aren’t investment instruments.',
   },
   {
     name: 'Liabilities',
     icon: icons.receipt,
-    body: 'Mortgages, bank loans, credit-card balances — and the informal money owed to family.',
+    body: 'Mortgages, bank loans, credit-card balances, and the informal money owed to family.',
   },
   {
     name: 'Receivables',
@@ -23,7 +23,7 @@ const groups = [
   {
     name: 'Investments',
     icon: icons.dollarIncrease,
-    body: 'Stocks, mutual funds, bonds, gold, time deposits — with a ledger for buys, sells, and income.',
+    body: 'Stocks, mutual funds, bonds, gold, and time deposits, with a ledger for buys, sells, and income.',
   },
 ];
 ---
@@ -36,8 +36,8 @@ const groups = [
     Everything in <span class="accent">one place</span>
   </h2>
   <p class="lede" data-reveal="up" style="--reveal-delay: 0.16s">
-    Net worth only means something when it covers the whole picture — including the illiquid things
-    that have no transactions to sync.
+    Net worth only means something when it covers the whole picture, including the illiquid things
+    with no transactions to sync.
   </p>
   <div class="cards" data-reveal>
     {groups.map((group, i) => (
@@ -148,6 +148,7 @@ const groups = [
     margin-top: 0.5rem;
     color: var(--muted-foreground);
     font-size: 0.9375rem;
+    text-wrap: balance;
   }
 
   .shot {
