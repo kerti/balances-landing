@@ -35,6 +35,13 @@ The **favicon / app icon** (`public/favicon.svg`) is a mirror of the app's icon 
 two byte-identical; if the app's icon changes, copy it over here rather than editing the copy in
 this repo. Any future shared brand marks (logo, wordmark) follow the same rule.
 
+The **share image** (`public/og.png`, decided 2026-10-27) is the exception: it carries the landing's
+copy, so it is landing-owned. It is a still of the hero, drawn by `scripts/og-card.ts`: the outlined
+wordmark from `public/brand/`, the hero's eyebrow, headline, subline and chips, and the hero's
+net-worth line from `src/components/net-worth.ts`, on the app's graphite plate. When the hero's copy
+changes, change it in the script too, then `npm run og` (needs `rsvg-convert`) to regenerate
+`docs/brand/og-card.svg` and the PNG.
+
 **Design tokens** (decided 2026-07-06; palette updated 2026-09-02) follow the same source-of-truth
 rule: the landing copies the app's tokens verbatim — **Geist Variable** (self-hosted via
 `@fontsource`, no external font CDN, unaffected by the brand's wordmark typeface — see below),
