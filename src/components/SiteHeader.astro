@@ -73,9 +73,10 @@ const sections = [
     list-style: none;
   }
 
-  /* Section links only where there is room; on phones the header keeps just
-     the GitHub link and the demo button. */
-  @media (min-width: 56rem) {
+  /* Section links only where all five fit on one line each (about 1024px);
+     narrower, the header keeps just the theme switch, the GitHub link and the
+     demo button. */
+  @media (min-width: 64rem) {
     .sections {
       display: flex;
     }
@@ -86,6 +87,7 @@ const sections = [
     font-size: 0.9375rem;
     font-weight: 500;
     text-decoration: none;
+    white-space: nowrap;
   }
 
   .sections a:hover {

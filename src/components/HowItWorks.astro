@@ -153,14 +153,8 @@ const steps = [
   }
 
   /* Phones: a 2×2 sheet of equal stamps, wrapping inside, rather than rows of
-     one, one and two. Edge to edge, a stamp's tilt and its oversized start
-     (see the motion below) would poke past the screen, so the section clips
-     sideways here. */
+     one, one and two. */
   @media (max-width: 36rem) {
-    section {
-      overflow-x: clip;
-    }
-
     .facts {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -171,6 +165,7 @@ const steps = [
       display: grid;
       place-items: center;
       text-align: center;
+      text-wrap: balance;
     }
   }
 
@@ -235,6 +230,7 @@ const steps = [
     margin-top: 0.75rem;
     font-size: 1.0625rem;
     color: var(--muted-foreground);
+    text-wrap: balance;
   }
 
   .shot {
