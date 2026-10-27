@@ -1,62 +1,69 @@
 ---
 import { Image } from 'astro:assets';
-import snapshotEntry from '../assets/screenshots/snapshot-entry.png';
+import stepPositions from '../assets/screenshots/step-positions.png';
+import stepSnapshot from '../assets/screenshots/step-snapshot.png';
+import stepNetWorth from '../assets/screenshots/step-net-worth.png';
 
 const steps = [
   {
+    label: 'Add',
     title: 'Add your positions',
     body: 'Bank accounts, property, vehicles, investments, debts — anything your household owns or owes.',
+    image: stepPositions,
+    alt: 'The four position groups in Balances — assets, investments, receivables, liabilities — with their totals',
+    narrow: false,
   },
   {
+    label: 'Enter',
     title: 'Enter month-end balances',
     body: 'One number per position, straight off the statement. Ten minutes at the end of the month.',
+    image: stepSnapshot,
+    alt: 'The dialog for recording a month-end balance in Balances',
+    narrow: true,
   },
   {
+    label: 'Watch',
     title: 'Watch your net worth',
     body: 'Balances charts it over time, across everything — including the illiquid things no bank sync can see.',
+    image: stepNetWorth,
+    alt: 'A household’s net worth and its chart over two years in Balances',
+    narrow: false,
   },
 ];
 ---
 
 <section id="how-it-works" class="container">
-  <div class="grid">
-    <div class="steps">
-      <p class="eyebrow">How it works</p>
-      <h2>
-        Ten minutes, <span class="accent">once a month.</span>
-      </h2>
-      <ol>
-        {steps.map((step) => (
-          <li>
-            <h3>{step.title}</h3>
-            <p>{step.body}</p>
-          </li>
-        ))}
-      </ol>
-    </div>
-    <div class="shot">
-      <Image src={snapshotEntry} alt="Entering a month-end balance in Balances on a phone" />
-    </div>
+  <div class="intro">
+    <p class="eyebrow">How it works</p>
+    <h2>
+      Ten minutes, <span class="accent">once a month.</span>
+    </h2>
   </div>
+  <ol>
+    {steps.map((step, i) => (
+      <li class:list={['step', { flip: i % 2 === 1 }]}>
+        <div class="copy">
+          <span class="numeral" aria-hidden="true">
+            {i + 1}
+          </span>
+          <p class="kicker">
+            Step {i + 1} · {step.label}
+          </p>
+          <h3>{step.title}</h3>
+          <p class="body">{step.body}</p>
+        </div>
+        <div class:list={['shot', { narrow: step.narrow }]}>
+          <Image src={step.image} alt={step.alt} />
+        </div>
+      </li>
+    ))}
+  </ol>
 </section>
 
 <style>
   section {
     padding-block: 4rem;
     border-top: 1px solid var(--border);
-  }
-
-  .grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 3rem;
-    align-items: center;
-  }
-
-  @media (min-width: 48rem) {
-    .grid {
-      grid-template-columns: 3fr 2fr;
-    }
   }
 
   h2 {
@@ -66,54 +73,79 @@ const steps = [
 
   ol {
     list-style: none;
-    counter-reset: step;
-    margin: 2rem 0 0;
+    margin: 3rem 0 0;
     padding: 0;
     display: grid;
-    gap: 1.75rem;
+    gap: 4.5rem;
   }
 
-  li {
-    counter-increment: step;
-    position: relative;
-    padding-left: 3.25rem;
-  }
-
-  li::before {
-    content: counter(step);
-    position: absolute;
-    left: 0;
-    top: 0.125rem;
-    width: 2.25rem;
-    height: 2.25rem;
+  .step {
     display: grid;
-    place-items: center;
-    border-radius: 50%;
-    background: var(--primary);
-    color: var(--primary-foreground);
-    font-weight: 700;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  @media (min-width: 48rem) {
+    .step {
+      grid-template-columns: 2fr 3fr;
+      gap: 4rem;
+    }
+
+    .step.flip {
+      grid-template-columns: 3fr 2fr;
+    }
+
+    .step.flip .copy {
+      order: 2;
+    }
+  }
+
+  /* Oversized outlined numeral, drawn as a brass stroke over the background. */
+  .numeral {
+    display: block;
+    font-size: clamp(5rem, 11vw, 8rem);
+    font-weight: 300;
+    line-height: 0.9;
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--primary);
+  }
+
+  .kicker {
+    margin-top: 1.25rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--primary);
   }
 
   h3 {
-    font-size: 1.1875rem;
-    font-weight: 650;
+    margin-top: 0.5rem;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
   }
 
-  li p {
-    margin-top: 0.375rem;
+  .body {
+    margin-top: 0.75rem;
+    font-size: 1.0625rem;
     color: var(--muted-foreground);
   }
 
   .shot {
-    max-width: 17rem;
-    margin-inline: auto;
     border: 1px solid var(--border);
-    border-radius: calc(var(--radius) * 2.2);
+    border-radius: calc(var(--radius) * 1.4);
     overflow: hidden;
     background: var(--card);
     box-shadow:
       0 2rem 3.5rem -1.5rem color-mix(in oklch, var(--primary) 45%, transparent),
       0 1.5rem 3rem -1.5rem oklch(0.147 0.004 49.25 / 25%);
+  }
+
+  .shot.narrow {
+    max-width: 22rem;
+    width: 100%;
+    justify-self: center;
   }
 
   .shot img {
