@@ -33,10 +33,6 @@
   --chart-3: light-dark(oklch(0.505 0.023 250.6), oklch(0.661 0.026 262.1));
   --chart-4: light-dark(oklch(0.661 0.026 262.1), oklch(0.505 0.023 250.6));
   --chart-5: light-dark(oklch(0.796 0.091 84.3), oklch(0.749 0.09 83.5));
-  /* The app's net-worth composition colours (CVD-validated there), so the
-     hero chart's assets and liabilities read like the real dashboard. */
-  --chart-assets: light-dark(#2a78d6, #3987e5);
-  --chart-liabilities: light-dark(#c0392b, #c94a3c);
   --radius: 0.625rem;
 
   /* Landing-only compositional tokens (not copied from the app) — built from
@@ -45,6 +41,8 @@
      otherwise runs on a single background. */
   --section-tint: light-dark(oklch(0.953 0.009 84.6), var(--secondary));
   --glow: light-dark(var(--foreground), var(--primary));
+  /* The hero above its net-worth line: a shade darker than the page. */
+  --hero-tint: light-dark(oklch(0.945 0.009 84.6), oklch(0.168 0.009 264.4));
   /* Top padding of each page section; phones tighten it (below). */
   --section-pad-top: 4rem;
   /* Lift under screenshots: a faint brass halo over a neutral drop shadow. */

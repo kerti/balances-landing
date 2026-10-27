@@ -10,61 +10,63 @@ const facts = [
 ];
 ---
 
-<section class="container">
-  <div class="copy">
-    <p class="eyebrow">Net worth for households</p>
-    <h1>
-      Track your net worth, <span class="accent">not&nbsp;your coffee&nbsp;money.</span>
-    </h1>
-    <p class="subhead">
-      Each month you enter your balances; Balances tracks your net worth. One number per position,
-      once a month. No receipt scanning, no transaction categorising, no bank-sync babysitting.
-    </p>
-    <p class="audience">
-      Built for households who want to watch wealth build over years, not track spending week to
-      week.
-    </p>
-    <div class="cta">
-      <a class="button button-primary" href={DEMO_URL} target="_blank" rel="noopener noreferrer">
-        Try the live demo
-      </a>
-      <a
-        class="button button-secondary"
-        href={SELF_HOST_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Self-host it
-      </a>
+<section>
+  <div class="container inner">
+    <div class="copy">
+      <p class="eyebrow">Net worth for households</p>
+      <h1>
+        Track your net worth, <span class="accent">not&nbsp;your coffee&nbsp;money.</span>
+      </h1>
+      <p class="subhead">
+        Each month you enter your balances; Balances tracks your net worth. One number per position,
+        once a month. No receipt scanning, no transaction categorising, no bank-sync babysitting.
+      </p>
+      <p class="audience">
+        Built for households who want to watch wealth build over years, not track spending week to
+        week.
+      </p>
+      <div class="cta">
+        <a class="button button-primary" href={DEMO_URL} target="_blank" rel="noopener noreferrer">
+          Try the live demo
+        </a>
+        <a
+          class="button button-secondary"
+          href={SELF_HOST_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Self-host it
+        </a>
+      </div>
+      <p class="caveat">No signup — the demo is a shared account; its data resets nightly.</p>
+      <ul class="facts">
+        {facts.map((fact) => (
+          <li>{fact}</li>
+        ))}
+      </ul>
     </div>
-    <p class="caveat">No signup — the demo is a shared account; its data resets nightly.</p>
-    <ul class="facts">
-      {facts.map((fact) => (
-        <li>{fact}</li>
-      ))}
-    </ul>
+    <HeroIllustration />
   </div>
-  <HeroIllustration />
 </section>
 
 <style>
+  /* Full width, so the illustration's earlier months can run out to the
+     window edge; the container inside holds the content. */
   section {
     position: relative;
-    padding-block: 4.5rem 3rem;
-    text-align: center;
+    isolation: isolate;
     overflow: hidden;
   }
 
-  section::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: radial-gradient(
-      55% 45% at 50% 0%,
-      color-mix(in oklch, var(--glow) 12%, transparent),
-      transparent 70%
-    );
+  .inner {
+    padding-block: 4.5rem 3rem;
+    text-align: center;
+  }
+
+  /* Above the illustration, whose faint line runs out behind the copy. */
+  .copy {
+    position: relative;
+    z-index: 1;
   }
 
   h1 {
@@ -126,7 +128,7 @@ const facts = [
 
   /* Phones: pull the hero up closer to the header. */
   @media (max-width: 36rem) {
-    section {
+    .inner {
       padding-top: var(--section-pad-top);
     }
   }
@@ -140,7 +142,7 @@ const facts = [
   /* Wide screens: copy on the left, the idea drawn on the right, both above
      the fold. Narrower screens keep the centred stack. */
   @media (min-width: 64rem) {
-    section {
+    .inner {
       display: grid;
       grid-template-columns: 1.15fr 1fr;
       gap: 3.5rem;
