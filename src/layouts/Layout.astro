@@ -34,6 +34,15 @@ const structuredData = {
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Apply a saved theme choice before first paint (see ThemeToggle.astro). -->
+    <script is:inline>
+      try {
+        const theme = localStorage.getItem('balances-landing-theme');
+        if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
+      } catch {
+        // Storage blocked: fall back to the OS theme.
+      }
+    </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />

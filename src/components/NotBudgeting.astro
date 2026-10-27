@@ -26,9 +26,8 @@ const noFeatures = ['Transaction feeds', 'Spending categories', 'Envelopes', 'Ba
       ))}
     </ul>
     <p>
-      No transaction feeds, no spending categories, no envelopes. That is deliberate — a
-      non-feature, not a missing feature. Budgeting apps answer{' '}
-      <em>“where did my coffee money go?”</em> Balances answers a different question:{' '}
+      Leaving those out is deliberate: they’re non-features, not missing features. Budgeting apps
+      answer <em>“where did my coffee money go?”</em> Balances answers a different question:{' '}
       <em>“is my household building wealth over time?”</em>
     </p>
     <p>
@@ -40,13 +39,11 @@ const noFeatures = ['Transaction feeds', 'Spending categories', 'Envelopes', 'Ba
 
 <style>
   section {
-    background: var(--section-tint);
-    border-block: 1px solid var(--border);
-    color: var(--secondary-foreground);
+    border-top: 1px solid var(--border);
   }
 
   .container {
-    padding-block: 4rem;
+    padding-block: var(--section-pad-top) 4rem;
     max-width: 60rem;
     text-align: center;
   }
@@ -120,5 +117,24 @@ const noFeatures = ['Transaction feeds', 'Spending categories', 'Envelopes', 'Ba
 
   .no s {
     text-decoration-thickness: 1px;
+  }
+
+  /* Phones: one item per line, left-aligned under each other like a
+     checklist, with the pill chrome dropped. */
+  @media (max-width: 36rem) {
+    .chips {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.625rem;
+      width: fit-content;
+      margin-inline: auto;
+    }
+
+    .chips li {
+      padding: 0;
+      border: 0;
+      background: none;
+      font-size: 0.9375rem;
+    }
   }
 </style>

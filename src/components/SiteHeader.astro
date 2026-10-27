@@ -1,6 +1,7 @@
 ---
 import { GITHUB_URL, DEMO_URL } from '../consts';
 import GithubIcon from './GithubIcon.astro';
+import ThemeToggle from './ThemeToggle.astro';
 
 const sections = [
   { href: '#how-it-works', label: 'How it works' },
@@ -15,14 +16,14 @@ const sections = [
   <div class="container bar">
     <a class="wordmark" href="/">
       <img
-        class="wordmark-light"
+        class="wordmark-light light-only"
         src="/brand/wordmark-light.svg"
         alt="Balances"
         width="142"
         height="44"
       />
       <img
-        class="wordmark-dark"
+        class="wordmark-dark dark-only"
         src="/brand/wordmark-dark.svg"
         alt="Balances"
         width="142"
@@ -37,6 +38,7 @@ const sections = [
           </li>
         ))}
       </ul>
+      <ThemeToggle />
       <a class="gh" href={GITHUB_URL} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
         <GithubIcon />
       </a>
@@ -100,6 +102,7 @@ const sections = [
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 0.75rem;
     padding-block: 0.6875rem;
   }
 
@@ -109,23 +112,14 @@ const sections = [
   }
 
   .wordmark img {
-    display: none;
+    display: block;
     height: 3rem;
     width: auto;
-  }
-
-  .wordmark img.wordmark-light {
-    display: block;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .wordmark img.wordmark-light {
-      display: none;
-    }
-
-    .wordmark img.wordmark-dark {
-      display: block;
-    }
+    /* The white letters sit low in the SVG box (only the brass "l" reaches the
+       top, and the baseline has padding below it), so the box-centred image
+       reads low next to the nav. Nudge it up; a percentage of its own height
+       keeps the correction right at every wordmark size. */
+    translate: 0 -8%;
   }
 
   nav {
@@ -150,6 +144,34 @@ const sections = [
     white-space: nowrap;
   }
 
+  /* Phones: shrink every header element together so the wordmark, theme
+     toggle, GitHub link and demo button fit on one comfortable row. */
+  @media (max-width: 36rem) {
+    /* Keep the desktop bar height (3rem wordmark + 2 × 0.6875rem) so the
+       smaller elements sit with room above and below them. */
+    .bar {
+      min-height: 4.375rem;
+    }
+
+    .wordmark img {
+      height: 2.25rem;
+    }
+
+    nav {
+      gap: 0.625rem;
+      --theme-toggle-size: 1.875rem;
+    }
+
+    .gh {
+      --gh-icon-size: 1.25rem;
+    }
+
+    .demo {
+      padding: 0.375rem 0.75rem;
+      font-size: 0.8125rem;
+    }
+  }
+
   @media (max-width: 26rem) {
     .bar {
       padding-inline: 1rem;
@@ -157,10 +179,6 @@ const sections = [
 
     nav {
       gap: 0.5rem;
-    }
-
-    .demo {
-      padding: 0.5rem 0.75rem;
     }
   }
 
@@ -170,7 +188,11 @@ const sections = [
     }
 
     .wordmark img {
-      height: 2.5rem;
+      height: 1.75rem;
+    }
+
+    .demo {
+      padding-inline: 0.625rem;
     }
   }
 </style>
