@@ -56,6 +56,10 @@ const cardRight = width + 40;
 const tintFrom = first.x - 160;
 const tintAt = (x: number) => ((x - tintFrom) / (cardRight - tintFrom)).toFixed(3);
 const sinceFirst = percentChange(0, allMonthEnds.length - 1).toFixed(0);
+const inAYear = percentChange(
+  allMonthEnds.length - netWorth.length,
+  allMonthEnds.length - 1,
+).toFixed(0);
 const line = toPath(points);
 const area = `${line} L${points.at(-1)!.x} ${baseline} L${points[0].x} ${baseline} Z`;
 const grid = [0.25, 0.5, 0.75].map((f) => pad.top + f * (baseline - pad.top));
@@ -138,8 +142,11 @@ const grid = [0.25, 0.5, 0.75].map((f) => pad.top + f * (baseline - pad.top));
         <text class="tip-date" x="-212" y="-32">
           This month-end
         </text>
-        <text class="tip-change" x="-212" y="-11">
+        <text class="tip-change wide" x="-212" y="-11">
           Net worth +{sinceFirst}% in 3 years
+        </text>
+        <text class="tip-change narrow" x="-212" y="-11">
+          Net worth +{inAYear}% in a year
         </text>
       </g>
     </svg>
@@ -212,9 +219,23 @@ const grid = [0.25, 0.5, 0.75].map((f) => pad.top + f * (baseline - pad.top));
     height: 100%;
   }
 
+  /* The tooltip's claim matches what's on screen: three years where the
+     backdrop shows them, only the card's year where it doesn't. */
+  .tip-change.wide {
+    display: none;
+  }
+
   @media (min-width: 64rem) {
     .backdrop {
       display: block;
+    }
+
+    .tip-change.wide {
+      display: inline;
+    }
+
+    .tip-change.narrow {
+      display: none;
     }
 
     .illustration {

@@ -127,12 +127,26 @@ const points = [
 
   .points {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(12.5rem, 1fr));
+    grid-template-columns: 1fr;
     gap: 1rem;
     margin: 2.5rem 0 0;
     padding: 0;
     list-style: none;
     text-align: left;
+  }
+
+  /* Four cards: a 2×2 on tablets, one row only where all four fit, so none is
+     ever left alone on a row. */
+  @media (min-width: 36rem) {
+    .points {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .points {
+      grid-template-columns: repeat(4, 1fr);
+    }
   }
 
   .points li {
