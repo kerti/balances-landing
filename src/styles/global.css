@@ -144,23 +144,28 @@ img {
 
 /* Section eyebrow: a small brass diamond and a tracked uppercase label that
    sits above a section heading. `:root` lifts it over the sections' scoped
-   `p` rules, which would otherwise override its size and margin. */
+   `p` rules, which would otherwise override its size and margin. The diamond
+   is inline, so a label that wraps on a phone takes it along on its first
+   line, centred with the words. */
 :root .eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.625rem;
   margin: 0 0 1rem;
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
+  text-wrap: balance;
   color: var(--muted-foreground);
 }
 
+/* Raised from the baseline so its centre meets the capitals' (Geist's cap
+   height is about 0.71em). */
 :root .eyebrow::before {
   content: '';
+  display: inline-block;
   width: 0.4375rem;
   height: 0.4375rem;
+  margin-right: 0.625rem;
+  vertical-align: calc(0.355em - 0.21875rem);
   background: var(--primary);
   transform: rotate(45deg);
 }
