@@ -39,10 +39,19 @@
      the tokens above, used for section banding and decorative glows. */
   --section-tint: light-dark(oklch(0.953 0.009 84.6), var(--secondary));
   --glow: light-dark(var(--foreground), var(--primary));
+  /* Top padding of each page section; phones tighten it (below). */
+  --section-pad-top: 4rem;
   /* Lift under screenshots: a faint brass halo over a neutral drop shadow. */
   --shot-shadow:
     0 1.5rem 3rem -1.5rem color-mix(in oklch, var(--primary) 20%, transparent),
     0 1.25rem 2.5rem -1.5rem oklch(0.147 0.004 49.25 / 22%);
+}
+
+/* Phones: sections start closer to the one above (matches the hero). */
+@media (max-width: 36rem) {
+  :root {
+    --section-pad-top: 2rem;
+  }
 }
 
 :root[data-theme='light'] {
