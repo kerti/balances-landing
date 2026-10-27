@@ -1,6 +1,14 @@
 ---
 import { GITHUB_URL, DEMO_URL } from '../consts';
 import GithubIcon from './GithubIcon.astro';
+
+const sections = [
+  { href: '#how-it-works', label: 'How it works' },
+  { href: '#why-monthly', label: 'Why monthly' },
+  { href: '#what-it-tracks', label: 'What it tracks' },
+  { href: '#report', label: 'Report' },
+  { href: '#open-source', label: 'Open source' },
+];
 ---
 
 <header>
@@ -22,6 +30,13 @@ import GithubIcon from './GithubIcon.astro';
       />
     </a>
     <nav>
+      <ul class="sections">
+        {sections.map((section) => (
+          <li>
+            <a href={section.href}>{section.label}</a>
+          </li>
+        ))}
+      </ul>
       <a class="gh" href={GITHUB_URL} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
         <GithubIcon />
       </a>
@@ -39,8 +54,46 @@ import GithubIcon from './GithubIcon.astro';
 
 <style>
   header {
-    background: var(--background);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: color-mix(in oklch, var(--background) 82%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
+  }
+
+  .sections {
+    display: none;
+    gap: 1.5rem;
+    margin: 0 0.5rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Section links only where there is room; on phones the header keeps just
+     the GitHub link and the demo button. */
+  @media (min-width: 56rem) {
+    .sections {
+      display: flex;
+    }
+  }
+
+  .sections a {
+    color: var(--muted-foreground);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .sections a:hover {
+    color: var(--foreground);
+  }
+
+  .sections a:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 4px;
+    border-radius: 2px;
   }
 
   .bar {
