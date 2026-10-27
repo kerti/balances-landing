@@ -62,8 +62,8 @@
   .theme-toggle {
     display: inline-grid;
     place-items: center;
-    width: 2.25rem;
-    height: 2.25rem;
+    width: var(--theme-toggle-size, 2.25rem);
+    height: var(--theme-toggle-size, 2.25rem);
     padding: 0;
     border: 1px solid var(--border);
     border-radius: 999px;
@@ -88,8 +88,8 @@
 
   svg {
     display: none;
-    width: 1.125rem;
-    height: 1.125rem;
+    width: 50%;
+    height: 50%;
     fill: none;
     stroke: currentColor;
     stroke-width: 1.75;
