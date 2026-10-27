@@ -29,25 +29,22 @@ const wordmark = readFileSync(new URL('../public/brand/wordmark-dark.svg', impor
 const wordmarkScale = 0.74;
 const wordmarkLeftPad = 6; // the SVG's own inset before the "b"
 
-// The whole line runs across the card, a month-end every `step`, ending on
-// this month-end near the top right. The card's year, with its dots, takes
-// the right of the card at full height. The earlier years are drawn flatter,
-// so they stay low: under the subline and, where they cross, behind the
-// chips. Only the shape is illustrative; nothing is read off an axis.
+// The whole line runs across the card at one scale, a month-end every
+// `step`, from the first month-end three years ago (just below the bottom
+// edge) to this one near the top right. Low enough on the left to pass under
+// the subline; the card's year, with its dots, rises on the right.
 const yearTo = 1180;
 const step = (yearTo + 10) / (earlierYears.length + lastYear.length - 1);
 const yearFrom = yearTo - (lastYear.length - 1) * step;
-const yFirst = 512; // the card's first month-end
-const yNow = 236;
-const yStart = 628; // the first month-end, three years ago
-const scale = (from: number, to: number, yFrom: number, yTo: number) => (value: number) =>
-  yFrom + ((value - from) / (to - from)) * (yTo - yFrom);
-const yearY = scale(lastYear[0], lastYear.at(-1)!, yFirst, yNow);
-const earlierY = scale(earlierYears[0], lastYear[0], yStart, yFirst);
-const points = lastYear.map((value, i) => ({ x: yearFrom + i * step, y: yearY(value) }));
+const yStart = 660;
+const yNow = 246;
+const first = earlierYears[0];
+const y = (value: number) =>
+  yStart - ((value - first) / (lastYear.at(-1)! - first)) * (yStart - yNow);
+const points = lastYear.map((value, i) => ({ x: yearFrom + i * step, y: y(value) }));
 const earlier = [...earlierYears, lastYear[0]].map((value, i) => ({
   x: yearFrom + (i - earlierYears.length) * step,
-  y: earlierY(value),
+  y: y(value),
 }));
 const path = (pts: { x: number; y: number }[]) =>
   pts.map((p, i) => `${i ? 'L' : 'M'}${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ');
@@ -58,7 +55,7 @@ const below = `${path([...earlier, ...points.slice(1)])} L${yearTo} ${height} L$
 const now = points.at(-1)!;
 
 // Chips, sized from their labels (Helvetica at 22px averages about 0.55em a
-// character) and checked against the canvas rather than trusted.
+// character). Solid, so the line can pass behind them.
 const chipLabels = ['AGPL-3.0 open source', 'Self-hostable', 'Multi-currency'];
 let chipX = left;
 const chips = chipLabels.map((label) => {
@@ -69,9 +66,6 @@ const chips = chipLabels.map((label) => {
   chipX += w + 14;
   return pill;
 });
-if (chipX - 14 > yearFrom + step) {
-  throw new Error(`og card: chips run past the first dot (${(chipX - 14).toFixed(0)})`);
-}
 
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width}" height="${height}">
   <defs>
