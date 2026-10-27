@@ -19,6 +19,7 @@ const ink = '#E8E6E1';
 const brass = '#C79A4E';
 const muted = '#9A958B';
 const rule = '#2A2E35';
+const chip = '#1C1F24'; // solid, so the line can pass behind a chip
 const font = 'Helvetica,Arial,sans-serif';
 
 // The wordmark: the header's outlined SVG, scaled to sit at the top left.
@@ -28,26 +29,32 @@ const wordmark = readFileSync(new URL('../public/brand/wordmark-dark.svg', impor
 const wordmarkScale = 0.74;
 const wordmarkLeftPad = 6; // the SVG's own inset before the "b"
 
-// The card's year runs across the right of the card, from its first
-// month-end low on the left of that stretch to this month-end near the top.
-// The earlier years carry on at the same scale and fall off the bottom edge
-// within a few months, so they never reach the copy.
-const yearFrom = 890;
+// The whole line runs across the card, a month-end every `step`, ending on
+// this month-end near the top right. The card's year, with its dots, takes
+// the right of the card at full height. The earlier years are drawn flatter,
+// so they stay low: under the subline and, where they cross, behind the
+// chips. Only the shape is illustrative; nothing is read off an axis.
 const yearTo = 1180;
-const yFirst = 512;
+const step = (yearTo + 10) / (earlierYears.length + lastYear.length - 1);
+const yearFrom = yearTo - (lastYear.length - 1) * step;
+const yFirst = 512; // the card's first month-end
 const yNow = 236;
-const step = (yearTo - yearFrom) / (lastYear.length - 1);
-const perUnit = (yFirst - yNow) / (lastYear.at(-1)! - lastYear[0]);
-const y = (value: number) => yFirst - (value - lastYear[0]) * perUnit;
-const points = lastYear.map((value, i) => ({ x: yearFrom + i * step, y: y(value) }));
+const yStart = 628; // the first month-end, three years ago
+const scale = (from: number, to: number, yFrom: number, yTo: number) => (value: number) =>
+  yFrom + ((value - from) / (to - from)) * (yTo - yFrom);
+const yearY = scale(lastYear[0], lastYear.at(-1)!, yFirst, yNow);
+const earlierY = scale(earlierYears[0], lastYear[0], yStart, yFirst);
+const points = lastYear.map((value, i) => ({ x: yearFrom + i * step, y: yearY(value) }));
 const earlier = [...earlierYears, lastYear[0]].map((value, i) => ({
   x: yearFrom + (i - earlierYears.length) * step,
-  y: y(value),
+  y: earlierY(value),
 }));
 const path = (pts: { x: number; y: number }[]) =>
   pts.map((p, i) => `${i ? 'L' : 'M'}${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ');
 const line = path(points);
-const area = `${line} L${yearTo} ${height} L${yearFrom} ${height} Z`;
+// Below the line the card takes a second, warmer tone: the one variation
+// in the background.
+const below = `${path([...earlier, ...points.slice(1)])} L${yearTo} ${height} L${earlier[0].x.toFixed(1)} ${height} Z`;
 const now = points.at(-1)!;
 
 // Chips, sized from their labels (Helvetica at 22px averages about 0.55em a
@@ -56,38 +63,29 @@ const chipLabels = ['AGPL-3.0 open source', 'Self-hostable', 'Multi-currency'];
 let chipX = left;
 const chips = chipLabels.map((label) => {
   const w = 22 * label.length * 0.55 + 48;
-  const chip =
-    `<rect x="${chipX.toFixed(0)}" y="548" width="${w.toFixed(0)}" height="48" rx="24" fill="${plate}" stroke="${rule}" stroke-width="1.5"/>` +
+  const pill =
+    `<rect x="${chipX.toFixed(0)}" y="548" width="${w.toFixed(0)}" height="48" rx="24" fill="${chip}" stroke="${rule}" stroke-width="1.5"/>` +
     `<text x="${(chipX + w / 2).toFixed(0)}" y="579" text-anchor="middle">${label}</text>`;
   chipX += w + 14;
-  return chip;
+  return pill;
 });
-if (chipX - 14 > yearFrom - 30) {
-  throw new Error(`og card: chips run into the chart (${(chipX - 14).toFixed(0)})`);
+if (chipX - 14 > yearFrom + step) {
+  throw new Error(`og card: chips run past the first dot (${(chipX - 14).toFixed(0)})`);
 }
 
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width}" height="${height}">
   <defs>
-    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="${brass}" stop-opacity="0.12"/>
-      <stop offset="70%" stop-color="${brass}" stop-opacity="0"/>
-    </radialGradient>
-    <linearGradient id="area" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="${brass}" stop-opacity="0.2"/>
-      <stop offset="1" stop-color="${brass}" stop-opacity="0"/>
-    </linearGradient>
-    <linearGradient id="earlier" gradientUnits="userSpaceOnUse" x1="${yearFrom - 6 * step}" y1="0" x2="${yearFrom}" y2="0">
-      <stop offset="0" stop-color="${brass}" stop-opacity="0"/>
-      <stop offset="1" stop-color="${brass}" stop-opacity="0.6"/>
+    <linearGradient id="below" gradientUnits="userSpaceOnUse" x1="0" y1="${yNow}" x2="0" y2="${height}">
+      <stop offset="0" stop-color="${brass}" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="${brass}" stop-opacity="0.04"/>
     </linearGradient>
   </defs>
   <rect width="${width}" height="${height}" fill="${plate}"/>
-  <circle cx="${now.x}" cy="${now.y}" r="420" fill="url(#glow)"/>
   <g stroke="${brass}" stroke-opacity="0.16" stroke-dasharray="2 5">
     ${points.map((p) => `<line x1="${p.x.toFixed(1)}" x2="${p.x.toFixed(1)}" y1="${p.y.toFixed(1)}" y2="${height}"/>`).join('')}
   </g>
-  <path d="${area}" fill="url(#area)"/>
-  <path d="${path(earlier)}" fill="none" stroke="url(#earlier)" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="${below}" fill="url(#below)"/>
+  <path d="${path(earlier)}" fill="none" stroke="${brass}" stroke-opacity="0.45" stroke-width="2.5" stroke-linejoin="round"/>
   <path d="${line}" fill="none" stroke="${brass}" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
   <g fill="${plate}" stroke="${brass}" stroke-width="3">
     ${points
