@@ -166,6 +166,42 @@ img {
   font-style: italic;
 }
 
+/* Scroll-triggered motion. Animations are declared only when motion is
+   allowed, always with fill-mode `both` so their first frame shows while
+   waiting. Under html.motion (set in Layout.astro's head) a [data-reveal]
+   element and everything inside it stays paused until Reveal.astro adds
+   .in-view. Without JS they simply play on load; the content itself is never
+   hidden by anything but an animation's first frame. */
+.motion [data-reveal]:not(.in-view),
+.motion [data-reveal]:not(.in-view) * {
+  animation-play-state: paused !important;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Generic fade-up; stagger with --reveal-delay. */
+  [data-reveal='up'] {
+    animation: reveal-up 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) var(--reveal-delay, 0s) both;
+  }
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    translate: 0 1.25rem;
+  }
+}
+
+/* Line-icon draw-in: give the path pathLength="1" and stroke-dasharray: 1. */
+@keyframes draw-stroke {
+  from {
+    stroke-dashoffset: 1;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
 .sr-only {
   position: absolute;
   width: 1px;

@@ -28,17 +28,21 @@ const points = [
 
 <section id="open-source">
   <div class="container">
-    <p class="eyebrow">Open source</p>
-    <h2>
+    <p class="eyebrow" data-reveal="up">
+      Open source
+    </p>
+    <h2 data-reveal="up" style="--reveal-delay: 0.08s">
       Yours, <span class="accent">not a data product</span>
     </h2>
-    <p class="lede">Your household’s net worth lives where you put it.</p>
-    <ul class="points">
-      {points.map((point) => (
-        <li>
+    <p class="lede" data-reveal="up" style="--reveal-delay: 0.16s">
+      Your household’s net worth lives where you put it.
+    </p>
+    <ul class="points" data-reveal>
+      {points.map((point, i) => (
+        <li style={`--i: ${i}`}>
           <span class="icon" aria-hidden="true">
             <svg viewBox="0 0 24 24">
-              <path d={point.icon} />
+              <path d={point.icon} pathLength="1" />
             </svg>
           </span>
           <h3>{point.title}</h3>
@@ -159,5 +163,20 @@ const points = [
     justify-content: center;
     gap: 0.75rem;
     margin-top: 2rem;
+  }
+
+  /* Motion (paused until in view; see global.css): cards stagger up and
+     their line icons draw themselves. */
+  @media (prefers-reduced-motion: no-preference) {
+    .points li {
+      animation: reveal-up 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+      animation-delay: calc(var(--i) * 0.09s);
+    }
+
+    .icon path {
+      stroke-dasharray: 1;
+      animation: draw-stroke 0.9s ease-out both;
+      animation-delay: calc(0.25s + var(--i) * 0.09s);
+    }
   }
 </style>

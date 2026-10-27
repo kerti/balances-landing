@@ -1,34 +1,49 @@
 ---
-// The idea, not the interface: twelve month-end snapshots, each one dot,
-// adding up to a net-worth line. Shapes are generated at build time from an
+// The idea, not the interface: twelve month-end snapshots. Assets run above,
+// liabilities shrink below, and net worth is the gap between them, the brass
+// line with one dot per month-end. Shapes are generated at build time from an
 // illustrative series; there are no real figures, so nothing here can go stale.
-const series = [100, 103, 102, 107, 110, 109, 114, 118, 117, 122, 126, 131];
+const netWorth = [90, 95, 93, 100, 106, 104, 112, 119, 117, 126, 134, 143];
+const liabilities = [75, 73, 71, 69, 67, 65, 62, 60, 57, 55, 52, 50];
+const assets = netWorth.map((value, i) => value + liabilities[i]);
 
 const width = 600;
 const height = 380;
 const pad = { x: 24, top: 24, bottom: 20 };
-const min = Math.min(...series) - 8;
-const max = Math.max(...series) + 4;
-
-const points = series.map((value, i) => ({
-  x: pad.x + (i * (width - 2 * pad.x)) / (series.length - 1),
-  y: pad.top + ((max - value) / (max - min)) * (height - pad.top - pad.bottom),
-}));
-
-const line = points.map((p, i) => `${i ? 'L' : 'M'}${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ');
+const all = [...assets, ...liabilities, ...netWorth];
+const min = Math.min(...all) - 12;
+const max = Math.max(...all) + 6;
 const baseline = height - pad.bottom;
+
+const toPoints = (series: number[]) =>
+  series.map((value, i) => ({
+    x: pad.x + (i * (width - 2 * pad.x)) / (series.length - 1),
+    y: pad.top + ((max - value) / (max - min)) * (baseline - pad.top),
+  }));
+const toPath = (pts: { x: number; y: number }[]) =>
+  pts.map((p, i) => `${i ? 'L' : 'M'}${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ');
+
+const points = toPoints(netWorth);
+const assetPoints = toPoints(assets);
+const liabilityPoints = toPoints(liabilities);
+const line = toPath(points);
+const assetsLine = toPath(assetPoints);
+const liabilitiesLine = toPath(liabilityPoints);
+// Direct labels sit just above each supporting line's last point.
+const labelX = width - pad.x;
 const area = `${line} L${points.at(-1)!.x} ${baseline} L${points[0].x} ${baseline} Z`;
 const grid = [0.25, 0.5, 0.75].map((f) => pad.top + f * (baseline - pad.top));
 ---
 
-<figure class="illustration">
+<figure class="illustration" data-reveal>
   <p class="head">
     <span>Net worth</span>
     <span class="sub">12 month-ends</span>
   </p>
   <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby="hero-illustration-title">
     <title id="hero-illustration-title">
-      Twelve monthly balance snapshots forming a rising net-worth line
+      Twelve monthly snapshots: assets rising, liabilities shrinking, and net worth, the gap
+      between them, climbing month by month
     </title>
     <defs>
       <linearGradient id="hero-area" x1="0" y1="0" x2="0" y2="1">
@@ -44,7 +59,15 @@ const grid = [0.25, 0.5, 0.75].map((f) => pad.top + f * (baseline - pad.top));
       <line class="tick" x1={p.x} x2={p.x} y1={p.y} y2={baseline} />
     ))}
     <path class="area" d={area} fill="url(#hero-area)" />
+    <path class="series assets" d={assetsLine} pathLength="1" />
+    <path class="series liabilities" d={liabilitiesLine} pathLength="1" />
     <path class="line" d={line} pathLength="1" />
+    <text class="label" x={labelX} y={assetPoints.at(-1)!.y - 12}>
+      Assets
+    </text>
+    <text class="label" x={labelX} y={liabilityPoints.at(-1)!.y - 12}>
+      Liabilities
+    </text>
     {points.map((p, i) => (
       <circle
         class:list={['dot', { now: i === points.length - 1 }]}
@@ -60,7 +83,7 @@ const grid = [0.25, 0.5, 0.75].map((f) => pad.top + f * (baseline - pad.top));
       <span>A year ago</span>
       <span>This month</span>
     </span>
-    <span class="legend">Each dot is one month-end: one number per position, added up.</span>
+    <span class="legend">Each dot is one month-end: what you own minus what you owe.</span>
   </figcaption>
 </figure>
 
@@ -111,12 +134,36 @@ const grid = [0.25, 0.5, 0.75].map((f) => pad.top + f * (baseline - pad.top));
     stroke-dasharray: 2 4;
   }
 
-  .line {
+  .line,
+  .series {
     fill: none;
-    stroke: var(--primary);
-    stroke-width: 3;
     stroke-linecap: round;
     stroke-linejoin: round;
+  }
+
+  .line {
+    stroke: var(--primary);
+    stroke-width: 3;
+  }
+
+  /* Supporting series: thin and quiet so net worth stays the subject. */
+  .series {
+    stroke-width: 1.75;
+  }
+
+  .assets {
+    stroke: var(--chart-3);
+  }
+
+  .liabilities {
+    stroke: var(--chart-4);
+  }
+
+  .label {
+    fill: var(--muted-foreground);
+    font-size: 19px;
+    font-weight: 500;
+    text-anchor: end;
   }
 
   .dot {
@@ -145,7 +192,7 @@ const grid = [0.25, 0.5, 0.75].map((f) => pad.top + f * (baseline - pad.top));
 
   .legend {
     display: block;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     text-align: center;
   }
 
@@ -155,21 +202,30 @@ const grid = [0.25, 0.5, 0.75].map((f) => pad.top + f * (baseline - pad.top));
     }
   }
 
-  /* Draw the line, then drop the dots in month by month. Motion only; the
-     static drawing is complete without it. */
+  /* Assets and liabilities draw first, then net worth, then the dots land
+     month by month. Motion only; the static drawing is complete without it. */
   @media (prefers-reduced-motion: no-preference) {
+    .series {
+      stroke-dasharray: 1;
+      animation: draw 1.4s ease-out both;
+    }
+
     .line {
       stroke-dasharray: 1;
-      animation: draw 1.6s ease-out both;
+      animation: draw 1.6s ease-out 0.35s both;
     }
 
     .area {
-      animation: fade 0.8s ease-out 1.1s both;
+      animation: fade 0.8s ease-out 1.5s both;
+    }
+
+    .label {
+      animation: fade 0.5s ease-out 1.2s both;
     }
 
     .dot {
       animation: fade 0.35s ease-out both;
-      animation-delay: calc(var(--i) * 0.11s + 0.15s);
+      animation-delay: calc(var(--i) * 0.11s + 0.5s);
     }
   }
 

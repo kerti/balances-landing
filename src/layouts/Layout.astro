@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import Reveal from '../components/Reveal.astro';
 
 interface Props {
   title: string;
@@ -43,6 +44,20 @@ const structuredData = {
         // Storage blocked: fall back to the OS theme.
       }
     </script>
+    <!-- Scroll-triggered motion (see Reveal.astro): with JS and motion allowed,
+         [data-reveal] animations wait paused until they scroll into view. If the
+         observer never starts, the failsafe drops the gate and they just play. -->
+    <script is:inline>
+      if (
+        'IntersectionObserver' in window &&
+        matchMedia('(prefers-reduced-motion: no-preference)').matches
+      ) {
+        document.documentElement.classList.add('motion');
+        setTimeout(() => {
+          if (!window.__revealReady) document.documentElement.classList.remove('motion');
+        }, 2500);
+      }
+    </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -67,5 +82,6 @@ const structuredData = {
   </head>
   <body>
     <slot />
+    <Reveal />
   </body>
 </html>
