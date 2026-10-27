@@ -62,10 +62,10 @@ const grid = [0.25, 0.5, 0.75].map((f) => pad.top + f * (baseline - pad.top));
     <path class="series assets" d={assetsLine} pathLength="1" />
     <path class="series liabilities" d={liabilitiesLine} pathLength="1" />
     <path class="line" d={line} pathLength="1" />
-    <text class="label" x={labelX} y={assetPoints.at(-1)!.y - 12}>
+    <text class="label assets" x={labelX} y={assetPoints.at(-1)!.y - 12}>
       Assets
     </text>
-    <text class="label" x={labelX} y={liabilityPoints.at(-1)!.y - 12}>
+    <text class="label liabilities" x={labelX} y={liabilityPoints.at(-1)!.y - 12}>
       Liabilities
     </text>
     {points.map((p, i) => (
@@ -152,18 +152,28 @@ const grid = [0.25, 0.5, 0.75].map((f) => pad.top + f * (baseline - pad.top));
   }
 
   .assets {
-    stroke: var(--chart-3);
+    stroke: var(--chart-assets);
   }
 
   .liabilities {
-    stroke: var(--chart-4);
+    stroke: var(--chart-liabilities);
   }
 
+  /* Each direct label takes its line's colour, so it doubles as the legend. */
   .label {
-    fill: var(--muted-foreground);
     font-size: 19px;
-    font-weight: 500;
+    font-weight: 600;
     text-anchor: end;
+  }
+
+  .label.assets {
+    fill: var(--chart-assets);
+    stroke: none;
+  }
+
+  .label.liabilities {
+    fill: var(--chart-liabilities);
+    stroke: none;
   }
 
   .dot {
