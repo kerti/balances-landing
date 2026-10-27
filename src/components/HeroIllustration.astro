@@ -1,0 +1,195 @@
+---
+// The idea, not the interface: twelve month-end snapshots, each one dot,
+// adding up to a net-worth line. Shapes are generated at build time from an
+// illustrative series; there are no real figures, so nothing here can go stale.
+const series = [100, 103, 102, 107, 110, 109, 114, 118, 117, 122, 126, 131];
+
+const width = 600;
+const height = 380;
+const pad = { x: 24, top: 24, bottom: 20 };
+const min = Math.min(...series) - 8;
+const max = Math.max(...series) + 4;
+
+const points = series.map((value, i) => ({
+  x: pad.x + (i * (width - 2 * pad.x)) / (series.length - 1),
+  y: pad.top + ((max - value) / (max - min)) * (height - pad.top - pad.bottom),
+}));
+
+const line = points.map((p, i) => `${i ? 'L' : 'M'}${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ');
+const baseline = height - pad.bottom;
+const area = `${line} L${points.at(-1)!.x} ${baseline} L${points[0].x} ${baseline} Z`;
+const grid = [0.25, 0.5, 0.75].map((f) => pad.top + f * (baseline - pad.top));
+---
+
+<figure class="illustration">
+  <p class="head">
+    <span>Net worth</span>
+    <span class="sub">12 month-ends</span>
+  </p>
+  <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby="hero-illustration-title">
+    <title id="hero-illustration-title">
+      Twelve monthly balance snapshots forming a rising net-worth line
+    </title>
+    <defs>
+      <linearGradient id="hero-area" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" style="stop-color: var(--primary); stop-opacity: 0.22"></stop>
+        <stop offset="1" style="stop-color: var(--primary); stop-opacity: 0"></stop>
+      </linearGradient>
+    </defs>
+    {grid.map((y) => (
+      <line class="grid" x1={pad.x} x2={width - pad.x} y1={y} y2={y} />
+    ))}
+    <line class="axis" x1={pad.x} x2={width - pad.x} y1={baseline} y2={baseline} />
+    {points.map((p) => (
+      <line class="tick" x1={p.x} x2={p.x} y1={p.y} y2={baseline} />
+    ))}
+    <path class="area" d={area} fill="url(#hero-area)" />
+    <path class="line" d={line} pathLength="1" />
+    {points.map((p, i) => (
+      <circle
+        class:list={['dot', { now: i === points.length - 1 }]}
+        cx={p.x}
+        cy={p.y}
+        r={i === points.length - 1 ? 9 : 6}
+        style={`--i: ${i}`}
+      />
+    ))}
+  </svg>
+  <figcaption>
+    <span class="ends">
+      <span>A year ago</span>
+      <span>This month</span>
+    </span>
+    <span class="legend">Each dot is one month-end: one number per position, added up.</span>
+  </figcaption>
+</figure>
+
+<style>
+  .illustration {
+    max-width: 40rem;
+    margin: 3.5rem auto 0;
+    padding: 1.5rem 1.5rem 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: calc(var(--radius) * 1.6);
+    background: color-mix(in oklch, var(--card) 70%, transparent);
+    box-shadow: var(--shot-shadow);
+    text-align: left;
+  }
+
+  .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1rem;
+    font-weight: 650;
+  }
+
+  .sub {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--muted-foreground);
+  }
+
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .grid {
+    stroke: var(--border);
+    stroke-dasharray: 4 6;
+  }
+
+  .axis {
+    stroke: var(--border);
+  }
+
+  .tick {
+    stroke: color-mix(in oklch, var(--primary) 18%, transparent);
+    stroke-dasharray: 2 4;
+  }
+
+  .line {
+    fill: none;
+    stroke: var(--primary);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .dot {
+    fill: var(--background);
+    stroke: var(--primary);
+    stroke-width: 2.5;
+  }
+
+  .dot.now {
+    fill: var(--primary);
+    stroke: color-mix(in oklch, var(--primary) 30%, transparent);
+    stroke-width: 10;
+    paint-order: stroke;
+  }
+
+  figcaption {
+    margin-top: 0.75rem;
+    font-size: 0.8125rem;
+    color: var(--muted-foreground);
+  }
+
+  .ends {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .legend {
+    display: block;
+    margin-top: 1rem;
+    text-align: center;
+  }
+
+  @media (min-width: 64rem) {
+    .illustration {
+      margin-top: 0;
+    }
+  }
+
+  /* Draw the line, then drop the dots in month by month. Motion only; the
+     static drawing is complete without it. */
+  @media (prefers-reduced-motion: no-preference) {
+    .line {
+      stroke-dasharray: 1;
+      animation: draw 1.6s ease-out both;
+    }
+
+    .area {
+      animation: fade 0.8s ease-out 1.1s both;
+    }
+
+    .dot {
+      animation: fade 0.35s ease-out both;
+      animation-delay: calc(var(--i) * 0.11s + 0.15s);
+    }
+  }
+
+  @keyframes draw {
+    from {
+      stroke-dashoffset: 1;
+    }
+
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+</style>
