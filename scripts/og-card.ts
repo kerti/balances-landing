@@ -90,7 +90,7 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${hei
   <circle cx="${now.x}" cy="${now.y.toFixed(1)}" r="10" fill="${brass}" stroke="${brass}" stroke-opacity="0.3" stroke-width="12" paint-order="stroke"/>
   <g transform="translate(${left - wordmarkLeftPad * wordmarkScale},64) scale(${wordmarkScale})">${wordmark}</g>
   <rect x="${left + 1}" y="242" width="11" height="11" fill="${brass}" transform="rotate(45 ${left + 6.5} 247.5)"/>
-  <text x="${left + 26}" y="255" font-family="${font}" font-weight="600" font-size="20" letter-spacing="3.6" fill="${muted}">NET WORTH TRACKING MADE EASY</text>
+  <text x="${left + 26}" y="255" font-family="${font}" font-weight="600" font-size="20" letter-spacing="3.6" fill="${muted}">EASY NET WORTH TRACKING FOR HOUSEHOLDS</text>
   <g font-family="${font}" font-weight="700" font-size="54">
     <text x="${left}" y="330" fill="${ink}">Track your net worth,</text>
     <text x="${left}" y="398" fill="${brass}">not your coffee money.</text>
