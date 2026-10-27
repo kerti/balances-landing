@@ -115,6 +115,11 @@ const sections = [
     display: block;
     height: 3rem;
     width: auto;
+    /* The white letters sit low in the SVG box (only the brass "l" reaches the
+       top, and the baseline has padding below it), so the box-centred image
+       reads low next to the nav. Nudge it up; a percentage of its own height
+       keeps the correction right at every wordmark size. */
+    translate: 0 -8%;
   }
 
   nav {
