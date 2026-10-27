@@ -5,7 +5,7 @@ import { DEMO_URL, SELF_HOST_URL } from '../consts';
 const facts = [
   'AGPL-3.0 open source',
   'Self-host with docker compose',
-  'No bank connections — you type the numbers',
+  'No bank connections',
   'Multi-currency',
 ];
 ---
@@ -112,7 +112,9 @@ const facts = [
     margin: 1.75rem auto 0;
     padding: 0;
     list-style: none;
-    max-width: 60rem;
+    /* Room for two chips a row, never three, so the four always pair up 2 + 2
+       instead of leaving one alone on a row. */
+    max-width: 28rem;
   }
 
   .facts li {
@@ -126,10 +128,20 @@ const facts = [
     white-space: nowrap;
   }
 
-  /* Phones: pull the hero up closer to the header. */
+  /* Phones: pull the hero up closer to the header, and stack the chips in a
+     column, each as wide as the widest. */
   @media (max-width: 36rem) {
     .inner {
       padding-top: var(--section-pad-top);
+    }
+
+    .facts {
+      flex-direction: column;
+      width: fit-content;
+    }
+
+    .facts li {
+      text-align: center;
     }
   }
 

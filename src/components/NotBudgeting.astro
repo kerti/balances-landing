@@ -132,10 +132,27 @@ const noFeatures = ['Transaction feeds', 'Spending categories', 'Envelopes', 'Ba
     border-top: 1px solid currentColor;
   }
 
-  /* Phones: one item per line, left-aligned under each other like a
-     checklist, with the pill chrome dropped. */
-  @media (max-width: 36rem) {
+  /* Too narrow for one row of five: the tick on a row of its own, the four
+     crossed-out features in a row under it, rather than one left over. */
+  @media (max-width: 56rem) {
     .chips {
+      display: grid;
+      grid-template-columns: repeat(4, auto);
+      justify-content: center;
+    }
+
+    .yes {
+      grid-column: 1 / -1;
+      justify-self: center;
+    }
+  }
+
+  /* Phones, and anywhere too narrow for the four in a row: one item per line,
+     left-aligned under each other like a checklist, with the pill chrome
+     dropped. */
+  @media (max-width: 42rem) {
+    .chips {
+      display: flex;
       flex-direction: column;
       align-items: flex-start;
       gap: 0.625rem;
