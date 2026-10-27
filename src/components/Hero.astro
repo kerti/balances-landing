@@ -12,14 +12,8 @@ const facts = ['AGPL-3.0 open source', 'Self-hostable', 'Multi-currency'];
       <h1>
         Track your net worth, <span class="accent">not&nbsp;your coffee&nbsp;money.</span>
       </h1>
-      <p class="subhead">
-        Each month you enter your balances; Balances tracks your net worth. No receipt scanning, no
-        transaction categorising, no bank-sync babysitting.
-      </p>
-      <p class="audience">
-        Built for households who want to watch wealth build over years, not track spending week to
-        week.
-      </p>
+      <p class="subhead">Each month you enter your balances; Balances tracks your net worth.</p>
+      <p class="audience">Built for households who want to watch their wealth build over years.</p>
       <div class="cta">
         <a class="button button-primary" href={DEMO_URL} target="_blank" rel="noopener noreferrer">
           Try the live demo
@@ -76,6 +70,7 @@ const facts = ['AGPL-3.0 open source', 'Self-hostable', 'Multi-currency'];
     margin: 1.5rem auto 0;
     font-size: 1.1875rem;
     color: var(--muted-foreground);
+    text-wrap: balance;
   }
 
   .cta {
@@ -91,6 +86,7 @@ const facts = ['AGPL-3.0 open source', 'Self-hostable', 'Multi-currency'];
     margin: 0.875rem auto 0;
     font-size: 1rem;
     color: var(--muted-foreground);
+    text-wrap: balance;
   }
 
   .caveat {
