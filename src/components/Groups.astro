@@ -1,4 +1,5 @@
 ---
+import { icons } from './icons';
 import { Image } from 'astro:assets';
 import appInvestments from '../assets/screenshots/app-investments.png';
 import appInvestmentsLight from '../assets/screenshots/app-investments-light.png';
@@ -6,22 +7,22 @@ import appInvestmentsLight from '../assets/screenshots/app-investments-light.png
 const groups = [
   {
     name: 'Assets',
-    icon: 'M3 10.5 12 3l9 7.5M5 9v11h14V9M10 20v-6h4v6',
+    icon: icons.home,
     body: 'Bank accounts, property, vehicles — things of value that aren’t investment instruments.',
   },
   {
     name: 'Liabilities',
-    icon: 'M3 7l6 6 4-4 8 8M21 11v6h-6',
+    icon: icons.receipt,
     body: 'Mortgages, bank loans, credit-card balances — and the informal money owed to family.',
   },
   {
     name: 'Receivables',
-    icon: 'M12 3v12m0 0-4-4m4 4 4-4M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4',
+    icon: icons.coinShare,
     body: 'Money owed to your household by someone else, so it stops falling through the cracks.',
   },
   {
     name: 'Investments',
-    icon: 'M3 17l6-6 4 4 8-8M15 7h6v6',
+    icon: icons.dollarIncrease,
     body: 'Stocks, mutual funds, bonds, gold, time deposits — with a ledger for buys, sells, and income.',
   },
 ];
@@ -42,8 +43,10 @@ const groups = [
     {groups.map((group, i) => (
       <div class="card" style={`--i: ${i}`}>
         <span class="icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24">
-            <path d={group.icon} pathLength="1" />
+          <svg viewBox="0 0 14 14">
+            {group.icon.map((d) => (
+              <path d={d} pathLength="1" />
+            ))}
           </svg>
         </span>
         <h3>{group.name}</h3>
@@ -100,23 +103,23 @@ const groups = [
     padding: 1.5rem;
   }
 
+  /* Frameless line icons, drawn larger so their soft, rounded strokes carry
+     on their own. */
   .icon {
-    display: inline-grid;
-    place-items: center;
-    width: 2.5rem;
-    height: 2.5rem;
+    display: block;
+    width: 2.75rem;
+    height: 2.75rem;
     margin-bottom: 1rem;
-    border-radius: calc(var(--radius) * 0.8);
-    background: color-mix(in oklch, var(--primary) 14%, transparent);
     color: var(--primary);
   }
 
   .icon svg {
-    width: 1.375rem;
-    height: 1.375rem;
+    display: block;
+    width: 100%;
+    height: 100%;
     fill: none;
     stroke: currentColor;
-    stroke-width: 1.75;
+    stroke-width: 0.8;
     stroke-linecap: round;
     stroke-linejoin: round;
   }
