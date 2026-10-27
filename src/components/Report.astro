@@ -93,9 +93,13 @@ const pages = [
     font-size: 1.0625rem;
   }
 
+  /* Narrow enough on short screens (a landscape tablet) that the whole page
+     and its controls fit under the header: the page is 1190 by 1683, and the
+     header, the gap above and the controls take about 10rem. Never below
+     20rem, where the page would be too small to read. */
   .pager {
     position: relative;
-    max-width: 36rem;
+    max-width: clamp(20rem, (100svh - var(--header-height) - 5.5rem) * 1190 / 1683, 36rem);
     margin: 2.5rem auto 0;
   }
 

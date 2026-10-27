@@ -89,10 +89,24 @@ const groups = [
 
   .cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    grid-template-columns: 1fr;
     gap: 1rem;
     margin-top: 2.5rem;
     text-align: left;
+  }
+
+  /* Four cards: a 2×2 on tablets, one row only where all four fit, so none is
+     ever left alone on a row. */
+  @media (min-width: 36rem) {
+    .cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .cards {
+      grid-template-columns: repeat(4, 1fr);
+    }
   }
 
   .card {
