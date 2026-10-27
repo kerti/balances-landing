@@ -4,19 +4,21 @@ const noFeatures = ['Transaction feeds', 'Spending categories', 'Envelopes', 'Ba
 
 <section>
   <div class="container">
-    <p class="eyebrow">Non-feature</p>
-    <h2>
+    <p class="eyebrow" data-reveal="up">
+      Non-feature
+    </p>
+    <h2 data-reveal="up" style="--reveal-delay: 0.08s">
       Not a <span class="accent">budgeting app</span>
     </h2>
-    <ul class="chips">
+    <ul class="chips" data-reveal>
       <li class="yes">
         <svg viewBox="0 0 16 16" aria-hidden="true">
           <path d="M3.5 8.5l3 3 6-7"></path>
         </svg>
         Net worth over years
       </li>
-      {noFeatures.map((item) => (
-        <li class="no">
+      {noFeatures.map((item, i) => (
+        <li class="no" style={`--i: ${i}`}>
           <svg viewBox="0 0 16 16" aria-hidden="true">
             <path d="M4.5 4.5l7 7m0-7l-7 7"></path>
           </svg>
@@ -115,8 +117,19 @@ const noFeatures = ['Transaction feeds', 'Spending categories', 'Envelopes', 'Ba
     background: var(--muted);
   }
 
+  /* The strike is drawn as a line (not text-decoration) so it can animate
+     across; <s> keeps the meaning for assistive tech. */
   .no s {
-    text-decoration-thickness: 1px;
+    position: relative;
+    text-decoration: none;
+  }
+
+  .no s::after {
+    content: '';
+    position: absolute;
+    inset-inline: -0.125rem;
+    top: 55%;
+    border-top: 1px solid currentColor;
   }
 
   /* Phones: one item per line, left-aligned under each other like a
@@ -135,6 +148,32 @@ const noFeatures = ['Transaction feeds', 'Spending categories', 'Envelopes', 'Ba
       border: 0;
       background: none;
       font-size: 0.9375rem;
+    }
+  }
+
+  /* Motion (paused until in view; see global.css): the tick pops, then a line
+     strikes through each budgeting feature in turn. */
+  @media (prefers-reduced-motion: no-preference) {
+    .yes svg {
+      animation: pop 0.5s cubic-bezier(0.3, 1.6, 0.5, 1) 0.2s both;
+    }
+
+    .no s::after {
+      transform-origin: left;
+      animation: strike 0.45s ease-in-out both;
+      animation-delay: calc(0.55s + var(--i) * 0.22s);
+    }
+  }
+
+  @keyframes pop {
+    from {
+      scale: 0;
+    }
+  }
+
+  @keyframes strike {
+    from {
+      scale: 0 1;
     }
   }
 </style>

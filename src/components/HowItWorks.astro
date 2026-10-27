@@ -44,20 +44,22 @@ const steps = [
 
 <section id="how-it-works" class="container">
   <div class="intro">
-    <p class="eyebrow">How it works</p>
-    <h2>
+    <p class="eyebrow" data-reveal="up">
+      How it works
+    </p>
+    <h2 data-reveal>
       <span class="lead">Not every transaction. Just your balances,</span>
       <span class="big">once a&nbsp;month.</span>
     </h2>
-    <ul class="facts">
-      {facts.map((fact) => (
-        <li>{fact}</li>
+    <ul class="facts" data-reveal>
+      {facts.map((fact, i) => (
+        <li style={`--i: ${i}`}>{fact}</li>
       ))}
     </ul>
   </div>
   <ol>
     {steps.map((step, i) => (
-      <li class:list={['step', { flip: i % 2 === 1 }]}>
+      <li class:list={['step', { flip: i % 2 === 1 }]} data-reveal>
         <div class="copy">
           <span class="numeral" aria-hidden="true">
             {i + 1}
@@ -221,5 +223,80 @@ const steps = [
 
   .shot img {
     display: block;
+  }
+
+  /* Motion (paused until in view; see global.css). The statement rises, the
+     chips stamp down one by one, and each step's copy slides in from its
+     side while the screenshot rises. Individual transform properties keep
+     the chips' resting tilt intact. */
+  @media (prefers-reduced-motion: no-preference) {
+    .lead {
+      animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    }
+
+    .big {
+      animation: rise-big 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.12s both;
+    }
+
+    .facts li {
+      animation: stamp 0.45s cubic-bezier(0.3, 1.4, 0.5, 1) both;
+      animation-delay: calc(0.35s + var(--i) * 0.12s);
+    }
+
+    .step .copy {
+      animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    }
+
+    .step .shot {
+      animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.15s both;
+    }
+  }
+
+  /* Side slides only where the steps sit side by side; on phones a sideways
+     start could poke past the screen edge. */
+  @media (prefers-reduced-motion: no-preference) and (min-width: 48rem) {
+    .step .copy {
+      animation-name: slide-from-left;
+    }
+
+    .step.flip .copy {
+      animation-name: slide-from-right;
+    }
+  }
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      translate: 0 1.5rem;
+    }
+  }
+
+  @keyframes rise-big {
+    from {
+      opacity: 0;
+      translate: 0 2rem;
+      scale: 0.96;
+    }
+  }
+
+  @keyframes stamp {
+    from {
+      opacity: 0;
+      scale: 1.35;
+    }
+  }
+
+  @keyframes slide-from-left {
+    from {
+      opacity: 0;
+      translate: -2rem 0;
+    }
+  }
+
+  @keyframes slide-from-right {
+    from {
+      opacity: 0;
+      translate: 2rem 0;
+    }
   }
 </style>

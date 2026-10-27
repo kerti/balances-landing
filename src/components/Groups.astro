@@ -28,20 +28,22 @@ const groups = [
 ---
 
 <section id="what-it-tracks" class="container">
-  <p class="eyebrow">What it tracks</p>
-  <h2>
+  <p class="eyebrow" data-reveal="up">
+    What it tracks
+  </p>
+  <h2 data-reveal="up" style="--reveal-delay: 0.08s">
     Everything in <span class="accent">one place</span>
   </h2>
-  <p class="lede">
+  <p class="lede" data-reveal="up" style="--reveal-delay: 0.16s">
     Net worth only means something when it covers the whole picture — including the illiquid things
     that have no transactions to sync.
   </p>
-  <div class="cards">
-    {groups.map((group) => (
-      <div class="card">
+  <div class="cards" data-reveal>
+    {groups.map((group, i) => (
+      <div class="card" style={`--i: ${i}`}>
         <span class="icon" aria-hidden="true">
           <svg viewBox="0 0 24 24">
-            <path d={group.icon} />
+            <path d={group.icon} pathLength="1" />
           </svg>
         </span>
         <h3>{group.name}</h3>
@@ -49,7 +51,7 @@ const groups = [
       </div>
     ))}
   </div>
-  <div class="shot">
+  <div class="shot" data-reveal="up">
     <Image
       class="light-only"
       src={appInvestmentsLight}
@@ -142,5 +144,20 @@ const groups = [
 
   .shot img {
     display: block;
+  }
+
+  /* Motion (paused until in view; see global.css): cards stagger up and
+     their line icons draw themselves. */
+  @media (prefers-reduced-motion: no-preference) {
+    .card {
+      animation: reveal-up 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+      animation-delay: calc(var(--i) * 0.09s);
+    }
+
+    .icon path {
+      stroke-dasharray: 1;
+      animation: draw-stroke 0.9s ease-out both;
+      animation-delay: calc(0.25s + var(--i) * 0.09s);
+    }
   }
 </style>
