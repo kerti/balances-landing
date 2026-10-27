@@ -1,6 +1,5 @@
 ---
-import { Image } from 'astro:assets';
-import dashboard from '../assets/screenshots/dashboard.png';
+import HeroIllustration from './HeroIllustration.astro';
 import { DEMO_URL, SELF_HOST_URL } from '../consts';
 
 const facts = [
@@ -12,40 +11,40 @@ const facts = [
 ---
 
 <section class="container">
-  <p class="eyebrow">Net worth for households</p>
-  <h1>
-    Track your net worth, <span class="accent">not&nbsp;your coffee&nbsp;money.</span>
-  </h1>
-  <p class="subhead">
-    Each month you enter your balances; Balances tracks your net worth. One number per position,
-    once a month — no receipt-scanning, no transaction categorising, no bank-sync babysitting.
-  </p>
-  <p class="audience">
-    Built for households who want to watch wealth build over years — not track spending week to
-    week.
-  </p>
-  <div class="cta">
-    <a class="button button-primary" href={DEMO_URL} target="_blank" rel="noopener noreferrer">
-      Try the live demo
-    </a>
-    <a
-      class="button button-secondary"
-      href={SELF_HOST_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      Self-host it
-    </a>
+  <div class="copy">
+    <p class="eyebrow">Net worth for households</p>
+    <h1>
+      Track your net worth, <span class="accent">not&nbsp;your coffee&nbsp;money.</span>
+    </h1>
+    <p class="subhead">
+      Each month you enter your balances; Balances tracks your net worth. One number per position,
+      once a month — no receipt-scanning, no transaction categorising, no bank-sync babysitting.
+    </p>
+    <p class="audience">
+      Built for households who want to watch wealth build over years — not track spending week to
+      week.
+    </p>
+    <div class="cta">
+      <a class="button button-primary" href={DEMO_URL} target="_blank" rel="noopener noreferrer">
+        Try the live demo
+      </a>
+      <a
+        class="button button-secondary"
+        href={SELF_HOST_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Self-host it
+      </a>
+    </div>
+    <p class="caveat">No signup — the demo is a shared account; its data resets nightly.</p>
+    <ul class="facts">
+      {facts.map((fact) => (
+        <li>{fact}</li>
+      ))}
+    </ul>
   </div>
-  <p class="caveat">No signup — the demo is a shared account; its data resets nightly.</p>
-  <ul class="facts">
-    {facts.map((fact) => (
-      <li>{fact}</li>
-    ))}
-  </ul>
-  <div class="shot">
-    <Image src={dashboard} alt="Balances dashboard showing a household net-worth chart" />
-  </div>
+  <HeroIllustration />
 </section>
 
 <style>
@@ -131,16 +130,32 @@ const facts = [
     }
   }
 
-  .shot {
-    margin-top: 3.5rem;
-    border: 1px solid var(--border);
-    border-radius: calc(var(--radius) * 1.4);
-    overflow: hidden;
-    background: var(--card);
-    box-shadow: var(--shot-shadow);
-  }
+  /* Wide screens: copy on the left, the idea drawn on the right, both above
+     the fold. Narrower screens keep the centred stack. */
+  @media (min-width: 64rem) {
+    section {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 3.5rem;
+      align-items: center;
+      padding-block: 4rem 4.5rem;
+      text-align: left;
+    }
 
-  .shot img {
-    display: block;
+    h1,
+    .subhead,
+    .audience,
+    .facts {
+      margin-inline: 0;
+    }
+
+    .cta,
+    .facts {
+      justify-content: flex-start;
+    }
+
+    .subhead {
+      font-size: 1.125rem;
+    }
   }
 </style>
