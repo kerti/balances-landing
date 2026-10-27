@@ -30,14 +30,15 @@ const wordmarkScale = 0.74;
 const wordmarkLeftPad = 6; // the SVG's own inset before the "b"
 
 // The whole line runs across the card at one scale, a month-end every
-// `step`, from the first month-end three years ago (just below the bottom
-// edge) to this one near the top right. Low enough on the left to pass under
-// the subline; the card's year, with its dots, rises on the right.
+// `step`, from the first month-end three years ago (below the bottom edge,
+// so the line enters a little way in) to this one near the top right. Low
+// enough to pass under the subline; the card's year, with its dots, rises on
+// the right.
 const yearTo = 1180;
 const step = (yearTo + 10) / (earlierYears.length + lastYear.length - 1);
 const yearFrom = yearTo - (lastYear.length - 1) * step;
-const yStart = 660;
-const yNow = 246;
+const yStart = 718;
+const yNow = 270;
 const first = earlierYears[0];
 const y = (value: number) =>
   yStart - ((value - first) / (lastYear.at(-1)! - first)) * (yStart - yNow);
