@@ -11,14 +11,10 @@ const pointedChange = percentChange(pointed - 1, pointed).toFixed(1);
 
 const points = [
   {
-    title: 'Open source',
-    body: 'The whole app is open-source under AGPL-3.0.',
-    icon: icons.fileCode,
-  },
-  {
-    title: 'Self-hosted',
-    body: 'Run it on your own machine with a single',
+    title: 'Docker Compose',
+    body: 'A released image and PostgreSQL, started with',
     code: 'docker compose up',
+    after: '. Nothing to build.',
     icon: icons.database,
   },
   {
@@ -27,8 +23,8 @@ const points = [
     icon: icons.archiveBox,
   },
   {
-    title: 'Two languages',
-    body: 'Use the app in English or Bahasa Indonesia.',
+    title: 'Translatable',
+    body: 'English and Bahasa Indonesia, chosen per person and saved to their account. Numbers and dates follow the language.',
     icon: icons.dictionary,
   },
 ];
@@ -68,13 +64,18 @@ const points = [
             {point.code && (
               <>
                 {' '}
-                <code>{point.code}</code>.
+                <code>{point.code}</code>
+                {point.after}
               </>
             )}
           </p>
         </li>
       ))}
     </ul>
+    <p class="note">
+      Self-hosting means upgrades, backups and HTTPS are yours to look after. The guide walks
+      through each.
+    </p>
     <div class="cta">
       <a
         class="button button-primary"
@@ -135,17 +136,11 @@ const points = [
     text-align: left;
   }
 
-  /* Four cards: a 2×2 on tablets, one row only where all four fit, so none is
-     ever left alone on a row. */
-  @media (min-width: 36rem) {
+  /* Three cards: stacked, then all three in a row. Never two columns, which
+     would leave one alone on a row. */
+  @media (min-width: 48rem) {
     .points {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (min-width: 64rem) {
-    .points {
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 
@@ -194,12 +189,20 @@ const points = [
     color: var(--secondary-foreground);
   }
 
+  /* What running it yourself takes, just above the guide that covers it. */
+  .note {
+    max-width: 40rem;
+    margin: 2rem auto 0;
+    font-size: 0.9375rem;
+    text-wrap: balance;
+  }
+
   .cta {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 0.75rem;
-    margin-top: 2rem;
+    margin-top: 1.25rem;
   }
 
   /* Motion (paused until in view; see global.css): cards stagger up and
