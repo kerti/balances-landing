@@ -1,7 +1,13 @@
 ---
 import { icons } from './icons';
 import BackgroundGraph from './BackgroundGraph.astro';
+import { allMonthEnds, percentChange } from './net-worth';
 import { GITHUB_URL, SELF_HOST_URL } from '../consts';
+
+// The hero's household again, all three years; the tooltip picks out the
+// month-end thirty months before this October.
+const pointed = 6;
+const pointedChange = percentChange(pointed - 1, pointed).toFixed(1);
 
 const points = [
   {
@@ -30,12 +36,10 @@ const points = [
 
 <section id="open-source">
   <BackgroundGraph
-    values={[
-      30, 29, 33, 35, 34, 38, 41, 39, 44, 47, 46, 51, 55, 53, 58, 62, 60, 66, 70, 69, 75, 80,
-    ]}
-    point={4}
+    values={allMonthEnds}
+    point={pointed}
     date="30 April"
-    change="Net worth +0.9%"
+    change={`Net worth +${pointedChange}%`}
     top={45}
   />
   <div class="container">

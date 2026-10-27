@@ -1,14 +1,18 @@
 ---
 // The idea, not the interface: twelve month-end snapshots of net worth, the
-// brass line with one dot per month-end. Shapes are generated at build time
-// from an illustrative series; there are no real figures, so nothing here can
-// go stale.
+// brass line with one dot per month-end, drawn at build time from the page's
+// illustrative household (./net-worth).
 //
 // The card is a window onto a longer line. On wide screens a backdrop behind
 // the card carries the same line across the hero: the months before this year
 // run out of the card's left edge as a faint line back to a first month-end
 // three years ago, and the hero is tinted above it.
-const netWorth = [90, 95, 93, 100, 106, 104, 112, 119, 117, 126, 134, 143];
+import {
+  allMonthEnds,
+  earlierYears as history,
+  lastYear as netWorth,
+  percentChange,
+} from './net-worth';
 
 const width = 600;
 const height = 380;
@@ -26,17 +30,6 @@ const toPath = (pts: { x: number; y: number }[]) =>
   pts.map((p, i) => `${i ? 'L' : 'M'}${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ');
 
 const points = toPoints(netWorth);
-// The months before the card, walked back from its first month to a first
-// month-end three years before this one, with a repeating set of monthly
-// falls so the line stays believably uneven. The few months just before the
-// card climb more steeply, a burst before the year the card shows.
-const steps = [4, 2, 5, 3, -1, 4, 3, 5, 2, 4, -1, 4];
-const burst = [7, 9, 7, 8];
-const history: number[] = [];
-for (let i = 0, value = netWorth[0]; i < 36 - (netWorth.length - 1); i++) {
-  value -= burst[i] ?? steps[i % steps.length];
-  history.unshift(value);
-}
 const step = (width - 2 * pad.x) / (netWorth.length - 1);
 const earlier = [...history, netWorth[0]].map((value, i) => ({
   x: pad.x + (i - history.length) * step,
@@ -62,14 +55,7 @@ const cardRight = width + 40;
 // hard edge where the line begins. Offsets along the tint gradient:
 const tintFrom = first.x - 160;
 const tintAt = (x: number) => ((x - tintFrom) / (cardRight - tintFrom)).toFixed(3);
-// Only the shape is drawn: the axis is unlabelled and doesn't start at zero.
-// Read as money, the series sits on an offset chosen so the three years grow
-// about 16%, roughly 5% a year, in line with the 4–5.5% a year (real) that an
-// average Indonesian adult's net wealth typically grows. Shifting the series
-// doesn't move a single point of the drawing.
-const growth = 0.16;
-const offset = (netWorth.at(-1)! - (1 + growth) * history[0]) / growth;
-const sinceFirst = (((netWorth.at(-1)! + offset) / (history[0] + offset) - 1) * 100).toFixed(0);
+const sinceFirst = percentChange(0, allMonthEnds.length - 1).toFixed(0);
 const line = toPath(points);
 const area = `${line} L${points.at(-1)!.x} ${baseline} L${points[0].x} ${baseline} Z`;
 const grid = [0.25, 0.5, 0.75].map((f) => pad.top + f * (baseline - pad.top));
