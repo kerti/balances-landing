@@ -35,6 +35,13 @@ The **favicon / app icon** (`public/favicon.svg`) is a mirror of the app's icon 
 two byte-identical; if the app's icon changes, copy it over here rather than editing the copy in
 this repo. Any future shared brand marks (logo, wordmark) follow the same rule.
 
+The **share image** (`public/og.png`, decided 2026-10-27) is the exception: it carries the landing's
+copy, so it is landing-owned. Its source, `docs/brand/og-card.svg`, keeps the app's GitHub
+social-preview layout (`docs/brand/social-card.svg` in `kerti/balances-v2`: plate, mark tile,
+outlined wordmark, glow) and swaps in the hero headline and hero chips. Change the copy there when
+the hero changes, then `npm run og` (needs `rsvg-convert`) to re-render the PNG. If the app's card
+layout or brand marks change, re-copy them into the SVG.
+
 **Design tokens** (decided 2026-07-06; palette updated 2026-09-02) follow the same source-of-truth
 rule: the landing copies the app's tokens verbatim — **Geist Variable** (self-hosted via
 `@fontsource`, no external font CDN, unaffected by the brand's wordmark typeface — see below),
