@@ -46,7 +46,7 @@ const shotSizes = '(min-width: 39rem) 36rem, calc(100vw - 3rem)';
               widths={widthsFor(page.src.width)}
               sizes={shotSizes}
               alt={`Monthly report, page ${i + 1}: ${page.alt}`}
-              loading={i === 0 ? 'eager' : 'lazy'}
+              loading="lazy"
             />
           </li>
         ))}
