@@ -1,0 +1,12 @@
+# Response headers for Cloudflare Pages (ADR-0002).
+# script-src and style-src are set by the <meta> CSP Astro generates with
+# per-build hashes (astro.config.mjs). This header carries the directives a
+# <meta> CSP can't (frame-ancestors) or shouldn't wait for. Browsers enforce
+# both policies, so a resource has to pass each of them.
+# No HSTS here: .dev is on the HSTS preload list as a whole TLD.
+/*
+  Content-Security-Policy: frame-ancestors 'none'; base-uri 'self'; object-src 'none'; form-action 'none'
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()

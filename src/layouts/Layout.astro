@@ -59,6 +59,20 @@ const structuredData = {
     </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Browser chrome matches --background (global.css). ThemeToggle.astro
+         repoints these when a theme is forced. -->
+    <meta
+      name="theme-color"
+      content="#f7f5f1"
+      media="(prefers-color-scheme: light)"
+      data-scheme="light"
+    />
+    <meta
+      name="theme-color"
+      content="#14161a"
+      media="(prefers-color-scheme: dark)"
+      data-scheme="dark"
+    />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonical} />
     <meta name="description" content={description} />
