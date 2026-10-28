@@ -1,10 +1,24 @@
 ---
+import BackgroundGraph from './BackgroundGraph.astro';
+import { allMonthEnds, percentChange } from './net-worth';
 import { DEMO_URL, SELF_HOST_URL } from '../consts';
+
+// The hero's household again, all three years, with two month-ends picked
+// out: an April bonus on the left and a holiday-spending December on the
+// right, one month up and one down.
+const change = (index: number) => {
+  const pct = percentChange(index - 1, index);
+  return `Net worth ${pct < 0 ? '−' : '+'}${Math.abs(pct).toFixed(1)}%`;
+};
+const points = [
+  { index: 6, date: '30 April', change: change(6) },
+  { index: 26, date: '31 December', change: change(26) },
+];
 ---
 
-<!-- The page's one tinted band (--section-tint), ending on the hero's two
-     calls to action and its demo caveat. -->
+<!-- The page ends on the hero's two calls to action and its demo caveat. -->
 <section>
+  <BackgroundGraph values={allMonthEnds} points={points} top={55} />
   <div class="container">
     <p class="eyebrow" data-reveal="up">
       Get started
@@ -34,13 +48,23 @@ import { DEMO_URL, SELF_HOST_URL } from '../consts';
 
 <style>
   section {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
     border-top: 1px solid var(--border);
-    background: var(--section-tint);
   }
 
+  /* Room under the copy for the net-worth line, whose band starts below the
+     caveat (top={55}). Phones hide the graph, so they keep a normal foot. */
   .container {
-    padding-block: var(--section-pad-top) 4.5rem;
+    padding-block: var(--section-pad-top) 16rem;
     text-align: center;
+  }
+
+  @media (max-width: 48rem) {
+    .container {
+      padding-bottom: 4.5rem;
+    }
   }
 
   h2 {
@@ -61,16 +85,6 @@ import { DEMO_URL, SELF_HOST_URL } from '../consts';
     justify-content: center;
     gap: 0.75rem;
     margin-top: 2rem;
-  }
-
-  /* In dark mode the band is --secondary, the secondary button's own fill;
-     the page background keeps the button distinct on the tint. */
-  .button-secondary {
-    background: var(--background);
-  }
-
-  .button-secondary:hover {
-    background: var(--accent);
   }
 
   .caveat {

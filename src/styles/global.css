@@ -36,10 +36,7 @@
   --radius: 0.625rem;
 
   /* Landing-only compositional tokens (not copied from the app) — built from
-     the tokens above, used for section banding and decorative glows. */
-  /* Kept for one distinct closing band (the planned final CTA); the page
-     otherwise runs on a single background. */
-  --section-tint: light-dark(oklch(0.953 0.009 84.6), var(--secondary));
+     the tokens above, used for decorative glows and the hero's tint. */
   --glow: light-dark(var(--foreground), var(--primary));
   /* The hero above its net-worth line: a shade darker than the page. */
   --hero-tint: light-dark(oklch(0.945 0.009 84.6), oklch(0.168 0.009 264.4));

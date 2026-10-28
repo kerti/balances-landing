@@ -1,7 +1,7 @@
 // The illustrative household behind every net-worth line on the page: one
 // month-end a month, from a first month-end three years ago to this one. The
-// hero draws the last twelve in its card and the rest behind it; the Open
-// source section draws all of it faintly. There are no real figures here, so
+// hero draws the last twelve in its card and the rest behind it; the closing
+// section draws all of it faintly. There are no real figures here, so
 // nothing can go stale.
 //
 // Written out by hand, month by month, to read like a real household's year

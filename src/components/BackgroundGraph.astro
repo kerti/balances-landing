@@ -1,22 +1,26 @@
 ---
-// A faint net-worth line behind a section, with one month-end picked out by a
-// crosshair, a dot and a small tooltip. Decorative only: illustrative values,
+// A faint net-worth line behind a section, with a few month-ends picked out,
+// each by a crosshair, a dot and a small tooltip. Decorative only: illustrative values,
 // no real figures, hidden from assistive tech. The line stretches to the
 // section (preserveAspectRatio="none"); the dot and tooltip are HTML placed by
 // percentage, so they stay round and land exactly on the line.
-interface Props {
-  /** Month-end values, oldest first. Only the shape matters. */
-  values: number[];
+interface Point {
   /** Index of the month-end to pick out. */
-  point: number;
+  index: number;
   /** Tooltip lines, e.g. a month-end date and the change. */
   date: string;
   change: string;
+}
+
+interface Props {
+  /** Month-end values, oldest first. Only the shape matters. */
+  values: number[];
+  points: Point[];
   /** Top of the line's band, as a percentage of the section height. */
   top?: number;
 }
 
-const { values, point, date, change, top = 20 } = Astro.props;
+const { values, points, top = 20 } = Astro.props;
 const min = Math.min(...values);
 const max = Math.max(...values);
 const coords = values.map((value, i) => ({
@@ -25,11 +29,18 @@ const coords = values.map((value, i) => ({
 }));
 const line = coords.map((c, i) => `${i ? 'L' : 'M'}${c.x.toFixed(2)} ${c.y.toFixed(2)}`).join(' ');
 const area = `${line} L100 100 L0 100 Z`;
-const at = coords[point];
-// The point's height within the whole graph box, which starts `top`% down.
-const pointTop = top + (at.y * (100 - top)) / 100;
-// Near the right edge the tooltip opens leftwards so it stays on screen.
-const tipEnd = at.x > 70;
+const marks = points.map(({ index, date, change }) => {
+  const { x, y } = coords[index];
+  return {
+    x,
+    // The point's height within the whole graph box, which starts `top`% down.
+    top: top + (y * (100 - top)) / 100,
+    // Near the right edge the tooltip opens leftwards so it stays on screen.
+    end: x > 70,
+    date,
+    change,
+  };
+});
 ---
 
 <div class="bg-graph" aria-hidden="true" style={`--top: ${top}%`}>
@@ -37,12 +48,16 @@ const tipEnd = at.x > 70;
     <path class="area" d={area}></path>
     <path class="line" d={line}></path>
   </svg>
-  <span class="crosshair" style={`left: ${at.x}%; top: calc(${pointTop}% - 12rem)`}></span>
-  <span class="dot" style={`left: ${at.x}%; top: ${pointTop}%`}></span>
-  <span class:list={['tip', { end: tipEnd }]} style={`left: ${at.x}%; top: ${pointTop}%`}>
-    <span class="date">{date}</span>
-    <span class="change">{change}</span>
-  </span>
+  {marks.map((mark) => (
+    <>
+      <span class="crosshair" style={`left: ${mark.x}%; top: calc(${mark.top}% - 12rem)`} />
+      <span class="dot" style={`left: ${mark.x}%; top: ${mark.top}%`} />
+      <span class:list={['tip', { end: mark.end }]} style={`left: ${mark.x}%; top: ${mark.top}%`}>
+        <span class="date">{mark.date}</span>
+        <span class="change">{mark.change}</span>
+      </span>
+    </>
+  ))}
 </div>
 
 <style>
