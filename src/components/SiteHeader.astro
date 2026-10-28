@@ -59,10 +59,21 @@ const sections = [
     position: sticky;
     top: 0;
     z-index: 10;
-    background: color-mix(in oklch, var(--background) 82%, transparent);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    /* Liquid glass, after Uruni's header-glass: a see-through tint over a
+       strong blur with a little saturation, so content passing beneath tints
+       the bar instead of vanishing. The light catches the edge that faces the
+       content: a bright 1px line just inside the hairline border, with a soft
+       glow falling up from it. Dark mode keeps both faint. */
+    background-color: color-mix(in oklch, var(--background) 60%, transparent);
+    /* Prefixed first: the build's CSS minifier keeps only the last of the
+       pair, and Chromium ignores the -webkit- form. */
+    -webkit-backdrop-filter: blur(28px) saturate(1.6);
+    backdrop-filter: blur(28px) saturate(1.6);
     border-bottom: 1px solid var(--border);
+    box-shadow:
+      inset 0 -1px 0 light-dark(oklch(1 0 0 / 85%), oklch(1 0 0 / 10%)),
+      inset 0 -10px 14px -10px light-dark(oklch(1 0 0 / 70%), oklch(1 0 0 / 6%)),
+      0 4px 16px oklch(0.147 0.004 49.25 / 8%);
   }
 
   .sections {
