@@ -4,6 +4,11 @@ import { defineConfig } from 'astro/config';
 // integration (ADR-0002) — no adapter needed for a static build.
 export default defineConfig({
   site: 'https://balances.kerti.dev',
+  // One page, about 7 KB of CSS gzipped: inlined, it saves a round trip before
+  // first paint, and the fonts it names are found as soon as the HTML is read.
+  build: {
+    inlineStylesheets: 'always',
+  },
   // Content Security Policy as a <meta> tag: Astro hashes every inline script
   // and style it emits, so nothing inline runs unless the build put it there.
   // Directives a <meta> CSP can't carry (frame-ancestors) live in public/_headers.
