@@ -1,6 +1,7 @@
 ---
 import { icons } from './icons';
 import { Image } from 'astro:assets';
+import { widthsFor } from './image-widths';
 import appInvestments from '../assets/screenshots/app-investments.png';
 import appInvestmentsLight from '../assets/screenshots/app-investments-light.png';
 
@@ -26,6 +27,9 @@ const groups = [
     body: 'Stocks, mutual funds, bonds, gold, and time deposits, with a ledger for buys, sells, and income.',
   },
 ];
+
+// The screenshot spans the container: 68rem less 1.5rem padding a side.
+const shotSizes = '(min-width: 68rem) 65rem, calc(100vw - 3rem)';
 ---
 
 <section id="what-it-tracks" class="container">
@@ -58,11 +62,15 @@ const groups = [
     <Image
       class="light-only"
       src={appInvestmentsLight}
+      widths={widthsFor(appInvestmentsLight.width)}
+      sizes={shotSizes}
       alt="Investments overview in Balances, with all four position groups in the navigation"
     />
     <Image
       class="dark-only"
       src={appInvestments}
+      widths={widthsFor(appInvestments.width)}
+      sizes={shotSizes}
       alt="Investments overview in Balances, with all four position groups in the navigation"
     />
   </div>
