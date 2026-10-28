@@ -267,16 +267,19 @@ const shotSizes = '(min-width: 39rem) 36rem, calc(100vw - 3rem)';
   /* Dots, not "1 of 5": each page's own footer already counts its pages. */
   .dots {
     display: flex;
-    gap: 0.5rem;
   }
 
+  /* Each button is a 24px tap target (WCAG 2.5.8); the dot is drawn in its
+     content box, so the padding is the spacing between dots. */
   .dot {
+    box-sizing: content-box;
     width: 0.5rem;
     height: 0.5rem;
-    padding: 0;
+    padding: 0.5rem;
     border: 0;
     border-radius: 999px;
-    background: var(--border);
+    background-color: var(--border);
+    background-clip: content-box;
     cursor: pointer;
     transition:
       width 0.2s ease,
@@ -285,7 +288,7 @@ const shotSizes = '(min-width: 39rem) 36rem, calc(100vw - 3rem)';
 
   .dot[aria-current='true'] {
     width: 1.25rem;
-    background: var(--primary);
+    background-color: var(--primary);
   }
 
   .step:focus-visible,
