@@ -1,0 +1,95 @@
+---
+import BackgroundGraph from './BackgroundGraph.astro';
+import { allMonthEnds, percentChange } from './net-worth';
+import { DEMO_URL, SELF_HOST_URL } from '../consts';
+
+// The hero's household again, all three years, with two month-ends picked
+// out: an April bonus on the left and a holiday-spending December on the
+// right, one month up and one down.
+const change = (index: number) => {
+  const pct = percentChange(index - 1, index);
+  return `Net worth ${pct < 0 ? '−' : '+'}${Math.abs(pct).toFixed(1)}%`;
+};
+const points = [
+  { index: 6, date: '30 April', change: change(6) },
+  { index: 26, date: '31 December', change: change(26) },
+];
+---
+
+<!-- The page ends on the hero's two calls to action and its demo caveat. -->
+<section>
+  <BackgroundGraph values={allMonthEnds} points={points} top={55} />
+  <div class="container">
+    <p class="eyebrow" data-reveal="up">
+      Get started
+    </p>
+    <h2 data-reveal="up" style="--reveal-delay: 0.08s">
+      Start with <span class="accent">this month’s balances.</span>
+    </h2>
+    <p class="lede" data-reveal="up" style="--reveal-delay: 0.16s">
+      Look around the demo first, or run your own copy today.
+    </p>
+    <div class="cta" data-reveal="up" style="--reveal-delay: 0.24s">
+      <a class="button button-primary" href={DEMO_URL} target="_blank" rel="noopener noreferrer">
+        Try the live demo
+      </a>
+      <a
+        class="button button-secondary"
+        href={SELF_HOST_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Self-host it
+      </a>
+    </div>
+    <p class="caveat">No signup. The demo is a shared account, and its data resets nightly.</p>
+  </div>
+</section>
+
+<style>
+  section {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border-top: 1px solid var(--border);
+  }
+
+  /* Room under the copy for the net-worth line, whose band starts below the
+     caveat (top={55}). Phones hide the graph, so they keep a normal foot. */
+  .container {
+    padding-block: var(--section-pad-top) 16rem;
+    text-align: center;
+  }
+
+  @media (max-width: 48rem) {
+    .container {
+      padding-bottom: 4.5rem;
+    }
+  }
+
+  h2 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: var(--secondary-foreground);
+  }
+
+  .lede {
+    margin-top: 1.25rem;
+    font-size: 1.0625rem;
+    color: var(--muted-foreground);
+  }
+
+  .cta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  .caveat {
+    margin-top: 0.875rem;
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+  }
+</style>
