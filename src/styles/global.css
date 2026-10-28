@@ -272,3 +272,25 @@ img {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
 }
+
+/* The first Tab stop: jumps past the header's links to the page content.
+   Off-screen until focused, then shown above the sticky header. */
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  padding: 0.625rem 1rem;
+  border-radius: var(--radius);
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-weight: 600;
+  text-decoration: none;
+  translate: 0 calc(-100% - 1rem);
+}
+
+.skip-link:focus-visible {
+  translate: none;
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
