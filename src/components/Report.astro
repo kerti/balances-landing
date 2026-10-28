@@ -378,9 +378,13 @@ const shotSizes = '(min-width: 39rem) 36rem, calc(100vw - 3rem)';
     // or the arrow keys while it has focus.
     strip.addEventListener('pointerdown', stop);
     strip.addEventListener('keydown', stop);
-    strip.addEventListener('wheel', (event) => {
-      if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) stop();
-    });
+    strip.addEventListener(
+      'wheel',
+      (event) => {
+        if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) stop();
+      },
+      { passive: true },
+    );
 
     pager.addEventListener('mouseenter', () => ((held.hover = true), schedule()));
     pager.addEventListener('mouseleave', () => ((held.hover = false), schedule()));
