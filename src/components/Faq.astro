@@ -1,0 +1,194 @@
+---
+import { CONTRIBUTING_URL, DEMO_URL, NEW_ISSUE_URL, SELF_HOST_URL } from '../consts';
+---
+
+<section id="faq">
+  <div class="container">
+    <p class="eyebrow" data-reveal="up">
+      FAQ
+    </p>
+    <h2 data-reveal="up" style="--reveal-delay: 0.08s">
+      Common <span class="accent">questions</span>
+    </h2>
+    <!-- Plain <details>: opens and closes with no script, and every answer is
+         in the HTML for search engines and find-in-page. -->
+    <div class="questions" data-reveal>
+      <details style="--i: 0">
+        <summary>What does it cost?</summary>
+        <p>
+          Nothing. Balances is open source under AGPL-3.0. You run it on your own server, and a
+          small one is enough: 1&nbsp;GB of memory and one CPU.
+        </p>
+      </details>
+      <details style="--i: 1">
+        <summary>Is there a hosted version I can sign up for?</summary>
+        <p>
+          No. Balances only runs where you install it. The{' '}
+          <a href={DEMO_URL} target="_blank" rel="noopener noreferrer">
+            live demo
+          </a>{' '}
+          is a shared account that resets every night, so it’s for looking around, not for your real
+          numbers.
+        </p>
+      </details>
+      <details style="--i: 2">
+        <summary>What do I need to run it?</summary>
+        <p>
+          A machine with Docker and Docker Compose. You download two files, set a few values in{' '}
+          <code>.env</code>, and run <code>docker compose up</code>. People can sign in with Google,
+          or you can turn on email and password accounts and skip Google entirely. The{' '}
+          <a href={SELF_HOST_URL} target="_blank" rel="noopener noreferrer">
+            self-hosting guide
+          </a>{' '}
+          covers HTTPS, upgrades and backups.
+        </p>
+      </details>
+      <details style="--i: 3">
+        <summary>Does it connect to my bank?</summary>
+        <p>
+          No, and it never asks for your bank login. You read the month-end balance off the
+          statement and type it in. Nothing is scraped and nothing syncs.
+        </p>
+      </details>
+      <details style="--i: 4">
+        <summary>Can my partner use it too?</summary>
+        <p>
+          Yes. A household can have more than one member. You invite them, and everyone in the
+          household sees and edits the same positions.
+        </p>
+      </details>
+      <details style="--i: 5">
+        <summary>What if I miss a month?</summary>
+        <p>
+          Nothing breaks. Each position keeps its last balance until you enter a new one, and
+          Balances lists the positions that are behind so you can catch up.
+        </p>
+      </details>
+      <details style="--i: 6">
+        <summary>Can I track more than one currency?</summary>
+        <p>
+          Yes, once you turn multi-currency on. Each position keeps its own currency. You enter a
+          month-end exchange rate, and Balances converts everything to your household’s reporting
+          currency.
+        </p>
+      </details>
+      <details style="--i: 7">
+        <summary>Can I contribute?</summary>
+        <p>
+          Yes. Bug reports, fixes and features go through GitHub. For anything bigger than a typo,{' '}
+          <a href={NEW_ISSUE_URL} target="_blank" rel="noopener noreferrer">
+            open an issue
+          </a>{' '}
+          first so the approach can be agreed before anyone writes code. The{' '}
+          <a href={CONTRIBUTING_URL} target="_blank" rel="noopener noreferrer">
+            contributing guide
+          </a>{' '}
+          covers setup and how a change gets merged.
+        </p>
+        <p>
+          Balances ships in English and Bahasa Indonesia. If you’d like to add a language, open an
+          issue to start the conversation.
+        </p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<style>
+  section {
+    border-top: 1px solid var(--border);
+  }
+
+  .container {
+    padding-block: var(--section-pad-top) 4rem;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: var(--secondary-foreground);
+  }
+
+  /* One reading column, narrower than the page, so answers keep a
+     comfortable line length. */
+  .questions {
+    max-width: 46rem;
+    margin: 2.5rem auto 0;
+    text-align: left;
+  }
+
+  details {
+    border-bottom: 1px solid var(--border);
+  }
+
+  details:first-child {
+    border-top: 1px solid var(--border);
+  }
+
+  summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding-block: 1.125rem;
+    font-size: 1.0625rem;
+    font-weight: 650;
+    color: var(--secondary-foreground);
+    text-wrap: balance;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  /* A brass plus that turns into a minus when open: the vertical stroke is a
+     second gradient that folds away. */
+  summary::after {
+    content: '';
+    flex: none;
+    width: 0.75rem;
+    height: 0.75rem;
+    background:
+      linear-gradient(var(--primary), var(--primary)) center / 100% 1.5px no-repeat,
+      linear-gradient(var(--primary), var(--primary)) center / 1.5px 100% no-repeat;
+    transition: background-size 0.2s ease;
+  }
+
+  details[open] summary::after {
+    background-size:
+      100% 1.5px,
+      1.5px 0;
+  }
+
+  summary:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+    border-radius: 0.25rem;
+  }
+
+  details p {
+    margin-bottom: 1.25rem;
+    font-size: 1rem;
+    color: var(--muted-foreground);
+  }
+
+  details p + p {
+    margin-top: -0.5rem;
+  }
+
+  code {
+    font-size: 0.9375em;
+    color: var(--secondary-foreground);
+  }
+
+  /* Motion (paused until in view; see global.css): rows stagger up. */
+  @media (prefers-reduced-motion: no-preference) {
+    details {
+      animation: reveal-up 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+      animation-delay: calc(var(--i) * 0.05s);
+    }
+  }
+</style>
