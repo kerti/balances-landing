@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import { widthsFor } from './image-widths';
 import report1 from '../assets/screenshots/report-1.png';
 import report2 from '../assets/screenshots/report-2.png';
 import report3 from '../assets/screenshots/report-3.png';
@@ -19,6 +20,9 @@ const pages = [
   { src: report4, alt: 'liabilities and receivables' },
   { src: report5, alt: 'investment performance and every holding' },
 ];
+
+// The pager caps at 36rem (see .pager), and narrower on phones.
+const shotSizes = '(min-width: 39rem) 36rem, calc(100vw - 3rem)';
 ---
 
 <section id="report" class="container">
@@ -39,6 +43,8 @@ const pages = [
           <li>
             <Image
               src={page.src}
+              widths={widthsFor(page.src.width)}
+              sizes={shotSizes}
               alt={`Monthly report, page ${i + 1}: ${page.alt}`}
               loading={i === 0 ? 'eager' : 'lazy'}
             />

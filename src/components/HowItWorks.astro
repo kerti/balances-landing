@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import { widthsFor } from './image-widths';
 import stepAdd from '../assets/screenshots/step-add.png';
 import stepAddLight from '../assets/screenshots/step-add-light.png';
 import stepEnter from '../assets/screenshots/step-enter.png';
@@ -40,6 +41,10 @@ const steps = [
     alt: 'A household’s net worth in Balances, charted month by month over two years',
   },
 ];
+
+// Side by side from 64rem, the screenshot takes 3 of 5 columns after the 4rem
+// gap: about 37rem at the container's widest. Stacked below, the full width.
+const shotSizes = '(min-width: 68rem) 37rem, (min-width: 64rem) 60vw, calc(100vw - 3rem)';
 ---
 
 <section id="how-it-works" class="container">
@@ -71,8 +76,20 @@ const steps = [
           <p class="body">{step.body}</p>
         </div>
         <div class="shot">
-          <Image class="light-only" src={step.imageLight} alt={step.alt} />
-          <Image class="dark-only" src={step.image} alt={step.alt} />
+          <Image
+            class="light-only"
+            src={step.imageLight}
+            widths={widthsFor(step.imageLight.width)}
+            sizes={shotSizes}
+            alt={step.alt}
+          />
+          <Image
+            class="dark-only"
+            src={step.image}
+            widths={widthsFor(step.image.width)}
+            sizes={shotSizes}
+            alt={step.alt}
+          />
         </div>
       </li>
     ))}
