@@ -40,7 +40,7 @@ const pages = [
             <Image
               src={page.src}
               alt={`Monthly report, page ${i + 1}: ${page.alt}`}
-              loading={i === 0 ? 'eager' : 'lazy'}
+              loading="lazy"
             />
           </li>
         ))}
