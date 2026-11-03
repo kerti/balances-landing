@@ -4,7 +4,10 @@
    neutrals with a muted brass accent (matches the logo accent #B08947 /
    deep #8A6A30, docs/brand/logo.md), replacing the old indigo/stone
    pairing. If the app's palette moves, re-copy these values; don't fork
-   the look here. Each light-dark() pair is <app :root value, app .dark value>. */
+   the look here. Each light-dark() pair is <app :root value, app .dark value>.
+   Trial exception: the light page, fills and muted text are near-grey here
+   (chroma cut to ~25%, after Uruni's 4e0405c) ahead of the app; --border stays
+   warm. Re-copy from the app once it follows, or revert. */
 
 @import '@fontsource-variable/geist';
 @import '@fontsource-variable/geist/wght-italic.css';
@@ -14,17 +17,17 @@
      setting data-theme on <html> (see Layout.astro). Every colour token below
      is a light-dark(<light>, <dark>) pair, so this is the only switch. */
   color-scheme: light dark;
-  --background: light-dark(oklch(0.971 0.006 84.6), oklch(0.2 0.009 264.4));
+  --background: light-dark(oklch(0.967 0.0015 84.6), oklch(0.2 0.009 264.4));
   --foreground: light-dark(oklch(0.246 0.015 256.8), oklch(0.925 0.007 88.6));
   --card: light-dark(oklch(1 0 0), oklch(0.238 0.011 260.7));
   --card-foreground: light-dark(oklch(0.246 0.015 256.8), oklch(0.925 0.007 88.6));
   --primary: light-dark(oklch(0.544 0.086 80.1), oklch(0.713 0.108 78.7));
   --primary-foreground: light-dark(oklch(1 0 0), oklch(0.246 0.015 256.8));
-  --secondary: light-dark(oklch(0.941 0.01 81.8), oklch(0.268 0.014 261.7));
+  --secondary: light-dark(oklch(0.936 0.0025 81.8), oklch(0.268 0.014 261.7));
   --secondary-foreground: light-dark(oklch(0.246 0.015 256.8), oklch(0.925 0.007 88.6));
-  --muted: light-dark(oklch(0.944 0.009 84.6), oklch(0.268 0.014 261.7));
-  --muted-foreground: light-dark(oklch(0.517 0.019 79.3), oklch(0.671 0.016 84.6));
-  --accent: light-dark(oklch(0.941 0.01 81.8), oklch(0.268 0.014 261.7));
+  --muted: light-dark(oklch(0.938 0.0025 84.6), oklch(0.268 0.014 261.7));
+  --muted-foreground: light-dark(oklch(0.512 0.008 79.3), oklch(0.671 0.016 84.6));
+  --accent: light-dark(oklch(0.936 0.0025 81.8), oklch(0.268 0.014 261.7));
   --accent-foreground: light-dark(oklch(0.246 0.015 256.8), oklch(0.925 0.007 88.6));
   --border: light-dark(oklch(0.912 0.014 78.3), oklch(0.3 0.014 261.7));
   --ring: light-dark(oklch(0.544 0.086 80.1), oklch(0.713 0.108 78.7));
@@ -39,7 +42,7 @@
      the tokens above, used for decorative glows and the hero's tint. */
   --glow: light-dark(var(--foreground), var(--primary));
   /* The hero above its net-worth line: a shade darker than the page. */
-  --hero-tint: light-dark(oklch(0.945 0.009 84.6), oklch(0.168 0.009 264.4));
+  --hero-tint: light-dark(oklch(0.94 0.0025 84.6), oklch(0.168 0.009 264.4));
   /* The sticky header's bar, not counting its 1px bottom line. Anchored
      sections scroll to exactly this offset, so a section's top divider lands
      on the header's line. */
