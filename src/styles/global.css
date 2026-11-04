@@ -4,10 +4,7 @@
    neutrals with a muted brass accent (matches the logo accent #B08947 /
    deep #8A6A30, docs/brand/logo.md), replacing the old indigo/stone
    pairing. If the app's palette moves, re-copy these values; don't fork
-   the look here. Each light-dark() pair is <app :root value, app .dark value>.
-   Trial exception: the light page, fills and muted text are near-grey here
-   (chroma cut to ~25%, after Uruni's 4e0405c) ahead of the app; --border stays
-   warm. Re-copy from the app once it follows, or revert. */
+   the look here. Each light-dark() pair is <app :root value, app .dark value>. */
 
 @import '@fontsource-variable/geist';
 @import '@fontsource-variable/geist/wght-italic.css';
