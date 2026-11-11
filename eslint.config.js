@@ -1,6 +1,7 @@
 import js from '@eslint/js';
 import ts from 'typescript-eslint';
 import astro from 'eslint-plugin-astro';
+import globals from 'globals';
 
 export default [
   { ignores: ['dist/', '.astro/'] },
@@ -15,6 +16,13 @@ export default [
       parserOptions: {
         parser: ts.parser,
       },
+    },
+  },
+  {
+    // Node scripts run outside the site (launch-check).
+    files: ['scripts/**/*.mjs'],
+    languageOptions: {
+      globals: globals.node,
     },
   },
 ];

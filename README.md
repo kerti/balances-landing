@@ -29,6 +29,10 @@ npm run check      # the local mirror of CI: lint · format:check · astro check
 
 Individual gates: `npm run lint`, `npm run format` (write) / `npm run format:check`, `npm run astro:check`.
 
+`npm run launch-check` checks the build, the repo and the live site (headers, 404, caching, SEO tags,
+npm audit, brand files against the app); add `-- --lighthouse` for scores. Run `npm run build` first.
+The `launch-check` skill (`.claude/skills/`) covers what it can't see.
+
 ## Hosting
 
 Deploys to **Cloudflare Pages** via its native Git integration (ADR-0002, config in ADR-0006) —
