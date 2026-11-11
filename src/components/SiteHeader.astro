@@ -3,18 +3,25 @@ import { GITHUB_URL, DEMO_URL } from '../consts';
 import GithubIcon from './GithubIcon.astro';
 import ThemeToggle from './ThemeToggle.astro';
 
+interface Props {
+  /** False on pages other than the home page (the 404): links go back to `/`. */
+  onHome?: boolean;
+}
+const { onHome = true } = Astro.props;
+const home = onHome ? '' : '/';
+
 const sections = [
-  { href: '#how-it-works', label: 'How it works' },
-  { href: '#why-monthly', label: 'Why monthly' },
-  { href: '#what-it-tracks', label: 'What it tracks' },
-  { href: '#report', label: 'Report' },
-  { href: '#open-source', label: 'Open source' },
+  { href: `${home}#how-it-works`, label: 'How it works' },
+  { href: `${home}#why-monthly`, label: 'Why monthly' },
+  { href: `${home}#what-it-tracks`, label: 'What it tracks' },
+  { href: `${home}#report`, label: 'Report' },
+  { href: `${home}#open-source`, label: 'Open source' },
 ];
 ---
 
 <header>
   <div class="container bar">
-    <a class="wordmark" href="#top">
+    <a class="wordmark" href={onHome ? '#top' : '/'}>
       <img
         class="wordmark-light light-only"
         src="/brand/wordmark-light.svg"
