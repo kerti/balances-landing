@@ -1,4 +1,6 @@
 ---
+import { createHash } from 'node:crypto';
+import { readFileSync } from 'node:fs';
 import '../styles/global.css';
 import Reveal from '../components/Reveal.astro';
 
@@ -16,7 +18,13 @@ const {
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const ogImage = new URL('/og.png', Astro.site);
+// The share image's URL carries a hash of the file, so link-preview caches
+// (WhatsApp, Slack, Facebook) fetch the new card whenever `npm run og` changes it.
+const ogVersion = createHash('sha256')
+  .update(readFileSync('public/og.png'))
+  .digest('hex')
+  .slice(0, 8);
+const ogImage = new URL(`/og.png?v=${ogVersion}`, Astro.site);
 const ogImageAlt = 'Balances: track your net worth, not your coffee money.';
 
 // Structured data for search engines. Claims here follow the same discipline
