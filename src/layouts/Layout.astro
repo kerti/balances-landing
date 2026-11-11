@@ -5,11 +5,14 @@ import Reveal from '../components/Reveal.astro';
 interface Props {
   title: string;
   description?: string;
+  /** Canonical, Open Graph, Twitter and JSON-LD. Off for the 404 page. */
+  share?: boolean;
 }
 
 const {
   title,
   description = 'Track your household’s net worth from one balance per account, entered once a month.',
+  share = true,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -74,23 +77,28 @@ const structuredData = {
       data-scheme="dark"
     />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="canonical" href={canonical} />
     <meta name="description" content={description} />
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Balances" />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={ogImage} />
-    <meta property="og:image:width" content="2560" />
-    <meta property="og:image:height" content="1280" />
-    <meta property="og:image:alt" content={ogImageAlt} />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImage} />
-    <meta name="twitter:image:alt" content={ogImageAlt} />
-    <script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
+    {share && (
+      <>
+        <link rel="canonical" href={canonical} />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Balances" />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={canonical} />
+        <meta property="og:image" content={ogImage} />
+        <meta property="og:image:width" content="2560" />
+        <meta property="og:image:height" content="1280" />
+        <meta property="og:image:alt" content={ogImageAlt} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={ogImage} />
+        <meta name="twitter:image:alt" content={ogImageAlt} />
+        <script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
+      </>
+    )}
+    <slot name="head" />
     <title>{title}</title>
   </head>
   <body>

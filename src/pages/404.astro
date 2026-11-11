@@ -1,0 +1,56 @@
+---
+// Cloudflare Pages serves dist/404.html, with a 404 status, for any path that
+// isn't a file. Without it, missing paths answered 200 with the home page.
+import Layout from '../layouts/Layout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+---
+
+<Layout
+  title="Balances: page not found"
+  description="There’s no page at this address on the Balances site."
+  share={false}
+>
+  <meta slot="head" name="robots" content="noindex" />
+  <SiteHeader onHome={false} />
+  <main id="content" class="container">
+    <p class="eyebrow">404</p>
+    <h1>Page not found</h1>
+    <p class="lede">There’s no page at this address.</p>
+    <a class="button button-primary" href="/">
+      Back to the home page
+    </a>
+  </main>
+  <SiteFooter />
+</Layout>
+
+<style>
+  /* A short page: main takes the leftover height, so the footer sits at the
+     bottom of the screen instead of floating above an empty band. */
+  :global(body) {
+    display: flex;
+    flex-direction: column;
+    min-height: 100svh;
+  }
+
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding-block: 5rem;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 1.5rem + 2.5vw, 3rem);
+    font-weight: 700;
+  }
+
+  .lede {
+    margin: 1rem 0 2rem;
+    color: var(--muted-foreground);
+  }
+</style>
