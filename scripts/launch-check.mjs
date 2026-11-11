@@ -210,6 +210,30 @@ async function get(path, opts = {}) {
 }
 
 let beaconLive = false;
+let beaconBlocked = false;
+// Whether a CSP stops <script src="https://host/..."> from loading: script-src,
+// else default-src, must exist and allow neither the host nor a wildcard.
+function blocksScriptHost(policy, host) {
+  const dirs = Object.fromEntries(
+    policy
+      .split(';')
+      .map((d) => d.trim().split(/\s+/))
+      .filter(([name]) => name)
+      .map(([name, ...values]) => [name.toLowerCase(), values]),
+  );
+  const values = dirs['script-src'] ?? dirs['default-src'];
+  if (!values) return false;
+  return !values.some((v) => {
+    const src = v.replace(/^https?:\/\//, '').replace(/\/.*$/, '');
+    return (
+      v === '*' ||
+      v === 'https:' ||
+      v === 'http:' ||
+      src === host ||
+      (src.startsWith('*.') && host.endsWith(src.slice(1)))
+    );
+  });
+}
 if (local || !base) {
   report('SKIP', 'live: all', local ? '--local' : 'no site in astro.config.mjs and no --url');
 } else {
@@ -246,12 +270,32 @@ if (local || !base) {
         `.${tld} is not preloaded; add Strict-Transport-Security`,
       );
 
+    // The zone injects Cloudflare's Web Analytics beacon. The maintainer keeps
+    // it on (2026-11-11) because the CSP refuses it, so nothing is collected.
+    // That holds only while every policy on the page blocks its script host:
+    // a PASS with a note while blocked, a FAIL the day it could run (ADR-0001).
     beaconLive = /cloudflareinsights/.test(home.body);
-    check(
-      !beaconLive,
-      'live: no Cloudflare Web Analytics beacon',
-      'the kerti.dev zone injects beacon.min.js; turn Web Analytics off in the Cloudflare dashboard',
-    );
+    const policies = [
+      h.get('content-security-policy') ?? '',
+      ...[
+        ...home.body.matchAll(/<meta http-equiv="content-security-policy" content="([^"]+)"/gi),
+      ].map((m) =>
+        m[1]
+          .replace(/&#39;/g, "'")
+          .replace(/&quot;/g, '"')
+          .replace(/&amp;/g, '&'),
+      ),
+    ];
+    beaconBlocked = policies.some((p) => blocksScriptHost(p, 'static.cloudflareinsights.com'));
+    if (!beaconLive) report('PASS', 'live: no Cloudflare Web Analytics beacon');
+    else
+      check(
+        beaconBlocked,
+        'live: Cloudflare Web Analytics beacon blocked by CSP',
+        'the zone injects beacon.min.js and no CSP refuses it: visitor data is being collected; block it or turn Web Analytics off in the Cloudflare dashboard',
+      );
+    if (beaconLive && beaconBlocked)
+      results.at(-1)[2] = 'known: injected by the zone, kept on by choice, refused by the CSP';
     check(
       !/data:font/.test(home.body),
       'live: no data: fonts',
@@ -324,16 +368,18 @@ if (lighthouse && !local && base) {
         )
         .filter((a) => r.categories[id].auditRefs.some((ref) => ref.id === a.id && ref.weight > 0))
         .map((a) => a.id);
-      // Best practices sits at 93 while the zone injects the beacon our CSP
-      // refuses (the beacon line above); WARN, not FAIL, for that cause alone.
+      // Best practices sits at 92 while the zone injects the beacon our CSP
+      // refuses (the beacon line above): the console logs the refusal. Known,
+      // so a PASS with a note when that is the only cause.
       const beaconOnly =
         id === 'best-practices' &&
         beaconLive &&
+        beaconBlocked &&
         failing.every((f) => ['errors-in-console', 'inspector-issues'].includes(f));
       report(
-        score >= 95 ? 'PASS' : beaconOnly ? 'WARN' : 'FAIL',
+        score >= 95 || beaconOnly ? 'PASS' : 'FAIL',
         `lighthouse ${form} ${id} ${score}`,
-        score >= 95 ? '' : failing.join(', '),
+        score >= 95 ? '' : beaconOnly ? 'known: the CSP refusing the beacon' : failing.join(', '),
       );
     }
   }

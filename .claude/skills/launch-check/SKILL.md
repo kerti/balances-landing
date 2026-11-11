@@ -30,7 +30,7 @@ Exits 1 on any FAIL. The repo checks need `gh` signed in (they read the app repo
 What the lines mean when they go wrong:
 
 - **live: serves the same build as dist/ (WARN)**, with other live checks failing: production didn't deploy `main`. Check `gh run list --branch main` for a run on the head commit; if there is none, the maintainer retries the deploy in the Cloudflare dashboard.
-- **live: no Cloudflare Web Analytics beacon:** the kerti.dev zone injects it into responses that look like browser page loads, which is why the script sends a browser `Accept` header; a bare `curl` misses it. Turning it off is a dashboard setting the maintainer changes. Until then Lighthouse Best Practices sits at 93 (a WARN, not a FAIL), because our CSP refuses the beacon and logs it.
+- **live: Cloudflare Web Analytics beacon:** the kerti.dev zone injects it into responses that look like browser page loads, which is why the script sends a browser `Accept` header; a bare `curl` misses it. The maintainer keeps it on by choice (2026-11-11) because our CSP refuses it, so nothing is collected: that is a PASS with a "known" note, and so is Lighthouse Best Practices at 92 when the refusal in the console is its only cause. Don't propose turning it off. It FAILs only if no policy on the page blocks `static.cloudflareinsights.com` any more, which means visitor data is being collected (ADR-0001): fix the CSP, or turn Web Analytics off in the dashboard.
 - **repo: … matches the app:** the favicon and home-screen icon mirror `kerti/balances-v2` byte for byte (CONTEXT.md, Brand assets). Copy the app's file over; never edit ours.
 - **repo: npm audit clean:** check `npm audit --omit=dev` first. A dev-only advisory is still fixed (an `overrides` entry, as for minimatch), but it is not urgent.
 - **Lighthouse:** the plain URL only (a `?query` skips Cloudflare's cache and inflates the server response). Below 95 is a FAIL. Reports are saved to the temp folder the script prints.
@@ -42,9 +42,9 @@ Run or confirm each, and report it alongside the script's output:
 - **Copy:** the rendered text against CONTEXT.md: the naming law ("Balances" the product, "balances" the noun), no em dashes, curly apostrophes, the slop rules.
 - **Layout:** both themes, at 320, 390, 800x1280 and 1440 wide; no sideways scroll. JavaScript disabled: the page is complete. Reduced motion: no animation.
 - **Screen-reader text** from the built HTML: skip link first, labelled navs, one H1, `aria-hidden` on decorative SVGs, no words glued across inline elements.
-- **CSP negative test:** an inline `<script>` added to the live page in DevTools must not run, and the console shows no violations except the beacon (until it is off).
+- **CSP negative test:** an inline `<script>` added to the live page in DevTools must not run, and the console shows no violations except the beacon's.
 - **Share card:** `public/og.png` regenerated after any hero change (`npm run og`), legible at about 600x300, and re-uploaded by hand as the GitHub repository's social preview (Settings, General, Social preview; there is no API).
-- **Cloudflare Pages settings** (dashboard, maintainer): Node from `.nvmrc`, the custom domain, previews on PRs, Web Analytics off.
+- **Cloudflare Pages settings** (dashboard, maintainer): Node from `.nvmrc`, the custom domain, previews on PRs. Web Analytics stays on by choice (see the beacon line above).
 - **Pre-commit gitleaks hook:** `gitleaks version` works and a staged test secret is refused (then unstaged).
 
 ## 4. Report, then wait
