@@ -33,7 +33,9 @@ Never write "BALANCES", "balances" (for the product), or "Balance" (singular, fo
 The **favicon / app icon** (`public/favicon.svg`) is a mirror of the app's icon in
 `kerti/balances-v2` (`frontend/public/favicon.svg`) — the app repo is the source of truth. Keep the
 two byte-identical; if the app's icon changes, copy it over here rather than editing the copy in
-this repo. Any future shared brand marks (logo, wordmark) follow the same rule.
+this repo. The **home-screen icon** (`public/apple-touch-icon.png`, 180x180) mirrors the app's
+`frontend/public/icons/apple-touch-icon.png` the same way. Any future shared brand marks (logo,
+wordmark) follow the same rule.
 
 The **share image** (`public/og.png`, decided 2026-10-27) is the exception: it carries the landing's
 copy, so it is landing-owned. It is a still of the hero, drawn by `scripts/og-card.ts`: the outlined
