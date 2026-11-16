@@ -4,13 +4,14 @@ This is the domain language and brand voice for the **marketing site**. It is de
 than the app's `CONTEXT.md` (in `kerti/balances-v2`), which carries the full financial ontology
 (positions, assets, liabilities, bonds, snapshots). Copy on this site should stay at the value-prop
 altitude; when a page needs a precise domain term, borrow it from the app's CONTEXT.md rather than
-inventing a new one here.
+inventing a new one here. The app's UI never says "position" (balances-v2#832), so neither does
+this site.
 
 ## What Balances is (one paragraph, canonical)
 
 Balances is a personal-finance app that tracks **net worth** via end-of-month balance snapshots
-across all of a Household's positions — bank accounts, property, investments, debts. You enter one
-number per position each month; Balances computes and charts your net worth over time.
+across everything a Household owns and owes — bank accounts, property, investments, debts. You enter
+one number for each, every month; Balances computes and charts your net worth over time.
 Transaction-by-transaction budgeting (Mint / YNAB style) is a deliberate **non-feature** — that is a
 positioning point, not an omission.
 
@@ -59,7 +60,7 @@ already self-contained.
 
 ## Value proposition (what the copy sells)
 
-- **Low friction.** One number per position, once a month. No receipt-scanning, no transaction
+- **Low friction.** One number for each account, once a month. No receipt-scanning, no transaction
   categorising, no bank-sync babysitting.
 - **Net worth, not budgeting.** The question answered is "am I building wealth over time?", not
   "where did my coffee money go?".
@@ -71,7 +72,7 @@ already self-contained.
 **Hero headline (canonical):** _"Track your net worth, not your coffee money."_ Subhead: the
 disambiguation sentence from the naming law.
 
-**Claims discipline** (decided 2026-07-06): the page names only the durable core — four position
+**Claims discipline** (decided 2026-07-06): the page names only the durable core — four
 groups, monthly snapshots, the net-worth chart, multi-currency (confirmed durable 2026-07-19),
 open-source/AGPL, self-host, household backup/export. No version numbers, no "beta" badge; the live demo is the maturity disclosure.
 Churn-prone features (importers, tags, analytics) stay off the page until the app stabilises
