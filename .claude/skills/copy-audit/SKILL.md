@@ -51,8 +51,8 @@ The script can't judge these. Read the rendered text (or the components) against
   Non-features stated plainly.
 - **Anti-slop.** "X, not Y" contrasts: few, never in more than one heading (the canonical headline
   is the approved one). Colon reveals ("the number that actually matters: X"). Three-item lists and
-  three cards in a row. Stock closers. Prose that repeats a chip or list beside it. A two-tone
-  heading highlights only the hook.
+  three cards in a row. Stock closers. Prose that repeats a chip or list beside it. Headings
+  are one colour: no brass italic hook (dropped 2026-11-17).
 - **Style.** British spelling (_-ise_, _colour_). No serial comma ("a, b and c"). Curly quotes and
   apostrophes. Periods and commas, never em dashes. Dates as _30 April_; numbers from data go
   through `Intl`.

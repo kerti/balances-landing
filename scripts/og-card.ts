@@ -94,7 +94,7 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${hei
   <text x="${left + 26}" y="255" font-family="${font}" font-weight="600" font-size="20" letter-spacing="3.6" fill="${muted}">EASY NET WORTH TRACKING FOR HOUSEHOLDS</text>
   <g font-family="${font}" font-weight="700" font-size="54">
     <text x="${left}" y="330" fill="${ink}">Track your net worth,</text>
-    <text x="${left}" y="398" fill="${brass}">not your coffee money.</text>
+    <text x="${left}" y="398" fill="${ink}">not your coffee money.</text>
   </g>
   <text x="${left}" y="470" font-family="${font}" font-size="28" fill="${muted}">Enter your balances once a month. That’s it.</text>
   <g font-family="${font}" font-weight="500" font-size="22" fill="${muted}">

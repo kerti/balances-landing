@@ -93,6 +93,8 @@ Churn-prone features (importers, tags, analytics) stay off the page until the ap
 - **Curly quotes and apostrophes** everywhere in copy: ’ “ ”.
 - **No em dashes** in copy; periods and commas instead.
 - **No exclamation marks.**
+- **Headings are one colour.** No brass italic phrase in a heading (dropped 2026-11-17 as a
+  trope). The one brass heading is How it works’ oversized “once a month.”, which works by size.
 
 `npm run copy-audit` checks the mechanical rules; `.claude/skills/copy-audit` covers the rest.
 
