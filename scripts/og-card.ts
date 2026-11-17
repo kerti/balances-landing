@@ -11,6 +11,10 @@ import { earlierYears, lastYear } from '../src/components/net-worth.ts';
 
 const width = 1280;
 const height = 640;
+// The layout is drawn at 2:1; the canvas adds plate above it to reach
+// LinkedIn's 1.91:1 (1280x670, rendered 2560x1340). At 2:1 LinkedIn
+// resamples the card and its text comes out soft.
+const headroom = 30;
 const left = 100;
 
 // Brand colours on the graphite plate, as the app's social card uses them.
@@ -68,14 +72,14 @@ const chips = chipLabels.map((label) => {
   return pill;
 });
 
-const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width}" height="${height}">
+const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 ${-headroom} ${width} ${height + headroom}" width="${width}" height="${height + headroom}">
   <defs>
     <linearGradient id="below" gradientUnits="userSpaceOnUse" x1="0" y1="${yNow}" x2="0" y2="${height}">
       <stop offset="0" stop-color="${brass}" stop-opacity="0.14"/>
       <stop offset="1" stop-color="${brass}" stop-opacity="0.04"/>
     </linearGradient>
   </defs>
-  <rect width="${width}" height="${height}" fill="${plate}"/>
+  <rect y="${-headroom}" width="${width}" height="${height + headroom}" fill="${plate}"/>
   <g stroke="${brass}" stroke-opacity="0.16" stroke-dasharray="2 5">
     ${points.map((p) => `<line x1="${p.x.toFixed(1)}" x2="${p.x.toFixed(1)}" y1="${p.y.toFixed(1)}" y2="${height}"/>`).join('')}
   </g>
