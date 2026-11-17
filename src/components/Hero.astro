@@ -64,8 +64,10 @@ const facts = ['AGPL-3.0 open source', 'Self-hostable', 'Multi-currency'];
     margin-inline: auto;
   }
 
-  /* The second line stays whole where it fits (600px up); phones break it. */
-  @media (min-width: 37.5rem) {
+  /* The second line stays whole on one-column layouts wide enough for it
+     (600 to 1023px). Phones break it, and in two columns holding it would
+     widen the copy column and squeeze the chart card beside it. */
+  @media (min-width: 37.5rem) and (max-width: 63.99rem) {
     .hold {
       white-space: nowrap;
     }
