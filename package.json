@@ -11,7 +11,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "og": "node scripts/og-card.ts && rsvg-convert -w 2560 -h 1280 docs/brand/og-card.svg -o public/og.png",
+    "og": "node scripts/og-card.ts && rsvg-convert -w 2560 -h 1340 docs/brand/og-card.svg -o public/og.png",
     "astro:check": "astro check",
     "lint": "eslint .",
     "format": "prettier --write .",
