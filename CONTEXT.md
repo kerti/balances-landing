@@ -85,6 +85,19 @@ Churn-prone features (importers, tags, analytics) stay off the page until the ap
 - **Voice:** calm, precise, a little opinionated. State the non-features plainly. No hype, no
   growth-hacking urgency, no fake scarcity. Never imply features the app does not have.
 
+## Style rules (decided 2026-11-17)
+
+- **British spelling:** _-ise_, _colour_, _licence_ (the noun). Code identifiers keep their own
+  spelling (`color` in CSS).
+- **No serial comma:** "assets, investments and debts".
+- **Curly quotes and apostrophes** everywhere in copy: ’ “ ”.
+- **No em dashes** in copy; periods and commas instead.
+- **No exclamation marks.**
+- **Headings are one colour.** No brass italic phrase in a heading (dropped 2026-11-17 as a
+  trope). The one brass heading is How it works’ oversized “once a month.”, which works by size.
+
+`npm run copy-audit` checks the mechanical rules; `.claude/skills/copy-audit` covers the rest.
+
 ## Calls to action (decided 2026-07-06)
 
 There is no hosted signup — production SaaS is deferred indefinitely (app repo HANDOFF.md). The

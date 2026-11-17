@@ -183,13 +183,6 @@ img {
   transform: rotate(45deg);
 }
 
-/* Two-tone headings: the closing phrase carries the brass accent, set in
-   Geist's true italic (the wght-italic face imported above). */
-.accent {
-  color: var(--primary);
-  font-style: italic;
-}
-
 /* Scroll-triggered motion. Animations are declared only when motion is
    allowed, always with fill-mode `both` so their first frame shows while
    waiting. Under html.motion (set in Layout.astro's head) a [data-reveal]

@@ -10,7 +10,7 @@ const facts = ['AGPL-3.0 open source', 'Self-hostable', 'Multi-currency'];
     <div class="copy">
       <p class="eyebrow">Easy net&nbsp;worth&nbsp;tracking for&nbsp;households</p>
       <h1>
-        Track your net worth, <span class="accent">not&nbsp;your coffee&nbsp;money.</span>
+        Track your net&nbsp;worth, <span class="hold">not&nbsp;your coffee&nbsp;money.</span>
       </h1>
       <p class="subhead">Each month you enter your balances; Balances tracks your net worth.</p>
       <div class="cta">
@@ -62,6 +62,15 @@ const facts = ['AGPL-3.0 open source', 'Self-hostable', 'Multi-currency'];
     font-weight: 700;
     max-width: 20ch;
     margin-inline: auto;
+  }
+
+  /* The second line stays whole on one-column layouts wide enough for it
+     (600 to 1023px). Phones break it, and in two columns holding it would
+     widen the copy column and squeeze the chart card beside it. */
+  @media (min-width: 37.5rem) and (max-width: 63.99rem) {
+    .hold {
+      white-space: nowrap;
+    }
   }
 
   .subhead {
