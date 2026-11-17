@@ -12,8 +12,9 @@ import { earlierYears, lastYear } from '../src/components/net-worth.ts';
 const width = 1280;
 const height = 640;
 // The layout is drawn at 2:1; the canvas adds plate above it to reach
-// LinkedIn's 1.91:1 (1280x670, rendered 2560x1340). At 2:1 LinkedIn
-// resamples the card and its text comes out soft.
+// LinkedIn's 1.91:1 (1280x670). Rendered 2400x1256: at 2560 wide LinkedIn
+// kept only a 160px thumbnail and the card came out blurry; 2400 matches the
+// kerti.dev and Uruni cards, which it renders sharp.
 const headroom = 30;
 const left = 100;
 
