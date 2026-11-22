@@ -16,7 +16,7 @@ Workers static-assets later is possible but is a new ADR (it adds a `wrangler` c
 - Connected repo: `kerti/balances-landing`, production branch `main`
 - Build command: `npm run build`
 - Build output directory: `dist`
-- Node version: `22` (via `.nvmrc`, reinforced by a `NODE_VERSION=22` project env var)
+- Node version: `26` (via `.nvmrc`, reinforced by a `NODE_VERSION=26` project env var)
 - No environment secrets — the site is static (ADR-0001) and Git integration deploys without a
   Cloudflare API token in GitHub (ADR-0002), so there is nothing to leak.
 
