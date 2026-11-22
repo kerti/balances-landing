@@ -18,7 +18,7 @@ value-prop sections, screenshots, founder note, and baseline SEO/social previews
 
 ## Local development
 
-Prerequisites: Node 22+ (pinned in `.nvmrc`).
+Prerequisites: Node 26+ (pinned in `.nvmrc`).
 
 ```sh
 npm install        # installs deps; the "prepare" script enables the pre-commit secret guard
