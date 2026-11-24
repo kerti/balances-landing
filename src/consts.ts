@@ -4,3 +4,4 @@ export const SELF_HOST_URL = 'https://github.com/kerti/balances-v2/blob/main/SEL
 export const LICENSE_URL = 'https://github.com/kerti/balances-v2/blob/main/LICENSE';
 export const CONTRIBUTING_URL = 'https://github.com/kerti/balances-v2/blob/main/CONTRIBUTING.md';
 export const NEW_ISSUE_URL = 'https://github.com/kerti/balances-v2/issues/new';
+export const BUILD_LOG_URL = 'https://log.kerti.dev/series/balances/';
